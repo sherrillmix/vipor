@@ -9,7 +9,7 @@
 #x: groupings that will be jiggered
 #maxOffset: maximum amount to spread (usually not reached)
 #stepNum: number of breaks to use in density estimation
-#compare: use normal runif for comparison to low discrepancy 
+#compare: use normal runif for comparison to low discrepancy
 #...: additional arguments to density
 spreadY<-function(y,x=rep(1,length(y)),maxOffset=.4,stepNum=100,compare=FALSE,...){
 	#thisNum<-20;groups<-6;x<-rep(1:groups,each=thisNum);y<-rnorm(thisNum*groups,rep(rnorm(groups),each=thisNum))+rep(c(0,2),length.out=groups*thisNum);plot(x+spreadY(y,x,maxOffset=.8),y)
@@ -28,6 +28,30 @@ spreadY<-function(y,x=rep(1,length(y)),maxOffset=.4,stepNum=100,compare=FALSE,..
 	return(output)
 }
 
+#simple.violinplot from UsingR package
+violinPlot<-function (values, groupings, bw = "nrd0", centers = 1:length(unique(groups)),col='white',spacer=7/16,...){
+	groups<-split(values,groupings) 
+	n <- length(groups)
+	if(length(col)==1)col<-rep(col,n)
+	if (n==0)stop("invalid first argument")
+	xvals <- matrix(0, nrow = 512, ncol = n)
+	yvals <- matrix(0, nrow = 512, ncol = n)
+	for (i in 1:n){
+		tmp.dens <- density(groups[[i]], bw = bw, ...)
+		yvals[, i] <- tmp.dens$x
+		xvals.needtoscale <- tmp.dens$y
+		xvals.scaled <- spacer * xvals.needtoscale/max(xvals.needtoscale)
+		xvals[, i] <- xvals.scaled
+	}
+	for (i in 1:n){
+		x<-xvals[, i]
+		x<-c(x,-rev(x))
+		x<-x+centers[i]
+		y<-yvals[, i]
+		y<-c(y,rev(y))
+		polygon(x,y, col = col[i])
+	}
+}
 
 
 
