@@ -15,10 +15,12 @@ spreadY<-function(y,x=rep(1,length(y)),maxOffset=.4,stepNum=100,compare=FALSE,..
 	#thisNum<-20;groups<-6;x<-rep(1:groups,each=thisNum);y<-rnorm(thisNum*groups,rep(rnorm(groups),each=thisNum))+rep(c(0,2),length.out=groups*thisNum);plot(x+spreadY(y,x,maxOffset=.8),y)
 	output<-rep(NA,length(y))
 	#low discrepancy "random"
+	maxDense<--Inf
 	for(j in unique(x)){
-		dense<-density(y,n=stepNum,...)
-		dense$y<-dense$y/max(dense$y)
 		groupSelector<-x==j
+		dense<-density(y[groupSelector],n=stepNum,...)
+		dense$y<-dense$y/max(dense$y)
+		#maxDense<-max(maxDense,dense$y)
 		if(!compare) randomJitter<-vanDerCorput(sum(groupSelector))[rank(y[groupSelector],ties.method='first')]
 		else randomJitter<-runif(sum(groupSelector),0,1)
 		for(i in 1:stepNum){
@@ -26,6 +28,7 @@ spreadY<-function(y,x=rep(1,length(y)),maxOffset=.4,stepNum=100,compare=FALSE,..
 			output[groupSelector][selector]<-(randomJitter[selector]*maxOffset*2-maxOffset)*dense$y[i]
 		}
 	}
+	#output<-output/maxDense
 	return(output)
 }
 
