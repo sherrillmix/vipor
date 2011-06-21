@@ -17,8 +17,9 @@ spreadY<-function(y,x=rep(1,length(y)),maxOffset=.4,stepNum=100,compare=FALSE,..
 	#low discrepancy "random"
 	for(j in unique(x)){
 		dense<-density(y,n=stepNum,...)
+		dense$y<-dense$y/max(dense$y)
 		groupSelector<-x==j
-		if(!compare) randomJitter<-vanDerCorput(sum(groupSelector))[rank(y[groupSelector])]
+		if(!compare) randomJitter<-vanDerCorput(sum(groupSelector))[rank(y[groupSelector],ties.method='first')]
 		else randomJitter<-runif(sum(groupSelector),0,1)
 		for(i in 1:stepNum){
 			selector<-y[groupSelector]<=dense$x[i]&is.na(output[groupSelector])
