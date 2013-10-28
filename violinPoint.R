@@ -33,28 +33,22 @@ spreadY<-function(y,x=rep(1,length(y)),maxOffset=.4,stepNum=100,compare=FALSE,..
 }
 
 #simple.violinplot from UsingR package
-violinPlot<-function (values, groupings, bw = "nrd0", centers = 1:length(unique(groups)),col='white',spacer=7/16,...){
-	groups<-split(values,groupings) 
-	n <- length(groups)
-	if(length(col)==1)col<-rep(col,n)
-	if (n==0)stop("invalid first argument")
-	xvals <- matrix(0, nrow = 512, ncol = n)
-	yvals <- matrix(0, nrow = 512, ncol = n)
-	for (i in 1:n){
-		tmp.dens <- density(groups[[i]], bw = bw, ...)
-		yvals[, i] <- tmp.dens$x
-		xvals.needtoscale <- tmp.dens$y
-		xvals.scaled <- spacer * xvals.needtoscale/max(xvals.needtoscale)
-		xvals[, i] <- xvals.scaled
+violinPoint<-function(values,samples,sampleOrder=unique(samples),xlab='Samples',ylab='Values',addRects=TRUE,addMedians=TRUE,...){
+	idLookup<-1:length(sampleOrder)
+	names(idLookup)<-sampleOrder
+	dots<-list(...)
+	plotPars<-names(par()) #this can create a new device but that should be ok since this is going to plot in a second anyway
+	isPlotArg <- names(dots) %in% plotPars
+	spreadXPos<-idLookup[samples]+do.call(spreadY,c(list(values),list(samples),dots[!isPlotArg]))
+	do.call(plot,c(list(spreadXPos),list(values),dots[isPlotArg],xlab=xlab,ylab=ylab,xaxt='n'))
+	axis(1,idLookup,names(idLookup),las=2)
+	if(addRects)rect(seq(1,length(sampleOrder),2)-.5,par('usr')[3],seq(1,length(sampleOrder),2)+.5,par('usr')[4],col='#00000009',border=NA)
+	if(addMedians){
+		medians<-tapply(values,samples,median)
+		maxOffset<-ifelse('maxOffset' %in% names(dots),dots[['maxOffset']],.4)
+		segments(xPos[names(medians)]-maxOffset,medians,xPos[names(medians)]+maxOffset,medians)
 	}
-	for (i in 1:n){
-		x<-xvals[, i]
-		x<-c(x,-rev(x))
-		x<-x+centers[i]
-		y<-yvals[, i]
-		y<-c(y,rev(y))
-		polygon(x,y, col = col[i])
-	}
+	invisible(idLookup)
 }
 
 
