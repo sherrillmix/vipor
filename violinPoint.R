@@ -18,6 +18,10 @@ spreadY<-function(y,x=rep(1,length(y)),maxOffset=.4,stepNum=100,compare=FALSE,..
 	maxDense<--Inf
 	for(j in unique(x)){
 		groupSelector<-x==j
+		if(sum(groupSelector)==1){
+			output[groupSelector]<-0
+			next()
+		}
 		dense<-density(y[groupSelector],n=stepNum,...)
 		dense$y<-dense$y/max(dense$y)
 		#maxDense<-max(maxDense,dense$y)
