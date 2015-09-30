@@ -1,17 +1,13 @@
-Package: ggbeeswarm
+Package: violinPointR
 Type: Package
-Title: Provides position_beeswarm() for ggplot2
+Title: Plot categorical data using quasirandom noise and density estimates
 Version: 0.2.0
 Date: 2015-01-13
-Authors: Erik Clarke, Scott Sherrill-Mix
-Maintainer: Erik Clarke <ecl@mail.med.upenn.edu>
-Description: Allows the creation of beeswarm-style plots with ggplot2
+Author: Scott Sherrill-Mix, Erik Clarke
+Maintainer: Scott Sherrill-Mix <shescott@upenn.edu>
+Description: Generate a combination of a violin/histogram plot and a scatter plot by offsetting points within a category based on their density using quasirandom noise.
 License: GPL-2
 Depends:
     R (>= 3.0.0)
-Imports:
-    proto
-Collate:
-    'ggbeeswarm-package.R'
-    'position-beeswarm.r'
-    'ggbeeswarm.R'
+Suggests:
+	testthat
