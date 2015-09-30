@@ -2,5 +2,5 @@
 
 export(digits2number)
 export(number2digits)
-export(offset_x)
+export(offsetX)
 export(vanDerCorput)
