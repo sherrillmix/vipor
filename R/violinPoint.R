@@ -14,11 +14,12 @@
 #' @examples 
 #' ## Generate fake data
 #' dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))
-#' labels <- c("Normal", "Dense Norm.", "Bimodal", "Extremes")
+#' names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 #' 
 #' ## Plot each distribution with a variety of parameters
 #' par(mfrow=c(4,1), mar=c(2,4, 0.5, 0.5))
-#' mapply(function(y, label) {
+#' sapply(names(dat),function(label) {
+#'   y<-dat[[label]]
 #'   ids <- rep(1:4, each=length(y))
 #'   
 #'   offsets <- c(
@@ -29,7 +30,7 @@
 #'   
 #'   plot(offsets + ids, rep(y, 4), ylab=label, xlab='', xaxt='n', pch=21, las=1)
 #'   axis(1, 1:4, c("Default", "Adjust=2", "Adjust=0.1", "Width=10%"))
-#' }, dat, labels)
+#' })
 #' 
 offsetX <- function(y, x, width=0.4, varwidth=FALSE, adjust=0.5, nbins=1000) {
   
