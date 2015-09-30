@@ -15,11 +15,12 @@ test_that("Test van der Corput generation",{
 	expect_that(vanDerCorput(5,start=4), equals(c(1/8,5/8,6/16,14/16,1/16)))
 	expect_that(vanDerCorput(3,3), equals(c(1/3,2/3,1/9)))
 	expect_that(vanDerCorput(3,10), equals(c(1/10,2/10,3/10)))
+	expect_that(vanDerCorput(0,10), equals(c()))
 	expect_that(vanDerCorput(3,1), throws_error('base'))
 	expect_that(vanDerCorput(3,-10), throws_error('base'))
+	expect_that(vanDerCorput(10,0), throws_error('base'))
 	expect_that(vanDerCorput(-10,10), throws_error('n '))
 	expect_that(vanDerCorput(10,10,-100), throws_error('start'))
-	expect_that(vanDerCorput(0,10), throws_error('n'))
 	expect_that(length(vanDerCorput(10000)), equals(10000))
 	expect_that(length(unique(vanDerCorput(10000))), equals(10000))
 })
@@ -56,8 +57,8 @@ test_that("Test digit combining",{
 	expect_that(digits2number(c(rep(0,15),1),5), equals(5^15))
 	expect_that(digits2number(c(rep(0,5),1),5), equals(5^5))
 	expect_that(digits2number(c(1,1,1),1), equals(3))
-	expect_that(digits2number(c(1,1,1),0), equals(0))
 	expect_that(digits2number(rep(0,16),2), equals(0))
+	expect_that(digits2number(c(1,1,1),0), throws_error('base')) #doesn't really require an error but probably does not produce a desired result
 	expect_that(digits2number(1,-1), throws_error('base')) #doesn't really require an error but probably does not produce a desired result
 	expect_that(digits2number(-1,10), throws_error('digit')) #doesn't really require an error but probably does not produce a desired result
 })
