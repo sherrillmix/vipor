@@ -121,7 +121,7 @@ number2digits <- function(n, base=2){
 #' digits2number(number2digits(100))
 digits2number<-function(digits,base=2,fractional=FALSE){
   if(length(digits)==0)return(0)
-  if(base<0)stop(simpleError('base < 0 in digits2number'))
+  if(base<=0)stop(simpleError('base <= 0 in digits2number'))
   if(any(digits<0))stop(simpleError('digit < 0 in digits2number'))
   powers<-0:(length(digits)-1)
   out<-sum(digits*base^powers)
