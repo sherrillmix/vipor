@@ -22,19 +22,19 @@
 #'   ids <- rep(1:4, each=length(y))
 #'   
 #'   offsets <- c(
-#'     offset_x(y),  # Default
-#'     offset_x(y, adjust=2),    # More smoothing
-#'     offset_x(y, adjust=0.1),  # Tighter fit
-#'     offset_x(y, width=0.1))   # Less wide
+#'     offsetX(y),  # Default
+#'     offsetX(y, adjust=2),    # More smoothing
+#'     offsetX(y, adjust=0.1),  # Tighter fit
+#'     offsetX(y, width=0.1))   # Less wide
 #'   
 #'   plot(offsets + ids, rep(y, 4), ylab=label, xlab='', xaxt='n', pch=21, las=1)
 #'   axis(1, 1:4, c("Default", "Adjust=2", "Adjust=0.1", "Width=10%"))
 #' }, dat, labels)
 #' 
-offset_x <- function(y, x, width=0.4, varwidth=FALSE, adjust=0.5, nbins=1000) {
+offsetX <- function(y, x, width=0.4, varwidth=FALSE, adjust=0.5, nbins=1000) {
   
   if (missing(x)) x <- rep(1, length(y))
-  if (length(x)!=length(y)) stop(simpleError('x and y not the same length in offset_x'))
+  if (length(x)!=length(y)) stop(simpleError('x and y not the same length in offsetX'))
   
   maxLength<-max(table(x))
 
@@ -76,6 +76,10 @@ offset_x <- function(y, x, width=0.4, varwidth=FALSE, adjust=0.5, nbins=1000) {
 #' vanDerCorput(100)
 vanDerCorput <- function(n, base=2,start=1){
   #generate n first digits of the van der Corput sequence
+  if(n==0)return(c())
+  if(n<0)stop(simpleError('n < 0 in vanDerCorput'))
+  if(base<=1)stop(simpleError('base <=1 in vanDerCorput'))
+  if(start<1)stop(simpleError('start < 1 in vanDerCorput'))
   out<-sapply(1:n+start-1,function(ii)digits2number(rev(number2digits(ii,base)),base,TRUE))
   return(out)
 }
@@ -93,6 +97,9 @@ vanDerCorput <- function(n, base=2,start=1){
 #' number2digits(100)
 #' number2digits(100,8)
 number2digits <- function(n, base=2){
+  if(n==0)return(c())
+  if(n<0)stop(simpleError('negative number in number2digits'))
+  if(base<=1)stop(simpleError('base <=1 in number2digits'))
   nDigits<-ceiling(log(n+1,base))
   powers<-base^(0:nDigits)
   out<-diff(n %% powers)/powers[-length(powers)]
@@ -114,6 +121,8 @@ number2digits <- function(n, base=2){
 #' digits2number(number2digits(100))
 digits2number<-function(digits,base=2,fractional=FALSE){
   if(length(digits)==0)return(0)
+  if(base<0)stop(simpleError('base < 0 in digits2number'))
+  if(any(digits<0))stop(simpleError('digit < 0 in digits2number'))
   powers<-0:(length(digits)-1)
   out<-sum(digits*base^powers)
   if(fractional)out<-out/base^(length(digits))
