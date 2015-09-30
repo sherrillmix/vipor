@@ -22,6 +22,7 @@ We use the provided function `offsetX` to generate the x-offsets for plotting.
 ```r
 library(violinPointR)
 # Generate data
+set.seed(1234)
 dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))
 names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 
