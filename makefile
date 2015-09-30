@@ -7,7 +7,7 @@ all: $(PACKAGEFILE) README.md
 .PHONY: all install
 
 install:
-	R -e 'devtools::install_github("eclarke/violin_point")'
+	R -e 'devtools::install_github("sherrillmix/$(NAME)")'
 
 man: R/*.R
 	R -e 'devtools::document()'
