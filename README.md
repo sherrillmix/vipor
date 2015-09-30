@@ -22,12 +22,12 @@ We use the provided function `offsetX` to generate the x-offsets for plotting.
 ```r
 library(violinPointR)
 # Generate data
-set.seed(1234)
+set.seed(12345)
 dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))
 names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 
 # Plot distributions
-par(mfrow=c(4,1), mar=c(2,4, 0.5, 0.5))
+par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 sapply(names(dat),function(label) {
   y<-dat[[label]]
   ids <- rep(1:4, each=length(y))
@@ -37,7 +37,7 @@ sapply(names(dat),function(label) {
     offsetX(y, adjust=0.1),  # Tighter fit
     offsetX(y, width=0.1))   # Less wide
 
-  plot(offsets + ids, rep(y, 4), ylab=label, xlab='', xaxt='n', pch=21, las=1)
+  plot(offsets + ids, rep(y, 4), ylab='y value', xlab='', xaxt='n', pch=21,col='#00000099',bg='#00000033',las=1,main=label)
   axis(1, 1:4, c("Default", "Adjust=2", "Adjust=0.1", "Width=10%"))
 })
 ```
