@@ -7,8 +7,7 @@
 #' @param x a grouping factor for y (optional)
 #' @param width the maximum spacing away from center for each group of points. Since points are spaced to left and right, the maximum width of the cluster will be approximately width*2 (0 = no offset, default = 0.4)
 #' @param varwidth adjust the width of each group based on the number of points in the group
-#' @param adjust bandwidth used to adjust the density
-#' @param nbins the number of points used to calculate density
+#' @param ... additional arguments to offsetSingleGroup
 #' @return a vector with of x-offsets of the same length as y
 #' @export
 #' @examples 
@@ -32,36 +31,69 @@
 #'   axis(1, 1:4, c("Default", "Adjust=2", "Adjust=0.1", "Width=10%"))
 #' })
 #' 
-offsetX <- function(y, x, width=0.4, varwidth=FALSE, adjust=0.5, nbins=1000) {
+offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
   
-  if (missing(x)) x <- rep(1, length(y))
   if (length(x)!=length(y)) stop(simpleError('x and y not the same length in offsetX'))
   
   maxLength<-max(table(x))
 
   # Apply the van der Corput noise to each x group to create offsets
-  new_x <- ave(y,x, FUN=function(y_subgroup) {
-    
-    # If there's only one value in this group, leave it alone
-    if (length(y_subgroup) == 1) return(0) 
-    
-    subgroup_width <- 1
-	 #sqrt to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
-    if (varwidth) subgroup_width <- sqrt(length(y_subgroup)/maxLength)
-    
-    dens <- stats::density(y_subgroup, n = nbins, adjust = adjust)
-    dens$y <- dens$y / max(dens$y)
-    offset <- vanDerCorput(length(y_subgroup))[rank(y_subgroup, ties.method="first")]
-
-    pointDensities<-stats::approx(dens$x,dens$y,y_subgroup)$y
-
-    out<-(offset-.5)*2*width*pointDensities*subgroup_width
-    
-    return(out)
-  })
+  new_x <- aveWithArgs(y,x, FUN=offsetSingleGroup,maxLength=if(varwidth){maxLength}else{NULL},...)
+  new_x <- new_x*width
   
   return(new_x)
 }
+
+aveWithArgs<-function(x, y, FUN = mean,...){
+	if (missing(y)) 
+		x[] <- FUN(x,...)
+	else {
+		g <- interaction(y)
+		split(x, g) <- lapply(split(x, g), FUN,...)
+	}
+	x
+}
+
+
+#' Offset data to avoid overplotting for a single subgroup of data
+#' 
+#' Arranges data points using a van der Corput sequence, pseudorandom noise or
+#' alternatively positioning extreme values within a band to the left and right to
+#' form "beeswarm" style plots. Returns a vector of the offsets to be used in
+#' plotting.
+#' @param y_subgroup y values for a single group for which offsets should be calculated
+#' @param maxLength multiply the offset by sqrt(length(y_subgroup)/maxLength) if not NULL. The sqrt is to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
+#' @param method method used to distribute the points
+#' @param nbins the number of points used to calculate density
+#' @param adjust bandwidth used to adjust the density
+#' @return a vector with of x-offsets between -1 and 1 of the same length as y
+offsetSingleGroup<-function(y_subgroup,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=1000,adjust=.5) {
+	method<-match.arg(method)
+	#catch 0 length inputs
+	if (length(y_subgroup) == 0) return(NULL) 
+	# If there's only one value in this group, leave it alone
+	if (length(y_subgroup) == 1) return(0) 
+
+	#sqrt to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
+	if(is.null(maxLength)||maxLength<=0)subgroup_width <- 1
+	else subgroup_width <- sqrt(length(y_subgroup)/maxLength)
+
+	dens <- stats::density(y_subgroup, n = nbins, adjust = adjust)
+	dens$y <- dens$y / max(dens$y)
+	offset <- switch(method,
+		'quasirandom'=vanDerCorput(length(y_subgroup))[rank(y_subgroup, ties.method="first")],
+		'pseudorandom'=runif(length(y_subgroup)),
+		stop(simpleError('Unrecognized method in offsetSingleGroup'))
+	)
+
+	pointDensities<-stats::approx(dens$x,dens$y,y_subgroup)$y
+
+	#*2 to get -1 to 1
+	out<-(offset-.5)*2*pointDensities*subgroup_width
+
+	return(out)
+}
+
 
 #' Generate van der Corput sequences
 #' 

@@ -4,7 +4,7 @@
 \alias{offsetX}
 \title{Offset data to avoid overplotting.}
 \usage{
-offsetX(y, x, width = 0.4, varwidth = FALSE, adjust = 0.5, nbins = 1000)
+offsetX(y, x = rep(1, length(y)), width = 0.4, varwidth = FALSE, ...)
 }
 \arguments{
 \item{y}{vector of data points}
@@ -15,9 +15,7 @@ offsetX(y, x, width = 0.4, varwidth = FALSE, adjust = 0.5, nbins = 1000)
 
 \item{varwidth}{adjust the width of each group based on the number of points in the group}
 
-\item{adjust}{bandwidth used to adjust the density}
-
-\item{nbins}{the number of points used to calculate density}
+\item{...}{additional arguments to offsetSingleGroup}
 }
 \value{
 a vector with of x-offsets of the same length as y
