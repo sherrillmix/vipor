@@ -9,17 +9,21 @@ all: $(PACKAGEFILE) README.md
 install:
 	R -e 'devtools::install_github("sherrillmix/$(NAME)")'
 
-man: R/*.R
+localInstall:
+	R -e 'devtools::install()'
+
+man: R/*.R 
 	R -e 'devtools::document()'
 	touch man
 
-README.md: README.Rmd
-	R -e 'knitr::opts_chunk$$set(fig.path="README_files/");knitr::knit("README.Rmd")'
 
 #inst/doc: vignettes/*.Rnw
 	#R -e 'devtools::build_vignettes()'
 	#touch inst/doc
 
+README.md: README.Rmd R/*.R
+	make localInstall
+	R -e 'knitr::opts_chunk$$set(fig.path="README_files/");knitr::knit("README.Rmd")'
 	
 #inst/doc
 $(PACKAGEFILE): man R/*.R DESCRIPTION tests/testthat/tests.R
