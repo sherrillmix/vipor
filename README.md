@@ -26,7 +26,7 @@ set.seed(12345)
 dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))
 names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 
-# Plot distributions
+# Violin points of several distributions
 par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 sapply(names(dat),function(label) {
 	y<-dat[[label]]
@@ -45,7 +45,7 @@ sapply(names(dat),function(label) {
 ![plot of chunk adjust-examples](README_files/adjust-examples-1.png) 
 
 
-### Violin point examples
+### Comparison with other methods
 
 ```r
 par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
