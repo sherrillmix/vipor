@@ -60,12 +60,13 @@ aveWithArgs<-function(x, y, FUN = mean,...){
 #' Arranges data points using a van der Corput sequence, pseudorandom noise or
 #' alternatively positioning extreme values within a band to the left and right to
 #' form "beeswarm" style plots. Returns a vector of the offsets to be used in
-#' plotting.
+#' plotting. This function is mostly used as a subroutine of \code{\link{offsetX}}
 #' @param y_subgroup y values for a single group for which offsets should be calculated
 #' @param maxLength multiply the offset by sqrt(length(y_subgroup)/maxLength) if not NULL. The sqrt is to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
 #' @param method method used to distribute the points
 #' @param nbins the number of points used to calculate density
 #' @param adjust bandwidth used to adjust the density
+#' @seealso \code{\link{offsetX}}
 #' @return a vector with of x-offsets between -1 and 1 of the same length as y
 offsetSingleGroup<-function(y_subgroup,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=1000,adjust=.5) {
 	method<-match.arg(method)
@@ -83,6 +84,8 @@ offsetSingleGroup<-function(y_subgroup,maxLength=NULL,method=c('quasirandom','ps
 	offset <- switch(method,
 		'quasirandom'=vanDerCorput(length(y_subgroup))[rank(y_subgroup, ties.method="first")],
 		'pseudorandom'=runif(length(y_subgroup)),
+		'smiley'=ave(y_subgroup,as.character(cut(y_subgroup,dens$x)),FUN=topBottomDistribute),
+		'frowney'=ave(y_subgroup,as.character(cut(y_subgroup,dens$x)),FUN=function(x)topBottomDistribute(x,frowney=TRUE)),
 		stop(simpleError('Unrecognized method in offsetSingleGroup'))
 	)
 
@@ -94,6 +97,30 @@ offsetSingleGroup<-function(y_subgroup,maxLength=NULL,method=c('quasirandom','ps
 	return(out)
 }
 
+#' Produce offsets such that points are sorted with most extreme values to right and left
+#' 
+#' Produce offsets to generate smile-like or frown-like distributions of points. That is sorting the points so that the most extreme values alternate between the left and right e.g. (max,3rd max,...,4th max, 2nd max). The function returns either a proportion between 0 and 1 (useful for plotting) or and an order
+#' 
+#' @param x the elements to be sorted
+#' @param frowney if TRUE then sort minimums to the outside, otherwise sort maximums to the outside
+#' @param prop if FALSE then return an ordering of the data with extremes on the outside. If TRUE then return a sequence between 0 and 1 sorted by the ordering
+#' @return a vector of the same length as x with values ranging between 0 and 1 if prop is TRUE or an ordering of 1 to length(x)
+#' @export
+#' @examples
+#' topBottomDistribute(1:10)
+#' topBottomDistribute(1:10,TRUE)
+topBottomDistribute<-function(x,frowney=FALSE,prop=TRUE){
+	if(length(x)==1)return(.5)
+	if(frowney)x<- -x
+	newOrder<-rank(x,ties.method='first')
+	newOrder[newOrder%%2==1]<- -newOrder[newOrder%%2==1]
+	newOrder<-rank(newOrder)
+	if(prop){
+		props<-seq(0,1,length.out=length(newOrder))
+		newOrder<-props[newOrder]
+	}
+	return(newOrder)
+}
 
 #' Generate van der Corput sequences
 #' 
