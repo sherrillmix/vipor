@@ -2,10 +2,50 @@ library(violinPointR)
 context("violinPointR functions")
 test_that("Test offsetting",{
 	expect_that(offsetX(1,1), equals(0))
+	expect_that(offsetX(rep(1,10),1:10), equals(rep(0,10)))
 	expect_that(offsetX(1,1:2), throws_error("not the same length"))
 	expect_that(offsetX(1:2,1), throws_error("not the same length"))
 	expect_that(length(unique(offsetX(rep(1,100)))), equals(100))
 	expect_that(offsetX(rep(1,100)), equals(offsetX(rep(1,100))))
+})
+
+test_that("Test offsetting",{
+	expect_that(offsetSingleGroup(1), equals(0))
+	expect_that(offsetSingleGroup(NULL), equals(NULL))
+	expect_that(offsetSingleGroup(rep(1,100)), equals(offsetSingleGroup(rep(1,100))))
+	expect_that(length(offsetSingleGroup(rnorm(1000))), equals(1000))
+})
+
+test_that("Test ave with args",{
+	expect_that(aveWithArgs(1:10,rep(1:5,2)), equals(ave(1:10,rep(1:5,2))))
+	expect_that(aveWithArgs(1:10,rep(1:5,2),FUN=median), equals(ave(1:10,rep(1:5,2),FUN=median)))
+	expect_that(aveWithArgs(100:1+.01,rep(1:5,20),FUN=median), equals(ave(100:1+.01,rep(1:5,20),FUN=median)))
+	expect_that(aveWithArgs(100:1+.01,rep(1:5,20),FUN=max), equals(ave(100:1+.01,rep(1:5,20),FUN=max)))
+	expect_that(aveWithArgs(100:1+.01,rep(1:5,20),FUN=max), equals(ave(100:1+.01,rep(1:5,20),FUN=max)))
+	expect_that(aveWithArgs(c(1:5,NA),rep(1:3,2),FUN=max,na.rm=TRUE), equals(rep(c(4,5,3),2)))
+	expect_that(aveWithArgs(c(1:6),rep(1:3,2),FUN=function(x,y)sum(x)+y,3), equals(rep(c(8,10,12),2)))
+	expect_that(aveWithArgs(c(1:6),rep(1:3,2),FUN=function(x,y)x+y,3), equals(1:6+3))
+	expect_that(aveWithArgs(c(6:1),rep(1:3,2),FUN=function(x,y)sqrt(x)+y,3), equals(sqrt(6:1)+3))
+	expect_that(aveWithArgs(c(6:1),rep(1:3,2),FUN=function(x,y)sqrt(x)+y), throws_error('argument.*missing'))
+})
+
+test_that("Test top bottom distribute",{
+	expect_that(topBottomDistribute(1:10), equals(topBottomDistribute(1:10+100)))
+	expect_that(topBottomDistribute(-1:-10), equals(topBottomDistribute(1:10,TRUE)))
+	expect_that(topBottomDistribute(1000), equals(.5))
+	expect_that(topBottomDistribute(-1000), equals(.5))
+	expect_that(topBottomDistribute(1:3)[1], equals(.5)) #could do left to right or right to left
+	expect_that(topBottomDistribute(-1:-3)[3], equals(.5)) #could do left to right or right to left
+	expect_that(length(topBottomDistribute(1:100)), equals(100)) 
+	expect_that(sort(tail(topBottomDistribute(1:100),2)), equals(c(0,1)))
+	expect_that(sort(tail(topBottomDistribute(1:1000),2)), equals(c(0,1)))
+	expect_that(sort(head(topBottomDistribute(1:1000,TRUE),2)), equals(c(0,1)))
+	expect_that(sort(head(topBottomDistribute(1:100,TRUE),2)), equals(c(0,1)))
+	expect_that(sort(head(topBottomDistribute(1:100,TRUE,FALSE),2)), equals(c(1,100)))
+	expect_that(sort(tail(topBottomDistribute(1:100,FALSE,FALSE),2)), equals(c(1,100)))
+	expect_that(sort(tail(topBottomDistribute(1:1000,prop=FALSE),2)), equals(c(1,1000)))
+	expect_that(sort(head(topBottomDistribute(1:1000,prop=FALSE),5)), equals(498:502))
+	expect_that(sort(tail(topBottomDistribute(1:1000,TRUE,prop=FALSE),5)), equals(498:502))
 })
 
 test_that("Test van der Corput generation",{
