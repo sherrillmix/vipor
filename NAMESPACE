@@ -3,4 +3,5 @@
 export(digits2number)
 export(number2digits)
 export(offsetX)
+export(topBottomDistribute)
 export(vanDerCorput)

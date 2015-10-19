@@ -25,6 +25,9 @@ a vector with of x-offsets between -1 and 1 of the same length as y
 Arranges data points using a van der Corput sequence, pseudorandom noise or
 alternatively positioning extreme values within a band to the left and right to
 form "beeswarm" style plots. Returns a vector of the offsets to be used in
-plotting.
+plotting. This function is mostly used as a subroutine of \code{\link{offsetX}}
+}
+\seealso{
+\code{\link{offsetX}}
 }
 
