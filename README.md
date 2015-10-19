@@ -1,4 +1,4 @@
-# Plot one-dimensional data using quasirandom noise and density estimates
+# Plot one-dimensional data using quasirandom noise and kernel density
 
 ## Introduction
 
@@ -15,7 +15,7 @@ devtools::install_github("sherrillmix/violinPointR")
 
 ## Examples
 
-### Using base graphics
+### Violin point examples
 
 We use the provided function `offsetX` to generate the x-offsets for plotting.
 
@@ -29,20 +29,44 @@ names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 # Plot distributions
 par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 sapply(names(dat),function(label) {
-  y<-dat[[label]]
-  ids <- rep(1:4, each=length(y))
-  offsets <- c(
-    offsetX(y),  # Default
-    offsetX(y, adjust=2),    # More smoothing
-    offsetX(y, adjust=0.1),  # Tighter fit
-    offsetX(y, width=0.1))   # Less wide
-
-  plot(offsets + ids, rep(y, 4), ylab='y value', xlab='', xaxt='n', pch=21,col='#00000099',bg='#00000033',las=1,main=label)
-  axis(1, 1:4, c("Default", "Adjust=2", "Adjust=0.1", "Width=10%"))
+	y<-dat[[label]]
+	offsets <- list(
+		offsetX(y),  # Default
+		offsetX(y, adjust=2),    # More smoothing
+		offsetX(y, adjust=0.1),  # Tighter fit
+		offsetX(y, width=0.1)    # Less wide
+	)  
+	ids <- rep(1:length(offsets), each=length(y))
+	plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab='y value', xlab='', xaxt='n', pch=21,col='#00000099',bg='#00000033',las=1,main=label)
+	axis(1, 1:length(offsets), c("Default", "Adjust=2", "Adjust=0.1", "Width=10%"))
 })
 ```
 
-![plot of chunk base-examples](README_files/base-examples-1.png) 
+![plot of chunk adjust-examples](README_files/adjust-examples-1.png) 
+
+
+### Violin point examples
+
+```r
+par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+sapply(names(dat),function(label) {
+	y<-dat[[label]]
+	offsets <- list(
+		offsetX(y),  # Default
+		offsetX(y, method='pseudorandom',nbins=100),
+		offsetX(y, method='frowney',nbins=20),
+		offsetX(y, method='smiley',nbins=20),
+		offsetX(y, method='smiley',nbins=100),
+		offsetX(y, method='smiley',nbins=round(length(y)/5))
+	)
+	ids <- rep(1:length(offsets), each=length(y))
+
+	plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab='y value', xlab='', xaxt='n', pch=21,col='#00000099',bg='#00000033',las=1,main=label)
+	axis(1, 1:length(offsets), c("Quasi", "Pseudo", "Frown", "Smile 20 bin","Smile 100 bin","Smile n/5 bin"))
+})
+```
+
+![plot of chunk other-methods](README_files/other-methods-1.png) 
 
 ------
 Authors: Scott Sherrill-Mix and Erik Clarke
