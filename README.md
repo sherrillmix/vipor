@@ -31,14 +31,14 @@ par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab
 sapply(names(dat),function(label) {
 	y<-dat[[label]]
 	offsets <- list(
-		offsetX(y),  # Default
-		offsetX(y, adjust=2),    # More smoothing
-		offsetX(y, adjust=0.1),  # Tighter fit
-		offsetX(y, width=0.1)    # Less wide
+		'Default'=offsetX(y),  # Default
+		'Adjust=2'=offsetX(y, adjust=2),    # More smoothing
+		'Adjust=.1'=offsetX(y, adjust=0.1),  # Tighter fit
+		'Width=10%'=offsetX(y, width=0.1)    # Less wide
 	)  
 	ids <- rep(1:length(offsets), each=length(y))
 	plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab='y value', xlab='', xaxt='n', pch=21,col='#00000099',bg='#00000033',las=1,main=label)
-	axis(1, 1:length(offsets), c("Default", "Adjust=2", "Adjust=0.1", "Width=10%"))
+	axis(1, 1:length(offsets), names(offsets))
 })
 ```
 
@@ -53,18 +53,19 @@ par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab
 sapply(names(dat),function(label) {
 	y<-dat[[label]]
 	offsets <- list(
-		offsetX(y),  # Default
-		offsetX(y, method='pseudorandom',nbins=100),
-		offsetX(y, method='frowney',nbins=20),
-		offsetX(y, method='smiley',nbins=20),
-		offsetX(y, method='smiley',nbins=100),
-		offsetX(y, method='smiley',nbins=round(length(y)/5)),
-		swarmx(rep(0,length(y)),y)$x
+		'Quasi'=offsetX(y),  # Default
+		'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
+		'Frown'=offsetX(y, method='frowney',nbins=20),
+		'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
+		'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
+		'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+		'Beeswarm'=swarmx(rep(0,length(y)),y)$x
 	)
 	ids <- rep(1:length(offsets), each=length(y))
 
 	plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab='y value', xlab='', xaxt='n', pch=21,col='#00000099',bg='#00000033',las=1,main=label)
-	axis(1, 1:length(offsets), c("Quasi", "Pseudo", "Frown", "Smile 20 bin","Smile 100 bin","Smile n/5 bin","Beeswarm"))
+	par(lheight=.8)
+	axis(1, 1:length(offsets), names(offsets),padj=1,mgp=c(0,-.3,0),tcl=-.5)
 })
 ```
 
