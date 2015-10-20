@@ -27,7 +27,8 @@ dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))
 names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 
 # Violin points of several distributions
-par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+	cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 sapply(names(dat),function(label) {
 	y<-dat[[label]]
 	offsets <- list(
@@ -50,7 +51,8 @@ sapply(names(dat),function(label) {
 
 ```r
 library(beeswarm)
-par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+	cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 sapply(names(dat),function(label) {
 	y<-dat[[label]]
 	offsets <- list(
