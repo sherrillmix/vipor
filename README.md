@@ -23,21 +23,23 @@ We use the provided function `offsetX` to generate the x-offsets for plotting.
 library(violinPointR)
 # Generate data
 set.seed(12345)
-dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100, 5)), rcauchy(100))
+dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))
 names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 
 # Violin points of several distributions
-par(mfrow = c(4, 1), mar = c(2.5, 3.1, 1.2, 0.5), mgp = c(2.1, 0.75, 0), cex.axis = 1.2, 
-    cex.lab = 1.2, cex.main = 1.2)
-sapply(names(dat), function(label) {
-    y <- dat[[label]]
-    offsets <- list(Default = offsetX(y), `Adjust=2` = offsetX(y, adjust = 2), 
-        `Adjust=.1` = offsetX(y, adjust = 0.1), `Width=10%` = offsetX(y, width = 0.1))
-    ids <- rep(1:length(offsets), each = length(y))
-    plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab = "y value", xlab = "", 
-        xaxt = "n", pch = 21, col = "#00000099", bg = "#00000033", las = 1, 
-        main = label)
-    axis(1, 1:length(offsets), names(offsets))
+par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+sapply(names(dat),function(label) {
+	y<-dat[[label]]
+	offsets <- list(
+		'Default'=offsetX(y),  # Default
+		'Adjust=2'=offsetX(y, adjust=2),    # More smoothing
+		'Adjust=.1'=offsetX(y, adjust=0.1),  # Tighter fit
+		'Width=10%'=offsetX(y, width=0.1)    # Less wide
+	)  
+	ids <- rep(1:length(offsets), each=length(y))
+	plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab='y value',
+		xlab='', xaxt='n', pch=21,col='#00000099',bg='#00000033',las=1,main=label)
+	axis(1, 1:length(offsets), names(offsets))
 })
 ```
 
@@ -48,23 +50,24 @@ sapply(names(dat), function(label) {
 
 ```r
 library(beeswarm)
-par(mfrow = c(4, 1), mar = c(2.5, 3.1, 1.2, 0.5), mgp = c(2.1, 0.75, 0), cex.axis = 1.2, 
-    cex.lab = 1.2, cex.main = 1.2)
-sapply(names(dat), function(label) {
-    y <- dat[[label]]
-    offsets <- list(Quasi = offsetX(y), Pseudo = offsetX(y, method = "pseudorandom", 
-        nbins = 100), Frown = offsetX(y, method = "frowney", nbins = 20), `Smile\n20 bin` = offsetX(y, 
-        method = "smiley", nbins = 20), `Smile\n100 bin` = offsetX(y, method = "smiley", 
-        nbins = 100), `Smile\nn/5 bin` = offsetX(y, method = "smiley", nbins = round(length(y)/5)), 
-        Beeswarm = swarmx(rep(0, length(y)), y)$x)
-    ids <- rep(1:length(offsets), each = length(y))
-    
-    plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab = "y value", xlab = "", 
-        xaxt = "n", pch = 21, col = "#00000099", bg = "#00000033", las = 1, 
-        main = label)
-    par(lheight = 0.8)
-    axis(1, 1:length(offsets), names(offsets), padj = 1, mgp = c(0, -0.3, 0), 
-        tcl = -0.5)
+par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+sapply(names(dat),function(label) {
+	y<-dat[[label]]
+	offsets <- list(
+		'Quasi'=offsetX(y),  # Default
+		'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
+		'Frown'=offsetX(y, method='frowney',nbins=20),
+		'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
+		'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
+		'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+		'Beeswarm'=swarmx(rep(0,length(y)),y)$x
+	)
+	ids <- rep(1:length(offsets), each=length(y))
+
+	plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab='y value',
+		xlab='', xaxt='n', pch=21,col='#00000099',bg='#00000033',las=1,main=label)
+	par(lheight=.8)
+	axis(1, 1:length(offsets), names(offsets),padj=1,mgp=c(0,-.3,0),tcl=-.5)
 })
 ```
 
