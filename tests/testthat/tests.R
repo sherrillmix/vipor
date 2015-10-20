@@ -9,7 +9,7 @@ test_that("Test offsetting",{
 	expect_that(offsetX(rep(1,100)), equals(offsetX(rep(1,100))))
 })
 
-test_that("Test offsetting",{
+test_that("Test single group offsetting",{
 	expect_that(offsetSingleGroup(1), equals(0))
 	expect_that(offsetSingleGroup(NULL), equals(NULL))
 	expect_that(offsetSingleGroup(rep(1,100)), equals(offsetSingleGroup(rep(1,100))))
