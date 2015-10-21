@@ -1,5 +1,4 @@
-library(violinPointR)
-context("violinPointR functions")
+context("violinscatter functions")
 test_that("Test offsetting",{
 	expect_that(offsetX(1,1), equals(0))
 	expect_that(offsetX(rep(1,10),1:10), equals(rep(0,10)))
