@@ -1,7 +1,25 @@
-#' Offset data to avoid overplotting. 
+#' Functions to generate violin scatter plots
+#'
+#' Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/violinscatter}
+#'
+#' The main function is \code{\link{offsetX}} which calculate offsets in X position for plotting (groups of) one dimensional data
+#'
+#' @docType package
+#' @name violinscatter
+#' @author Scott Sherrill-Mix, \email{shescott@@upenn.edu}
+#' @examples
+#' dat<-list(rnorm(100),rnorm(50,1,2))
+#' ids<-rep(1:length(dat),sapply(dat,length))
+#' offset<-offsetX(unlist(dat),ids)
+#' plot(unlist(dat),ids+offset)
+NULL
+
+
+
+
+#' Offset data using quasirandom noise to avoid overplotting
 #' 
-#' Arranges data points using a van der Corput sequence to form "beeswarm" style
-#' plots. Returns a vector of the offsets to be used in plotting.
+#' Arranges data points using a quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. That is a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). This function returns a vector of the offsets to be used in plotting.
 #' 
 #' @param y vector of data points 
 #' @param x a grouping factor for y (optional)
@@ -19,15 +37,17 @@
 #' par(mfrow=c(4,1), mar=c(2,4, 0.5, 0.5))
 #' sapply(names(dat),function(label) {
 #'   y<-dat[[label]]
-#'   ids <- rep(1:4, each=length(y))
 #'   
-#'   offsets <- c(
-#'     offsetX(y),  # Default
-#'     offsetX(y, adjust=2),    # More smoothing
-#'     offsetX(y, adjust=0.1),  # Tighter fit
-#'     offsetX(y, width=0.1))   # Less wide
+#'   offsets <- list(
+#'     'Default'=offsetX(y),
+#'     'Smoother'=offsetX(y, adjust=2),
+#'     'Tighter'=offsetX(y, adjust=0.1),
+#'     'Thinner'=offsetX(y, width=0.1)
+#'   )
+#'   ids <- rep(1:length(offsets), sapply(offsets,length))
 #'   
-#'   plot(offsets + ids, rep(y, 4), ylab=label, xlab='', xaxt='n', pch=21, las=1)
+#'   plot(unlist(offsets) + ids, rep(y, length(offsets)), 
+#'        ylab=label, xlab='', xaxt='n', pch=21, las=1)
 #'   axis(1, 1:4, c("Default", "Adjust=2", "Adjust=0.1", "Width=10%"))
 #' })
 #' 
@@ -44,6 +64,20 @@ offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
   return(new_x)
 }
 
+#' the ave() function but with arguments passed to FUN
+#' 
+#' A function is applied to subsets of \code{x} where each subset consist of those observations with the same groupings in \code{y}
+#'
+#' @param x a vector to apply FUN to
+#' @param y a vector or list of vectors of grouping variables all of the same length as \code{x}
+#' @param FUN function to apply for each factor level combination.
+#' @param ... additional arguments to \code{FUN}
+#' @return A numeric vector of the same length as \code{x} where an each element contains the output from \code{FUN} after \code{FUN} was applied on the corresponding subgroup for that element (repeated if necessary within a subgroup).
+#' @seealso \code{\link{ave}}
+#' @export
+#' @examples
+#' aveWithArgs(1:10,rep(1:5,2))
+#' aveWithArgs(c(1:9,NA),rep(1:5,2),max,na.rm=TRUE)
 aveWithArgs<-function(x, y, FUN = mean,...){
 	if (missing(y)) 
 		x[] <- FUN(x,...)
@@ -57,10 +91,7 @@ aveWithArgs<-function(x, y, FUN = mean,...){
 
 #' Offset data to avoid overplotting for a single subgroup of data
 #' 
-#' Arranges data points using a van der Corput sequence, pseudorandom noise or
-#' alternatively positioning extreme values within a band to the left and right to
-#' form "beeswarm" style plots. Returns a vector of the offsets to be used in
-#' plotting. This function is mostly used as a subroutine of \code{\link{offsetX}}
+#' Arranges data points using a quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. Returns a vector of the offsets to be used in plotting. This function is mostly used as a subroutine of \code{\link{offsetX}}
 #' @param y_subgroup y values for a single group for which offsets should be calculated
 #' @param maxLength multiply the offset by sqrt(length(y_subgroup)/maxLength) if not NULL. The sqrt is to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
 #' @param method method used to distribute the points
@@ -99,7 +130,7 @@ offsetSingleGroup<-function(y_subgroup,maxLength=NULL,method=c('quasirandom','ps
 
 #' Produce offsets such that points are sorted with most extreme values to right and left
 #' 
-#' Produce offsets to generate smile-like or frown-like distributions of points. That is sorting the points so that the most extreme values alternate between the left and right e.g. (max,3rd max,...,4th max, 2nd max). The function returns either a proportion between 0 and 1 (useful for plotting) or and an order
+#' Produce offsets to generate smile-like or frown-like distributions of points. That is sorting the points so that the most extreme values alternate between the left and right e.g. (max,3rd max,...,4th max, 2nd max). The function returns either a proportion between 0 and 1 (useful for plotting) or an order
 #' 
 #' @param x the elements to be sorted
 #' @param frowney if TRUE then sort minimums to the outside, otherwise sort maximums to the outside

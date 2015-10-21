@@ -1,3 +1,3 @@
 library(testthat)
-library(violinPointR)
-test_check("violinPointR")
+library(violinscatter)
+test_check("violinscatter")

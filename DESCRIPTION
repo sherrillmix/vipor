@@ -1,4 +1,4 @@
-Package: violinPointR
+Package: violinscatter
 Type: Package
 Title: Plot categorical data using quasirandom noise and density estimates
 Version: 0.2.0
