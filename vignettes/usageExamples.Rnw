@@ -8,7 +8,7 @@ library(violinpoint)
 packageKeywords<-"visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput"
 @
 %\VignetteIndexEntry{\Sexpr{packageInfo$Package} method comparisons}
-%\VignetteDepends{lattice}
+%\VignetteDepends{}
 %\VignetteKeywords{\Sexpr{packageKeywords}}
 %\VignettePackage{\Sexpr{packageInfo$Package}}
 
