@@ -19,9 +19,9 @@
 #' plot(unlist(dat),ids+offset)
 NULL
 
-#' Plot data using offsets by quasirandom noise to avoid overplotting
+#' Plot data using offsets by quasirandom noise to generate a violin point plot
 #' 
-#' Arranges data points using quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. That is a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). This function returns a vector of the offsets to be used in plotting.
+#' Arranges data points using quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. That is a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points) and so here we'll call it a violin point plot.  
 #' 
 #' @param x a grouping factor for y (optional)
 #' @param y vector of data points 
@@ -38,8 +38,8 @@ NULL
 #'   'Gamma'=rgamma(50,1)
 #' )
 #' labs<-factor(rep(names(dat),sapply(dat,length)),levels=names(dat))
-#' violinPointPlot(labs,unlist(dat))
-violinPointPlot<-function(x=rep('Data',length(y)),y,xaxt='y',offsetXArgs=NULL,...){
+#' vpPlot(labs,unlist(dat))
+vpPlot<-function(x=rep('Data',length(y)),y,xaxt='y',offsetXArgs=NULL,...){
 	x<-as.factor(x)		
 	ids<-as.numeric(x)
 	labels<-levels(x)
