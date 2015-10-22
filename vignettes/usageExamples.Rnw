@@ -1,0 +1,92 @@
+\documentclass[article,nojss]{jss}
+
+
+<<package,include=FALSE,echo=FALSE>>=
+options(keep.source = TRUE, width = 60)
+packageInfo <- packageDescription("violinpoint")
+library(violinpoint)
+packageKeywords<-"visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput"
+@
+%\VignetteIndexEntry{\Sexpr{packageInfo$Package} method comparisons}
+%\VignetteDepends{beeswarm}
+%\VignetteKeywords{\Sexpr{packageKeywords}}
+%\VignettePackage{\Sexpr{packageInfo$Package}}
+
+\title{\pkg{\Sexpr{packageInfo$Package}} package example (version \Sexpr{packageInfo$Version})}
+\author{\Sexpr{packageInfo$Author}}
+\Plainauthor{\Sexpr{packageInfo$Author}}
+
+\Address{
+  Github: \url{http://github.com/sherrillmix/violinpoint}
+}
+
+\Keywords{\Sexpr{packageKeywords}}
+
+\Abstract{
+  This is a collection of examples of usage for the \pkg{\Sexpr{packageInfo$Package}} package.
+}
+
+\begin{document}
+\SweaveOpts{engine=R,eps=FALSE}
+
+\section{The basics}
+
+This is the simplest example of using the \code{vpPlot} function to generate violin scatter plots:% (Figure \ref{figVpPlot}):
+<<vpPlot, echo=TRUE, eval=FALSE>>=
+  set.seed(1234)
+  n<-100
+  dat<-rnorm(n*2)
+  labs<-rep(c('a','b'),n)
+  vpPlot(labs,dat)
+@
+
+\begin{center}
+<<showVpPlot, fig=TRUE, height=3.5, width=5, echo=FALSE>>=
+<<vpPlot>>
+@
+\end{center}
+
+
+\code{vpPlot} is just a wrapper around \code{plot} so normal graphical options and functions can be used: %(Figure \ref{figVpOpts}):
+<<vpOpts, echo=TRUE, eval=FALSE>>=
+  vpPlot(labs,dat,las=1,ylab='Data',col=rep(1:2,n))
+  abline(h=0,lty=2)
+@
+
+\begin{center}
+<<showVpOpts, fig=TRUE, height=3.5, width=5, echo=FALSE>>=
+<<vpOpts>>
+@
+\end{center}
+
+Factors can be used to generate custom group orderings:
+<<vpFactors, echo=TRUE, eval=FALSE>>=
+  labs2<-factor(labs,levels=c('b','a'))
+  vpPlot(labs2,dat,las=1,ylab='Data',col=rep(1:2,n))
+  abline(h=0,lty=2)
+@
+\begin{center}
+<<showVpFactors, fig=TRUE, height=3.5, width=5, echo=FALSE>>=
+<<vpFactors>>
+@
+\end{center}
+
+
+
+For custom plotting, the offsets for a group of points can be calculated using the \code{offsetX} function. The adjusted x position of the points is also returned invisibly from vpPlot:
+<<offsetX, echo=TRUE, eval=TRUE>>=
+	offsets<-offsetX(dat,labs)
+	head(offsets,4)
+	xPos<-vpPlot(labs,dat)
+	head(xPos,4)
+	xPos2<-rep(1:2,n)+offsets
+	head(xPos2,4)
+	all(xPos==xPos2)
+@
+Note that \code{offsetX} returns offsets centered around 0 which will need to be added to the original x positions.
+
+\section{The basics}
+
+
+
+\end{document}
