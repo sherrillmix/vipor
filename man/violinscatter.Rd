@@ -9,7 +9,11 @@
 Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/violinscatter}
 }
 \details{
-The main function is \code{\link{offsetX}} which calculate offsets in X position for plotting (groups of) one dimensional data
+The main functions are:
+     \describe{
+       \item{\code{\link{offsetX}}:}{calculate offsets in X position for plotting (groups of) one dimensional data}
+       \item{\code{\link{violinScatterPlot}}:}{a simple wrapper around plot and offsetX to generate plots of grouped data}
+     }
 }
 \examples{
 dat<-list(rnorm(100),rnorm(50,1,2))
@@ -19,5 +23,8 @@ plot(unlist(dat),ids+offset)
 }
 \author{
 Scott Sherrill-Mix, \email{shescott@upenn.edu}
+}
+\seealso{
+\url{http://github.com/sherrillmix/violinscatter.git}
 }
 

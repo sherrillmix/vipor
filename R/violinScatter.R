@@ -2,11 +2,16 @@
 #'
 #' Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/violinscatter}
 #'
-#' The main function is \code{\link{offsetX}} which calculate offsets in X position for plotting (groups of) one dimensional data
+#' The main functions are: 
+#'      \describe{
+#'        \item{\code{\link{offsetX}}:}{calculate offsets in X position for plotting (groups of) one dimensional data}
+#'        \item{\code{\link{violinScatterPlot}}:}{a simple wrapper around plot and offsetX to generate plots of grouped data}
+#'      }
 #'
 #' @docType package
 #' @name violinscatter
 #' @author Scott Sherrill-Mix, \email{shescott@@upenn.edu}
+#' @seealso \url{http://github.com/sherrillmix/violinscatter.git}
 #' @examples
 #' dat<-list(rnorm(100),rnorm(50,1,2))
 #' ids<-rep(1:length(dat),sapply(dat,length))
@@ -14,12 +19,43 @@
 #' plot(unlist(dat),ids+offset)
 NULL
 
-
-
+#' Plot data using offsets by quasirandom noise to avoid overplotting
+#' 
+#' Arranges data points using quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. That is a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). This function returns a vector of the offsets to be used in plotting.
+#' 
+#' @param x a grouping factor for y (optional)
+#' @param y vector of data points 
+#' @param xaxt if 'n' then no x axis is plotted
+#' @param offsetXArgs a list with arguments for offsetX
+#' @param ... additional arguments to plot 
+#' @return invisibly return the adjusted x positions of the points
+#' @export
+#' @examples
+#' dat<-list(
+#'   'Mean=0'=rnorm(200),
+#'   'Mean=1'=rnorm(50,1),
+#'   'Bimodal'=c(rnorm(40,-2),rnorm(60,2)),
+#'   'Gamma'=rgamma(50,1)
+#' )
+#' labs<-factor(rep(names(dat),sapply(dat,length)),levels=names(dat))
+#' violinScatterPlot(labs,unlist(dat))
+violinScatterPlot<-function(x=rep('Data',length(y)),y,xaxt='y',offsetXArgs=NULL,...){
+	x<-as.factor(x)		
+	ids<-as.numeric(x)
+	labels<-levels(x)
+	labelIds<-1:length(labels)
+	names(labelIds)<-labels
+	xPos<-ids+do.call(offsetX,c(list(y),list(x),offsetXArgs))
+	plot(xPos,y,...,xaxt='n',xlab='')
+	if(xaxt!='n'){
+		axis(1,labelIds,labels,...) 
+	}
+	return(invisible(xPos))
+}
 
 #' Offset data using quasirandom noise to avoid overplotting
 #' 
-#' Arranges data points using a quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. That is a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). This function returns a vector of the offsets to be used in plotting.
+#' Arranges data points using quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. That is a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). This function returns a vector of the offsets to be used in plotting.
 #' 
 #' @param y vector of data points 
 #' @param x a grouping factor for y (optional)
@@ -64,63 +100,43 @@ offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
   return(new_x)
 }
 
-#' the ave() function but with arguments passed to FUN
-#' 
-#' A function is applied to subsets of \code{x} where each subset consist of those observations with the same groupings in \code{y}
-#'
-#' @param x a vector to apply FUN to
-#' @param y a vector or list of vectors of grouping variables all of the same length as \code{x}
-#' @param FUN function to apply for each factor level combination.
-#' @param ... additional arguments to \code{FUN}
-#' @return A numeric vector of the same length as \code{x} where an each element contains the output from \code{FUN} after \code{FUN} was applied on the corresponding subgroup for that element (repeated if necessary within a subgroup).
-#' @seealso \code{\link{ave}}
-#' @export
-#' @examples
-#' aveWithArgs(1:10,rep(1:5,2))
-#' aveWithArgs(c(1:9,NA),rep(1:5,2),max,na.rm=TRUE)
-aveWithArgs<-function(x, y, FUN = mean,...){
-	if (missing(y)) 
-		x[] <- FUN(x,...)
-	else {
-		g <- interaction(y)
-		split(x, g) <- lapply(split(x, g), FUN,...)
-	}
-	x
-}
 
 
-#' Offset data to avoid overplotting for a single subgroup of data
-#' 
-#' Arranges data points using a quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. Returns a vector of the offsets to be used in plotting. This function is mostly used as a subroutine of \code{\link{offsetX}}
-#' @param y_subgroup y values for a single group for which offsets should be calculated
-#' @param maxLength multiply the offset by sqrt(length(y_subgroup)/maxLength) if not NULL. The sqrt is to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
+
+# Offset data to avoid overplotting for a single subgroup of data
+# 
+# Arranges data points using quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. Returns a vector of the offsets to be used in plotting. This function is mostly used as a subroutine of \code{\link{offsetX}}
+# @param y y values for a single group for which offsets should be calculated
+#' @param maxLength multiply the offset by sqrt(length(y)/maxLength) if not NULL. The sqrt is to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
 #' @param method method used to distribute the points
 #' @param nbins the number of points used to calculate density
 #' @param adjust bandwidth used to adjust the density
-#' @seealso \code{\link{offsetX}}
-#' @return a vector with of x-offsets between -1 and 1 of the same length as y
-offsetSingleGroup<-function(y_subgroup,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=1000,adjust=.5) {
+#' @export
+#' @rdname offsetX 
+# @seealso \code{\link{offsetX}}
+# @return a vector with of x-offsets between -1 and 1 of the same length as y
+offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=1000,adjust=1) {
 	method<-match.arg(method)
 	#catch 0 length inputs
-	if (length(y_subgroup) == 0) return(NULL) 
+	if (length(y) == 0) return(NULL) 
 	# If there's only one value in this group, leave it alone
-	if (length(y_subgroup) == 1) return(0) 
+	if (length(y) == 1) return(0) 
 
 	#sqrt to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
 	if(is.null(maxLength)||maxLength<=0)subgroup_width <- 1
-	else subgroup_width <- sqrt(length(y_subgroup)/maxLength)
+	else subgroup_width <- sqrt(length(y)/maxLength)
 
-	dens <- stats::density(y_subgroup, n = nbins, adjust = adjust)
+	dens <- stats::density(y, n = nbins, adjust = adjust)
 	dens$y <- dens$y / max(dens$y)
 	offset <- switch(method,
-		'quasirandom'=vanDerCorput(length(y_subgroup))[rank(y_subgroup, ties.method="first")],
-		'pseudorandom'=runif(length(y_subgroup)),
-		'smiley'=ave(y_subgroup,as.character(cut(y_subgroup,dens$x)),FUN=topBottomDistribute),
-		'frowney'=ave(y_subgroup,as.character(cut(y_subgroup,dens$x)),FUN=function(x)topBottomDistribute(x,frowney=TRUE)),
+		'quasirandom'=vanDerCorput(length(y))[rank(y, ties.method="first")],
+		'pseudorandom'=runif(length(y)),
+		'smiley'=ave(y,as.character(cut(y,dens$x)),FUN=topBottomDistribute),
+		'frowney'=ave(y,as.character(cut(y,dens$x)),FUN=function(x)topBottomDistribute(x,frowney=TRUE)),
 		stop(simpleError('Unrecognized method in offsetSingleGroup'))
 	)
 
-	pointDensities<-stats::approx(dens$x,dens$y,y_subgroup)$y
+	pointDensities<-stats::approx(dens$x,dens$y,y)$y
 
 	#*2 to get -1 to 1
 	out<-(offset-.5)*2*pointDensities*subgroup_width
@@ -218,4 +234,28 @@ digits2number<-function(digits,base=2,fractional=FALSE){
   out<-sum(digits*base^powers)
   if(fractional)out<-out/base^(length(digits))
   return(out)
+}
+
+#' the ave() function but with arguments passed to FUN
+#' 
+#' A function is applied to subsets of \code{x} where each subset consist of those observations with the same groupings in \code{y}
+#'
+#' @param x a vector to apply FUN to
+#' @param y a vector or list of vectors of grouping variables all of the same length as \code{x}
+#' @param FUN function to apply for each factor level combination.
+#' @param ... additional arguments to \code{FUN}
+#' @return A numeric vector of the same length as \code{x} where an each element contains the output from \code{FUN} after \code{FUN} was applied on the corresponding subgroup for that element (repeated if necessary within a subgroup).
+#' @seealso \code{\link{ave}}
+#' @export
+#' @examples
+#' aveWithArgs(1:10,rep(1:5,2))
+#' aveWithArgs(c(1:9,NA),rep(1:5,2),max,na.rm=TRUE)
+aveWithArgs<-function(x, y, FUN = mean,...){
+	if (missing(y)) 
+		x[] <- FUN(x,...)
+	else {
+		g <- interaction(y)
+		split(x, g) <- lapply(split(x, g), FUN,...)
+	}
+	x
 }
