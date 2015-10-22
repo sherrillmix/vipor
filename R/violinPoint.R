@@ -30,6 +30,7 @@ NULL
 #' @param ... additional arguments to plot 
 #' @return invisibly return the adjusted x positions of the points
 #' @export
+#' @seealso \code{\link{offsetX}}
 #' @examples
 #' dat<-list(
 #'   'Mean=0'=rnorm(200),
