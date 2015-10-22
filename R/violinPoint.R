@@ -110,10 +110,10 @@ offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
 #' @param maxLength multiply the offset by sqrt(length(y)/maxLength) if not NULL. The sqrt is to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
 #' @param method method used to distribute the points
 #' @param nbins the number of points used to calculate density
-#' @param adjust bandwidth used to adjust the density
+#' @param adjust adjust the bandwidth used to calculate the kernel density (smaller values mean tighter fit, larger values looser fit, default is 1)
 #' @export
 #' @rdname offsetX 
-# @seealso \code{\link{offsetX}}
+# @seealso \code{\link{offsetX}}, \code{\link[stats]{density}}
 # @return a vector with of x-offsets between -1 and 1 of the same length as y
 offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=1000,adjust=1) {
 	method<-match.arg(method)

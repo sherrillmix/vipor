@@ -27,7 +27,7 @@ offsetSingleGroup(y, maxLength = NULL, method = c("quasirandom",
 
 \item{nbins}{the number of points used to calculate density}
 
-\item{adjust}{bandwidth used to adjust the density}
+\item{adjust}{adjust the bandwidth used to calculate the kernel density (smaller values mean tighter fit, larger values looser fit, default is 1)}
 }
 \value{
 a vector with of x-offsets of the same length as y
