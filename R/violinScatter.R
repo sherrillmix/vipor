@@ -1,17 +1,17 @@
 #' Functions to generate violin scatter plots
 #'
-#' Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/violinscatter}
+#' Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/violinpoint}
 #'
 #' The main functions are: 
 #'      \describe{
 #'        \item{\code{\link{offsetX}}:}{calculate offsets in X position for plotting (groups of) one dimensional data}
-#'        \item{\code{\link{violinScatterPlot}}:}{a simple wrapper around plot and offsetX to generate plots of grouped data}
+#'        \item{\code{\link{violinpoint}}:}{a simple wrapper around plot and offsetX to generate plots of grouped data}
 #'      }
 #'
 #' @docType package
-#' @name violinscatter
+#' @name violinpoint
 #' @author Scott Sherrill-Mix, \email{shescott@@upenn.edu}
-#' @seealso \url{http://github.com/sherrillmix/violinscatter.git}
+#' @seealso \url{http://github.com/sherrillmix/violinspoint.git}
 #' @examples
 #' dat<-list(rnorm(100),rnorm(50,1,2))
 #' ids<-rep(1:length(dat),sapply(dat,length))
@@ -38,8 +38,8 @@ NULL
 #'   'Gamma'=rgamma(50,1)
 #' )
 #' labs<-factor(rep(names(dat),sapply(dat,length)),levels=names(dat))
-#' violinScatterPlot(labs,unlist(dat))
-violinScatterPlot<-function(x=rep('Data',length(y)),y,xaxt='y',offsetXArgs=NULL,...){
+#' violinPointPlot(labs,unlist(dat))
+violinPointPlot<-function(x=rep('Data',length(y)),y,xaxt='y',offsetXArgs=NULL,...){
 	x<-as.factor(x)		
 	ids<-as.numeric(x)
 	labels<-levels(x)
