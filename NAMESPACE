@@ -3,6 +3,8 @@
 export(aveWithArgs)
 export(digits2number)
 export(number2digits)
+export(offsetSingleGroup)
 export(offsetX)
 export(topBottomDistribute)
 export(vanDerCorput)
+export(violinScatterPlot)
