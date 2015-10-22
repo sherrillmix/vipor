@@ -12,7 +12,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ### code chunk number 2: vpPlot (eval = FALSE)
 ###################################################
-##   set.seed(1234)
+##   set.seed(12345)
 ##   n<-100
 ##   dat<-rnorm(n*2)
 ##   labs<-rep(c('a','b'),n)
@@ -22,7 +22,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ### code chunk number 3: showVpPlot
 ###################################################
-  set.seed(1234)
+  set.seed(12345)
   n<-100
   dat<-rnorm(n*2)
   labs<-rep(c('a','b'),n)
@@ -69,5 +69,81 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 	xPos2<-rep(1:2,n)+offsets
 	head(xPos2,4)
 	all(xPos==xPos2)
+
+
+###################################################
+### code chunk number 9: distAdjust (eval = FALSE)
+###################################################
+## dat <- list(rnorm(50), rnorm(500), c(rnorm(100),
+## 	rnorm(100,5)), rcauchy(100))
+## names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
+## par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+## 	cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+## dummy<-sapply(names(dat),function(label) {
+## 	y<-dat[[label]]
+## 	offsets <- list(
+## 		'defaults'=offsetX(y),  # Default
+## 		'adjust=2'=offsetX(y, adjust=2),    # More smoothing
+## 		'adjust=.1'=offsetX(y, adjust=0.1),  # Tighter fit
+## 		'width=.1'=offsetX(y, width=0.1),    # Less wide
+## 		'nbins=100'=offsetX(y, nbins=100)    # Less bins
+## 	)  
+## 	ids <- rep(1:length(offsets), each=length(y))
+## 	plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab='y value',
+## 		xlab='', xaxt='n', pch=21,
+## 		col='#00000099',bg='#00000033',las=1,main=label)
+## 	axis(1, 1:length(offsets), names(offsets))
+## })
+
+
+###################################################
+### code chunk number 10: showDistAdjust
+###################################################
+dat <- list(rnorm(50), rnorm(500), c(rnorm(100),
+	rnorm(100,5)), rcauchy(100))
+names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
+par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+	cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+dummy<-sapply(names(dat),function(label) {
+	y<-dat[[label]]
+	offsets <- list(
+		'defaults'=offsetX(y),  # Default
+		'adjust=2'=offsetX(y, adjust=2),    # More smoothing
+		'adjust=.1'=offsetX(y, adjust=0.1),  # Tighter fit
+		'width=.1'=offsetX(y, width=0.1),    # Less wide
+		'nbins=100'=offsetX(y, nbins=100)    # Less bins
+	)  
+	ids <- rep(1:length(offsets), each=length(y))
+	plot(unlist(offsets) + ids, rep(y, length(offsets)), ylab='y value',
+		xlab='', xaxt='n', pch=21,
+		col='#00000099',bg='#00000033',las=1,main=label)
+	axis(1, 1:length(offsets), names(offsets))
+})
+
+
+###################################################
+### code chunk number 11: vpBeaver (eval = FALSE)
+###################################################
+##   y<-c(beaver1$temp,beaver2$temp)
+##   x<-rep(
+##     c('Beaver 1','Beaver 2'),
+##     c(nrow(beaver1),nrow(beaver2))
+##   )
+##   vpPlot(x,y,las=1, ylab='Body temperature',
+##     pch=21, col='#00000099',bg='#00000033'
+##   )
+
+
+###################################################
+### code chunk number 12: showBeaver
+###################################################
+  y<-c(beaver1$temp,beaver2$temp)
+  x<-rep(
+    c('Beaver 1','Beaver 2'),
+    c(nrow(beaver1),nrow(beaver2))
+  )
+  vpPlot(x,y,las=1, ylab='Body temperature',
+    pch=21, col='#00000099',bg='#00000033'
+  )
 
 
