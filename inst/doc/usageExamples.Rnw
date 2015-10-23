@@ -71,8 +71,6 @@ Factors can be used to generate custom group orderings:
 @
 \end{center}
 
-
-
 For custom plotting, the offsets for a group of points can be calculated using the \code{offsetX} function. The adjusted x position of the points is also returned invisibly from \code{vpPlot}:
 <<offsetX, echo=TRUE, eval=TRUE>>=
 	offsets<-offsetX(dat,labs)
@@ -85,13 +83,17 @@ For custom plotting, the offsets for a group of points can be calculated using t
 @
 Note that \code{offsetX} returns offsets centered around 0 which will need to be added to the original x positions.
 
+
 \section{Options}
 \code{offsetX} calls \code{stats::density} to compute kernel density estimates. The tightness of the fit can be adjusted with the \code{adjust} option and the width of the offset with \code{width}. \code{nbins} to adjust the number of bins used in the kernel density is also provided but this can usually be left at its default when using quasirandom offsets:
 
 <<distAdjust, echo=TRUE, eval=FALSE>>=
-dat <- list(rnorm(50), rnorm(500), c(rnorm(100),
-	rnorm(100,5)), rcauchy(100))
-names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
+dat <- list(
+  'Normal'=rnorm(50),
+  'Dense normal'= rnorm(500),
+  'Bimodal'=c(rnorm(100), rnorm(100,5)),
+  'Extremes'=rcauchy(100)
+)
 par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
 	cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 dummy<-sapply(names(dat),function(label) {
@@ -113,6 +115,30 @@ dummy<-sapply(names(dat),function(label) {
 \begin{center}
 <<showDistAdjust, fig=TRUE, height=6, width=6, echo=FALSE>>=
 <<distAdjust>>
+@
+\end{center}
+
+The \code{varwidth} argument scales the width of a group by the square root of the number of observations in that group (as in the function \code{boxplot}). Arguments to \code{offsetX} can be passed into \code{vpPlot} as a list through the \code{offsetXArgs} argument.
+
+<<varwidth, echo=TRUE, eval=FALSE>>=
+dat <- list(
+  '10 points'=rnorm(10),
+  '50 points'=rnorm(50,2),
+  '200 points'=c(rnorm(400), rnorm(100,5)),
+  '5000 points'= rnorm(5000,1)
+)
+labs<-rep(names(dat),sapply(dat,length))
+labs<-factor(labs,levels=unique(labs))
+vpPlot(
+  labs,unlist(dat),
+  offsetXArgs=list(varwidth=TRUE),
+  las=1,ylab='Value',
+  col='#00000066',bg='#00000022',pch=21
+)
+@
+\begin{center}
+<<showVarwidth, fig=TRUE, height=4, width=6, echo=FALSE>>=
+<<varwidth>>
 @
 \end{center}
 

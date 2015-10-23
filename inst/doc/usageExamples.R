@@ -74,9 +74,12 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ### code chunk number 9: distAdjust (eval = FALSE)
 ###################################################
-## dat <- list(rnorm(50), rnorm(500), c(rnorm(100),
-## 	rnorm(100,5)), rcauchy(100))
-## names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
+## dat <- list(
+##   'Normal'=rnorm(50),
+##   'Dense normal'= rnorm(500),
+##   'Bimodal'=c(rnorm(100), rnorm(100,5)),
+##   'Extremes'=rcauchy(100)
+## )
 ## par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
 ## 	cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 ## dummy<-sapply(names(dat),function(label) {
@@ -99,9 +102,12 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ### code chunk number 10: showDistAdjust
 ###################################################
-dat <- list(rnorm(50), rnorm(500), c(rnorm(100),
-	rnorm(100,5)), rcauchy(100))
-names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
+dat <- list(
+  'Normal'=rnorm(50),
+  'Dense normal'= rnorm(500),
+  'Bimodal'=c(rnorm(100), rnorm(100,5)),
+  'Extremes'=rcauchy(100)
+)
 par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
 	cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 dummy<-sapply(names(dat),function(label) {
@@ -122,7 +128,45 @@ dummy<-sapply(names(dat),function(label) {
 
 
 ###################################################
-### code chunk number 11: vpBeaver (eval = FALSE)
+### code chunk number 11: varwidth (eval = FALSE)
+###################################################
+## dat <- list(
+##   '10 points'=rnorm(10),
+##   '50 points'=rnorm(50,2),
+##   '200 points'=c(rnorm(400), rnorm(100,5)),
+##   '5000 points'= rnorm(5000,1)
+## )
+## labs<-rep(names(dat),sapply(dat,length))
+## labs<-factor(labs,levels=unique(labs))
+## vpPlot(
+##   labs,unlist(dat),
+##   offsetXArgs=list(varwidth=TRUE),
+##   las=1,ylab='Value',
+##   col='#00000066',bg='#00000022',pch=21
+## )
+
+
+###################################################
+### code chunk number 12: showVarwidth
+###################################################
+dat <- list(
+  '10 points'=rnorm(10),
+  '50 points'=rnorm(50,2),
+  '200 points'=c(rnorm(400), rnorm(100,5)),
+  '5000 points'= rnorm(5000,1)
+)
+labs<-rep(names(dat),sapply(dat,length))
+labs<-factor(labs,levels=unique(labs))
+vpPlot(
+  labs,unlist(dat),
+  offsetXArgs=list(varwidth=TRUE),
+  las=1,ylab='Value',
+  col='#00000066',bg='#00000022',pch=21
+)
+
+
+###################################################
+### code chunk number 13: vpBeaver (eval = FALSE)
 ###################################################
 ##   y<-c(beaver1$temp,beaver2$temp)
 ##   x<-rep(
@@ -135,7 +179,7 @@ dummy<-sapply(names(dat),function(label) {
 
 
 ###################################################
-### code chunk number 12: showBeaver
+### code chunk number 14: showBeaver
 ###################################################
   y<-c(beaver1$temp,beaver2$temp)
   x<-rep(
