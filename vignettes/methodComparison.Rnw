@@ -189,7 +189,7 @@ Data with discrete bins are plotted adequately although other display choices (e
 
 \subsection{Moderately sized data}
 
-An example with using the \code{beaver1} and \code{beaver2} data from R:
+An example with using the \code{beaver1} and \code{beaver2} data from the \pkg{datasets} package:
 <<vpBeaver, echo=TRUE, eval=FALSE>>=
   y<-c(beaver1$temp,beaver2$temp)
   x<-rep(
@@ -237,6 +237,55 @@ An example with using the \code{beaver1} and \code{beaver2} data from R:
 <<vpBeaver>>
 @
 \end{center}
+
+\subsection{Larger data}
+
+An example with using the \code{EuStockMarkets} data from the \pkg{datasets} package:
+<<vpStock, echo=TRUE, eval=FALSE>>=
+  y<-as.vector(EuStockMarkets)
+  x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
+  par(mfrow=c(4,1), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+  #simple function to avoid repeating code
+  plotFunc<-function(x,y,offsetXArgs){
+    vpPlot(
+     x,y,
+     las=1, ylab='Closing price',
+     pch=21, col='#00000099',bg='#00000033',
+     offsetXArgs=offsetXArgs
+    )
+    addMeanLines(x,y)
+  }
+  #quasirandom
+  plotFunc(x,y,NULL)
+  title(main='Quasirandom')
+  #pseudorandom
+  plotFunc(
+    x,y,
+    list(method='pseudo')
+  )
+  title(main='Pseudorandom')
+  #smiley
+  plotFunc(
+    x,y,
+    list(method='smiley',nbins=20)
+  )
+  title(main='Smiley')
+  #beeswarm
+  beeInput<-split(y,x)
+  #beeswarm(
+    #beeInput,las=1,
+    #ylab='Closing price',main='Beeswarm',
+    #pch=21, col='#00000099',bg='#00000033',
+  #)
+  #addMeanLines(x,y)
+@
+\begin{center}
+<<showStock, fig=TRUE, height=7, width=4, echo=FALSE>>=
+<<vpStock>>
+@
+\end{center}
+
 
 
 
