@@ -78,14 +78,14 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   #simple function to avoid repeating code
 ##   plotFunc<-function(x,y,offsetXArgs){
 ##     vpPlot(x,y, las=1, ylab='Log treatment effect', pch=21,
-## 	   col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
+##       col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
 ##     title(xlab='Treatment')
 ##     addMeanLines(x,y)
 ##   }
 ##   addMeanLines<-function(x,y){
 ##     means<-tapply(y,x,mean)
 ##     segments(
-##      1:length(means)-.3,means,1:length(means)+.3,means,
+##      1:length(means)-.25,means,1:length(means)+.25,means,
 ##      col='#FF000099',lwd=2
 ##     )
 ##   }
@@ -115,14 +115,14 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #simple function to avoid repeating code
   plotFunc<-function(x,y,offsetXArgs){
     vpPlot(x,y, las=1, ylab='Log treatment effect', pch=21,
-	   col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
+      col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
     title(xlab='Treatment')
     addMeanLines(x,y)
   }
   addMeanLines<-function(x,y){
     means<-tapply(y,x,mean)
     segments(
-     1:length(means)-.3,means,1:length(means)+.3,means,
+     1:length(means)-.25,means,1:length(means)+.25,means,
      col='#FF000099',lwd=2
     )
   }
@@ -298,5 +298,53 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   beeswarm(beeInput,las=1,cex=.7, ylab='Closing price',
     main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
   addMeanLines(x,y)
+
+
+###################################################
+### code chunk number 13: vpDiamond (eval = FALSE)
+###################################################
+##   select<-sample(1:nrow(ggplot2::diamonds),8000)
+##   y<-log10(ggplot2::diamonds[select,'price'])
+##   x<-ggplot2::diamonds[select,'cut']
+##   par(mfrow=c(3,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
+##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+##   #simple function to avoid repeating code
+##   plotFunc<-function(x,y,...){
+##     vpPlot(x,y,las=1, ylab='Price',cex=.7,
+##       pch=21, col='#00000011',bg='#00000011',...,yaxt='n')
+## 		prettyY<-pretty(y)
+## 		axis(2,prettyY,sapply(prettyY,function(x)as.expression(bquote(10^.(x)))),las=1)
+##     addMeanLines(x,y)
+##   }
+##   #quasirandom
+##   plotFunc(x,y,main='Quasirandom',offsetXArgs=list(varwidth=TRUE))
+##   #pseudorandom
+##   plotFunc(x,y,offsetXArgs=list(method='pseudo',varwidth=TRUE),main='Pseudorandom')
+##   #smiley
+##   plotFunc(x,y,offsetXArgs=list(method='smiley',varwidth=TRUE),main='Smiley')
+
+
+###################################################
+### code chunk number 14: showDiamond
+###################################################
+  select<-sample(1:nrow(ggplot2::diamonds),8000)
+  y<-log10(ggplot2::diamonds[select,'price'])
+  x<-ggplot2::diamonds[select,'cut']
+  par(mfrow=c(3,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+  #simple function to avoid repeating code
+  plotFunc<-function(x,y,...){
+    vpPlot(x,y,las=1, ylab='Price',cex=.7,
+      pch=21, col='#00000011',bg='#00000011',...,yaxt='n')
+		prettyY<-pretty(y)
+		axis(2,prettyY,sapply(prettyY,function(x)as.expression(bquote(10^.(x)))),las=1)
+    addMeanLines(x,y)
+  }
+  #quasirandom
+  plotFunc(x,y,main='Quasirandom',offsetXArgs=list(varwidth=TRUE))
+  #pseudorandom
+  plotFunc(x,y,offsetXArgs=list(method='pseudo',varwidth=TRUE),main='Pseudorandom')
+  #smiley
+  plotFunc(x,y,offsetXArgs=list(method='smiley',varwidth=TRUE),main='Smiley')
 
 

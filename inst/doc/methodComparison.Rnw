@@ -8,7 +8,7 @@ library(violinpoint)
 packageKeywords<-"visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput, beanplot"
 @
 %\VignetteIndexEntry{\Sexpr{packageInfo$Package} method comparisons}
-%\VignetteDepends{lattice,beeswarm}
+%\VignetteDepends{lattice,beeswarm,ggplot2}
 %\VignetteKeywords{\Sexpr{packageKeywords}}
 %\VignettePackage{\Sexpr{packageInfo$Package}}
 
@@ -88,14 +88,14 @@ An example with few data points (maybe a bit too few for optimal use of this pac
   #simple function to avoid repeating code
   plotFunc<-function(x,y,offsetXArgs){
     vpPlot(x,y, las=1, ylab='Log treatment effect', pch=21,
-	   col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
+      col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
     title(xlab='Treatment')
     addMeanLines(x,y)
   }
   addMeanLines<-function(x,y){
     means<-tapply(y,x,mean)
     segments(
-     1:length(means)-.3,means,1:length(means)+.3,means,
+     1:length(means)-.25,means,1:length(means)+.25,means,
      col='#FF000099',lwd=2
     )
   }
@@ -187,7 +187,7 @@ An example with using the \code{beaver1} and \code{beaver2} data from the \pkg{d
 
 \subsection{Larger data}
 
-An example with using the \code{EuStockMarkets} data from the \pkg{datasets} package:
+An example using the \code{EuStockMarkets} data from the \pkg{datasets} package:
 <<vpStock, echo=TRUE, eval=FALSE>>=
   y<-as.vector(EuStockMarkets)
   x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
@@ -214,6 +214,66 @@ An example with using the \code{EuStockMarkets} data from the \pkg{datasets} pac
 \begin{center}
 <<showStock, fig=TRUE, height=7, width=4, echo=FALSE>>=
 <<vpStock>>
+@
+\end{center}
+
+%Another example using the \code{integrations} data from this package. Here \code{beeswarm} takes too long to run and is omitted:
+%<<vpInts, echo=TRUE, eval=FALSE>>=
+%  ints<-integrations[integrations$nearestGene>0,]
+%  y<-log(ints$nearestGene)
+%  x<-paste(ints$study,ints$latent)
+%  cols<-ifelse(ints$latent=='Active','#FF000033','#0000FF33')
+%  par(mfrow=c(4,1), mar=c(4,4, 1.2, 0.5),mgp=c(3.3,.75,0),
+%    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+%  #simple function to avoid repeating code
+%  plotFunc<-function(x,y,...){
+%    vpPlot(x,y,las=1, ylab='Log distance to gene',cex=.7,
+%      pch=21, col='#00000011',bg='#00000011',...)
+%    addMeanLines(x,y)
+%  }
+%  #quasirandom
+%  plotFunc(x,y,main='Quasirandom')
+%  #pseudorandom
+%  plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
+%  #smiley
+%  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+%  #beeswarm
+%  #beeInput<-split(y,x)
+%  #beeswarm(beeInput,las=1,cex=.7, ylab='Log distance to gene',
+%    #main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
+%  #addMeanLines(x,y)
+%@
+%\begin{center}
+%<<showInts, fig=TRUE, height=7, width=4, echo=FALSE>>=
+%<<vpInts>>
+%@
+%\end{center}
+
+Another example using 8000 entries of the \code{diamonds} data from the \pkg{ggplot2} package. Here \code{beeswarm} takes too long to run and is omitted:
+<<vpDiamond, echo=TRUE, eval=FALSE>>=
+  select<-sample(1:nrow(ggplot2::diamonds),8000)
+  y<-log10(ggplot2::diamonds[select,'price'])
+  x<-ggplot2::diamonds[select,'cut']
+  par(mfrow=c(3,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+  #simple function to avoid repeating code
+  plotFunc<-function(x,y,...){
+    vpPlot(x,y,las=1, ylab='Price',cex=.7,
+      pch=21, col='#00000011',bg='#00000011',...,yaxt='n')
+		prettyY<-pretty(y)
+		axis(2,prettyY,sapply(prettyY,function(x)as.expression(bquote(10^.(x)))),las=1)
+    addMeanLines(x,y)
+  }
+  #quasirandom
+  plotFunc(x,y,main='Quasirandom',offsetXArgs=list(varwidth=TRUE))
+  #pseudorandom
+  plotFunc(x,y,offsetXArgs=list(method='pseudo',varwidth=TRUE),main='Pseudorandom')
+  #smiley
+  plotFunc(x,y,offsetXArgs=list(method='smiley',varwidth=TRUE),main='Smiley')
+@
+\begin{center}
+<<showDiamond, fig=TRUE, height=7, width=6, echo=FALSE>>=
+<<vpDiamond>>
 @
 \end{center}
 
