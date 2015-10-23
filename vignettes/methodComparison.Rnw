@@ -80,50 +80,114 @@ Here, we plot the data using quasirandom, pseudorandom, alternating and beeswarm
 @
 \end{center}
 \section{Real data}
-\subsection{Suboptimal examples}
+\subsection{Few data points}
 An example with few data points (maybe a bit too few for optimal use of this package) using the \code{OrchardSprays} data from the \pkg{datasets} package:
 <<vpOrchard, echo=TRUE, eval=FALSE>>=
-  vpPlot(
+  par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+  #simple function to avoid repeating code
+  plotFunc<-function(x,y,offsetXArgs){
+    vpPlot(
+     x,y,
+     las=1, ylab='Log treatment effect',
+     pch=21, col='#00000099',bg='#00000033',
+     offsetXArgs=offsetXArgs
+    )
+    title(xlab='Treatment')
+    addMeanLines(x,y)
+  }
+  addMeanLines<-function(x,y){
+    means<-tapply(y,x,mean)
+    segments(
+     1:length(means)-.3,means,1:length(means)+.3,means,
+     col='#FF000099',lwd=2
+    )
+  }
+  #quasirandom
+  plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),NULL)
+  title(main='Quasirandom')
+  #pseudorandom
+  plotFunc(
     OrchardSprays$treatment,log(OrchardSprays$decrease),
-	 las=1, ylab='Log treatment effect',
-	 offsetXArgs=list(width=.2),
-    pch=21, col='#00000099',bg='#00000033'
+    list(method='pseudo')
   )
-  means<-tapply(log(OrchardSprays$decrease),OrchardSprays$treatment,mean)
-  segments(
-    1:length(means)-.3,means,1:length(means)+.3,means,
-    col='#FF000099',lwd=2
+  title(main='Pseudorandom')
+  #smiley
+  plotFunc(
+    OrchardSprays$treatment,log(OrchardSprays$decrease),
+    list(method='smiley',nbins=5)
   )
-  title(xlab='Treatment')
+  title(main='Smiley')
+  #beeswarm
+  beeInput<-split(
+    log(OrchardSprays$decrease),
+   OrchardSprays$treatment
+  )
+  beeswarm(
+    beeInput,las=1,
+    ylab='Log treatment effect',xlab='Treatment',
+    pch=21, col='#00000099',bg='#00000033',
+    main='Beeswarm'
+  )
+  addMeanLines(
+   OrchardSprays$treatment,
+  log(OrchardSprays$decrease)
+  )
 @
 \begin{center}
-<<showVpOrchard, fig=TRUE, height=4, width=7, echo=FALSE>>=
+<<showVpOrchard, fig=TRUE, height=6, width=7, echo=FALSE>>=
 <<vpOrchard>>
 @
 \end{center}
 
-
-Data with discrete bins are plotted adequately but might be better suited example with few data points using the \code{singer} data from the \pkg{lattice} package:
+\subsection{Discrete data}
+Data with discrete bins are plotted adequately although other display choices (e.g. multiple barplots) might be better for final publication. For example the \code{singer} data from the \pkg{lattice} package has its data rounded to the nearest inch:
 <<vpSinger, echo=TRUE, eval=FALSE>>=
   data('singer',package='lattice')
-  part<-sub(' [0-9]+$','',singer$voice)
-  vpPlot(
-    part,singer$height,
-	 las=1, ylab='Height',
-    pch=21, col='#00000099',bg='#00000033'
+  parts<-sub(' [0-9]+$','',singer$voice)
+  par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+  #simple function to avoid repeating code
+  plotFunc<-function(x,y,offsetXArgs){
+    vpPlot(
+     x,y,
+     las=1, ylab='Height',
+     pch=21, col='#00000099',bg='#00000033',
+     offsetXArgs=offsetXArgs
+    )
+    addMeanLines(x,y)
+  }
+  #quasirandom
+  plotFunc(parts,singer$height,NULL)
+  title(main='Quasirandom')
+  #pseudorandom
+  plotFunc(
+    parts,singer$height,
+    list(method='pseudo')
   )
-  means<-tapply(singer$height,part,mean)
-  segments(
-    1:length(means)-.3,means,1:length(means)+.3,means,
-    col='#FF000099',lwd=2
+  title(main='Pseudorandom')
+  #smiley
+  plotFunc(
+    parts,singer$height,
+    list(method='smiley',nbins=10)
   )
-  title(xlab='Treatment')
+  title(main='Smiley')
+  #beeswarm
+  beeInput<-split(singer$height, parts)
+  beeswarm(
+    beeInput,las=1,
+    ylab='Height',main='Beeswarm',
+    pch=21, col='#00000099',bg='#00000033',
+  )
+  addMeanLines(parts,singer$height)
 @
 \begin{center}
-<<showVpSinger, fig=TRUE, height=4, width=7, echo=FALSE>>=
+<<showVpSinger, fig=TRUE, height=7, width=7, echo=FALSE>>=
 <<vpSinger>>
 @
 \end{center}
+
+\subsection{Moderately sized data}
 
 An example with using the \code{beaver1} and \code{beaver2} data from R:
 <<vpBeaver, echo=TRUE, eval=FALSE>>=
@@ -132,12 +196,44 @@ An example with using the \code{beaver1} and \code{beaver2} data from R:
     c('Beaver 1','Beaver 2'),
     c(nrow(beaver1),nrow(beaver2))
   )
-  vpPlot(x,y,las=1, ylab='Body temperature',
-    pch=21, col='#00000099',bg='#00000033'
+  par(mfrow=c(4,1), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+  #simple function to avoid repeating code
+  plotFunc<-function(x,y,offsetXArgs){
+    vpPlot(
+     x,y,
+     las=1, ylab='Body temperature',
+     pch=21, col='#00000099',bg='#00000033',
+     offsetXArgs=offsetXArgs
+    )
+    addMeanLines(x,y)
+  }
+  #quasirandom
+  plotFunc(x,y,NULL)
+  title(main='Quasirandom')
+  #pseudorandom
+  plotFunc(
+    x,y,
+    list(method='pseudo')
   )
+  title(main='Pseudorandom')
+  #smiley
+  plotFunc(
+    x,y,
+    list(method='smiley',nbins=20)
+  )
+  title(main='Smiley')
+  #beeswarm
+  beeInput<-split(y,x)
+  beeswarm(
+    beeInput,las=1,
+    ylab='Body temperature',main='Beeswarm',
+    pch=21, col='#00000099',bg='#00000033',
+  )
+  addMeanLines(x,y)
 @
 \begin{center}
-<<showBeaver, fig=TRUE, height=4, width=4, echo=FALSE>>=
+<<showBeaver, fig=TRUE, height=7, width=4, echo=FALSE>>=
 <<vpBeaver>>
 @
 \end{center}
