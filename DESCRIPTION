@@ -11,4 +11,4 @@ LazyData: True
 Depends:
     R (>= 3.0.0)
 Suggests:
-	testthat, beeswarm, lattice, ggplot2
+	testthat, beeswarm, lattice, ggplot2, beanplot, vioplot
