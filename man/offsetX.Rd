@@ -8,7 +8,7 @@
 offsetX(y, x = rep(1, length(y)), width = 0.4, varwidth = FALSE, ...)
 
 offsetSingleGroup(y, maxLength = NULL, method = c("quasirandom",
-  "pseudorandom", "smiley", "frowney"), nbins = 1000, adjust = 1)
+  "pseudorandom", "smiley", "frowney"), nbins = NULL, adjust = 1)
 }
 \arguments{
 \item{y}{vector of data points}
@@ -25,7 +25,7 @@ offsetSingleGroup(y, maxLength = NULL, method = c("quasirandom",
 
 \item{method}{method used to distribute the points}
 
-\item{nbins}{the number of points used to calculate density}
+\item{nbins}{the number of points used to calculate density (defaults to 1000 for quasirandom and pseudorandom and 100 for others)}
 
 \item{adjust}{adjust the bandwidth used to calculate the kernel density (smaller values mean tighter fit, larger values looser fit, default is 1)}
 }
