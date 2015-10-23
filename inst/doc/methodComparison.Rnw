@@ -115,7 +115,7 @@ An example with few data points (maybe a bit too few for optimal use of this pac
   #smiley
   plotFunc(
     OrchardSprays$treatment,log(OrchardSprays$decrease),
-    list(method='smiley',nbins=5)
+    list(method='smiley')
   )
   title(main='Smiley')
   #beeswarm
@@ -169,7 +169,7 @@ Data with discrete bins are plotted adequately although other display choices (e
   #smiley
   plotFunc(
     parts,singer$height,
-    list(method='smiley',nbins=10)
+    list(method='smiley')
   )
   title(main='Smiley')
   #beeswarm
@@ -220,7 +220,7 @@ An example with using the \code{beaver1} and \code{beaver2} data from the \pkg{d
   #smiley
   plotFunc(
     x,y,
-    list(method='smiley',nbins=20)
+    list(method='smiley')
   )
   title(main='Smiley')
   #beeswarm
@@ -250,8 +250,8 @@ An example with using the \code{EuStockMarkets} data from the \pkg{datasets} pac
   plotFunc<-function(x,y,offsetXArgs){
     vpPlot(
      x,y,
-     las=1, ylab='Closing price',
-     pch=21, col='#00000099',bg='#00000033',
+     las=1, ylab='Closing price',cex=.7,
+     pch=21, col='#00000011',bg='#00000011',
      offsetXArgs=offsetXArgs
     )
     addMeanLines(x,y)
@@ -268,17 +268,17 @@ An example with using the \code{EuStockMarkets} data from the \pkg{datasets} pac
   #smiley
   plotFunc(
     x,y,
-    list(method='smiley',nbins=20)
+    list(method='smiley')
   )
   title(main='Smiley')
   #beeswarm
   beeInput<-split(y,x)
-  #beeswarm(
-    #beeInput,las=1,
-    #ylab='Closing price',main='Beeswarm',
-    #pch=21, col='#00000099',bg='#00000033',
-  #)
-  #addMeanLines(x,y)
+  beeswarm(
+    beeInput,las=1,cex=.7,
+    ylab='Closing price',main='Beeswarm',
+    pch=21, col='#00000099',bg='#00000033',
+  )
+  addMeanLines(x,y)
 @
 \begin{center}
 <<showStock, fig=TRUE, height=7, width=4, echo=FALSE>>=

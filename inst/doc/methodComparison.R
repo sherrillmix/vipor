@@ -105,7 +105,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   #smiley
 ##   plotFunc(
 ##     OrchardSprays$treatment,log(OrchardSprays$decrease),
-##     list(method='smiley',nbins=5)
+##     list(method='smiley')
 ##   )
 ##   title(main='Smiley')
 ##   #beeswarm
@@ -160,7 +160,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #smiley
   plotFunc(
     OrchardSprays$treatment,log(OrchardSprays$decrease),
-    list(method='smiley',nbins=5)
+    list(method='smiley')
   )
   title(main='Smiley')
   #beeswarm
@@ -209,7 +209,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   #smiley
 ##   plotFunc(
 ##     parts,singer$height,
-##     list(method='smiley',nbins=10)
+##     list(method='smiley')
 ##   )
 ##   title(main='Smiley')
 ##   #beeswarm
@@ -251,7 +251,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #smiley
   plotFunc(
     parts,singer$height,
-    list(method='smiley',nbins=10)
+    list(method='smiley')
   )
   title(main='Smiley')
   #beeswarm
@@ -296,7 +296,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   #smiley
 ##   plotFunc(
 ##     x,y,
-##     list(method='smiley',nbins=20)
+##     list(method='smiley')
 ##   )
 ##   title(main='Smiley')
 ##   #beeswarm
@@ -341,7 +341,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #smiley
   plotFunc(
     x,y,
-    list(method='smiley',nbins=20)
+    list(method='smiley')
   )
   title(main='Smiley')
   #beeswarm
@@ -365,8 +365,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   plotFunc<-function(x,y,offsetXArgs){
 ##     vpPlot(
 ##      x,y,
-##      las=1, ylab='Closing price',
-##      pch=21, col='#00000099',bg='#00000033',
+##      las=1, ylab='Closing price',cex=.7,
+##      pch=21, col='#00000011',bg='#00000011',
 ##      offsetXArgs=offsetXArgs
 ##     )
 ##     addMeanLines(x,y)
@@ -383,17 +383,17 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   #smiley
 ##   plotFunc(
 ##     x,y,
-##     list(method='smiley',nbins=20)
+##     list(method='smiley')
 ##   )
 ##   title(main='Smiley')
 ##   #beeswarm
 ##   beeInput<-split(y,x)
-##   #beeswarm(
-##     #beeInput,las=1,
-##     #ylab='Closing price',main='Beeswarm',
-##     #pch=21, col='#00000099',bg='#00000033',
-##   #)
-##   #addMeanLines(x,y)
+##   beeswarm(
+##     beeInput,las=1,cex=.7,
+##     ylab='Closing price',main='Beeswarm',
+##     pch=21, col='#00000099',bg='#00000033',
+##   )
+##   addMeanLines(x,y)
 
 
 ###################################################
@@ -407,8 +407,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   plotFunc<-function(x,y,offsetXArgs){
     vpPlot(
      x,y,
-     las=1, ylab='Closing price',
-     pch=21, col='#00000099',bg='#00000033',
+     las=1, ylab='Closing price',cex=.7,
+     pch=21, col='#00000011',bg='#00000011',
      offsetXArgs=offsetXArgs
     )
     addMeanLines(x,y)
@@ -425,16 +425,16 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #smiley
   plotFunc(
     x,y,
-    list(method='smiley',nbins=20)
+    list(method='smiley')
   )
   title(main='Smiley')
   #beeswarm
   beeInput<-split(y,x)
-  #beeswarm(
-    #beeInput,las=1,
-    #ylab='Closing price',main='Beeswarm',
-    #pch=21, col='#00000099',bg='#00000033',
-  #)
-  #addMeanLines(x,y)
+  beeswarm(
+    beeInput,las=1,cex=.7,
+    ylab='Closing price',main='Beeswarm',
+    pch=21, col='#00000099',bg='#00000033',
+  )
+  addMeanLines(x,y)
 
 
