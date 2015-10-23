@@ -110,14 +110,15 @@ offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
 # @param y y values for a single group for which offsets should be calculated
 #' @param maxLength multiply the offset by sqrt(length(y)/maxLength) if not NULL. The sqrt is to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
 #' @param method method used to distribute the points
-#' @param nbins the number of points used to calculate density
+#' @param nbins the number of points used to calculate density (defaults to 1000 for quasirandom and pseudorandom and 100 for others)
 #' @param adjust adjust the bandwidth used to calculate the kernel density (smaller values mean tighter fit, larger values looser fit, default is 1)
 #' @export
 #' @rdname offsetX 
 # @seealso \code{\link{offsetX}}, \code{\link[stats]{density}}
 # @return a vector with of x-offsets between -1 and 1 of the same length as y
-offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=1000,adjust=1) {
+offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=NULL,adjust=1) {
 	method<-match.arg(method)
+	if(is.null(nbins))nbins<-ifelse(method %in% c("pseudorandom","quasirandom"),1000,100)
 	#catch 0 length inputs
 	if (length(y) == 0) return(NULL) 
 	# If there's only one value in this group, leave it alone
