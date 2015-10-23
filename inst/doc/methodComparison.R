@@ -354,3 +354,87 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   addMeanLines(x,y)
 
 
+###################################################
+### code chunk number 11: vpStock (eval = FALSE)
+###################################################
+##   y<-as.vector(EuStockMarkets)
+##   x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
+##   par(mfrow=c(4,1), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+##   #simple function to avoid repeating code
+##   plotFunc<-function(x,y,offsetXArgs){
+##     vpPlot(
+##      x,y,
+##      las=1, ylab='Closing price',
+##      pch=21, col='#00000099',bg='#00000033',
+##      offsetXArgs=offsetXArgs
+##     )
+##     addMeanLines(x,y)
+##   }
+##   #quasirandom
+##   plotFunc(x,y,NULL)
+##   title(main='Quasirandom')
+##   #pseudorandom
+##   plotFunc(
+##     x,y,
+##     list(method='pseudo')
+##   )
+##   title(main='Pseudorandom')
+##   #smiley
+##   plotFunc(
+##     x,y,
+##     list(method='smiley',nbins=20)
+##   )
+##   title(main='Smiley')
+##   #beeswarm
+##   beeInput<-split(y,x)
+##   #beeswarm(
+##     #beeInput,las=1,
+##     #ylab='Closing price',main='Beeswarm',
+##     #pch=21, col='#00000099',bg='#00000033',
+##   #)
+##   #addMeanLines(x,y)
+
+
+###################################################
+### code chunk number 12: showStock
+###################################################
+  y<-as.vector(EuStockMarkets)
+  x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
+  par(mfrow=c(4,1), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+  #simple function to avoid repeating code
+  plotFunc<-function(x,y,offsetXArgs){
+    vpPlot(
+     x,y,
+     las=1, ylab='Closing price',
+     pch=21, col='#00000099',bg='#00000033',
+     offsetXArgs=offsetXArgs
+    )
+    addMeanLines(x,y)
+  }
+  #quasirandom
+  plotFunc(x,y,NULL)
+  title(main='Quasirandom')
+  #pseudorandom
+  plotFunc(
+    x,y,
+    list(method='pseudo')
+  )
+  title(main='Pseudorandom')
+  #smiley
+  plotFunc(
+    x,y,
+    list(method='smiley',nbins=20)
+  )
+  title(main='Smiley')
+  #beeswarm
+  beeInput<-split(y,x)
+  #beeswarm(
+    #beeInput,las=1,
+    #ylab='Closing price',main='Beeswarm',
+    #pch=21, col='#00000099',bg='#00000033',
+  #)
+  #addMeanLines(x,y)
+
+
