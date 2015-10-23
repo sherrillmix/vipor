@@ -118,7 +118,7 @@ offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
 # @return a vector with of x-offsets between -1 and 1 of the same length as y
 offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=NULL,adjust=1) {
 	method<-match.arg(method)
-	if(is.null(nbins))nbins<-ifelse(method %in% c("pseudorandom","quasirandom"),1000,100)
+	if(is.null(nbins))nbins<-ifelse(method %in% c("pseudorandom","quasirandom"),2^10,ceiling(length(y)/5))
 	#catch 0 length inputs
 	if (length(y) == 0) return(NULL) 
 	# If there's only one value in this group, leave it alone
