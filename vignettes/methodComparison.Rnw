@@ -75,7 +75,7 @@ Here, we plot the data using quasirandom, pseudorandom, alternating and beeswarm
 @
 
 \begin{center}
-<<plotSimmed, fig=TRUE, height=8, width=5, echo=FALSE>>=
+<<plotSimmed, fig=TRUE, height=8, width=7, echo=FALSE>>=
 <<simmed>>
 @
 \end{center}
@@ -87,12 +87,8 @@ An example with few data points (maybe a bit too few for optimal use of this pac
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,offsetXArgs){
-    vpPlot(
-     x,y,
-     las=1, ylab='Log treatment effect',
-     pch=21, col='#00000099',bg='#00000033',
-     offsetXArgs=offsetXArgs
-    )
+    vpPlot(x,y, las=1, ylab='Log treatment effect', pch=21,
+	   col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
     title(xlab='Treatment')
     addMeanLines(x,y)
   }
@@ -107,32 +103,18 @@ An example with few data points (maybe a bit too few for optimal use of this pac
   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),NULL)
   title(main='Quasirandom')
   #pseudorandom
-  plotFunc(
-    OrchardSprays$treatment,log(OrchardSprays$decrease),
-    list(method='pseudo')
-  )
+  plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
+    list(method='pseudo'))
   title(main='Pseudorandom')
   #smiley
-  plotFunc(
-    OrchardSprays$treatment,log(OrchardSprays$decrease),
-    list(method='smiley')
-  )
+  plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
+    list(method='smiley'))
   title(main='Smiley')
   #beeswarm
-  beeInput<-split(
-    log(OrchardSprays$decrease),
-   OrchardSprays$treatment
-  )
-  beeswarm(
-    beeInput,las=1,
-    ylab='Log treatment effect',xlab='Treatment',
-    pch=21, col='#00000099',bg='#00000033',
-    main='Beeswarm'
-  )
-  addMeanLines(
-   OrchardSprays$treatment,
-  log(OrchardSprays$decrease)
-  )
+  beeInput<-split(log(OrchardSprays$decrease), OrchardSprays$treatment)
+  beeswarm(beeInput,las=1,ylab='Log treatment effect',xlab='Treatment',
+    pch=21, col='#00000099',bg='#00000033', main='Beeswarm')
+  addMeanLines(OrchardSprays$treatment,log(OrchardSprays$decrease))
 @
 \begin{center}
 <<showVpOrchard, fig=TRUE, height=6, width=7, echo=FALSE>>=
@@ -148,37 +130,21 @@ Data with discrete bins are plotted adequately although other display choices (e
   par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   #simple function to avoid repeating code
-  plotFunc<-function(x,y,offsetXArgs){
-    vpPlot(
-     x,y,
-     las=1, ylab='Height',
-     pch=21, col='#00000099',bg='#00000033',
-     offsetXArgs=offsetXArgs
-    )
+  plotFunc<-function(x,y,...){
+    vpPlot(x,y,las=1, ylab='Height',pch=21,col='#00000099',bg='#00000033',...)
     addMeanLines(x,y)
   }
   #quasirandom
-  plotFunc(parts,singer$height,NULL)
+  plotFunc(parts,singer$height)
   title(main='Quasirandom')
   #pseudorandom
-  plotFunc(
-    parts,singer$height,
-    list(method='pseudo')
-  )
-  title(main='Pseudorandom')
+  plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
   #smiley
-  plotFunc(
-    parts,singer$height,
-    list(method='smiley')
-  )
-  title(main='Smiley')
+  plotFunc( parts,singer$height,offsetXArgs=list(method='smiley'),main='Smiley')
   #beeswarm
   beeInput<-split(singer$height, parts)
-  beeswarm(
-    beeInput,las=1,
-    ylab='Height',main='Beeswarm',
-    pch=21, col='#00000099',bg='#00000033',
-  )
+  beeswarm(beeInput,las=1,ylab='Height',main='Beeswarm',
+    pch=21, col='#00000099',bg='#00000033')
   addMeanLines(parts,singer$height)
 @
 \begin{center}
@@ -192,44 +158,25 @@ Data with discrete bins are plotted adequately although other display choices (e
 An example with using the \code{beaver1} and \code{beaver2} data from the \pkg{datasets} package:
 <<vpBeaver, echo=TRUE, eval=FALSE>>=
   y<-c(beaver1$temp,beaver2$temp)
-  x<-rep(
-    c('Beaver 1','Beaver 2'),
-    c(nrow(beaver1),nrow(beaver2))
-  )
+  x<-rep(c('Beaver 1','Beaver 2'), c(nrow(beaver1),nrow(beaver2)))
   par(mfrow=c(4,1), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   #simple function to avoid repeating code
-  plotFunc<-function(x,y,offsetXArgs){
-    vpPlot(
-     x,y,
-     las=1, ylab='Body temperature',
-     pch=21, col='#00000099',bg='#00000033',
-     offsetXArgs=offsetXArgs
-    )
+  plotFunc<-function(x,y,...){
+    vpPlot(x,y, las=1, ylab='Body temperature',pch=21,
+      col='#00000099',bg='#00000033',...)
     addMeanLines(x,y)
   }
   #quasirandom
-  plotFunc(x,y,NULL)
-  title(main='Quasirandom')
+  plotFunc(x,y,main='Quasirandom')
   #pseudorandom
-  plotFunc(
-    x,y,
-    list(method='pseudo')
-  )
-  title(main='Pseudorandom')
+  plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
   #smiley
-  plotFunc(
-    x,y,
-    list(method='smiley')
-  )
-  title(main='Smiley')
+  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
   #beeswarm
   beeInput<-split(y,x)
-  beeswarm(
-    beeInput,las=1,
-    ylab='Body temperature',main='Beeswarm',
-    pch=21, col='#00000099',bg='#00000033',
-  )
+  beeswarm(beeInput,las=1,ylab='Body temperature',main='Beeswarm',
+    pch=21, col='#00000099',bg='#00000033')
   addMeanLines(x,y)
 @
 \begin{center}
@@ -244,40 +191,24 @@ An example with using the \code{EuStockMarkets} data from the \pkg{datasets} pac
 <<vpStock, echo=TRUE, eval=FALSE>>=
   y<-as.vector(EuStockMarkets)
   x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
-  par(mfrow=c(4,1), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+  par(mfrow=c(4,1), mar=c(4,4, 1.2, 0.5),mgp=c(3.3,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   #simple function to avoid repeating code
-  plotFunc<-function(x,y,offsetXArgs){
-    vpPlot(
-     x,y,
-     las=1, ylab='Closing price',cex=.7,
-     pch=21, col='#00000011',bg='#00000011',
-     offsetXArgs=offsetXArgs
-    )
+  plotFunc<-function(x,y,...){
+    vpPlot(x,y,las=1, ylab='Closing price',cex=.7,
+      pch=21, col='#00000011',bg='#00000011',...)
     addMeanLines(x,y)
   }
   #quasirandom
-  plotFunc(x,y,NULL)
-  title(main='Quasirandom')
+  plotFunc(x,y,main='Quasirandom')
   #pseudorandom
-  plotFunc(
-    x,y,
-    list(method='pseudo')
-  )
-  title(main='Pseudorandom')
+  plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
   #smiley
-  plotFunc(
-    x,y,
-    list(method='smiley')
-  )
-  title(main='Smiley')
+  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
   #beeswarm
   beeInput<-split(y,x)
-  beeswarm(
-    beeInput,las=1,cex=.7,
-    ylab='Closing price',main='Beeswarm',
-    pch=21, col='#00000099',bg='#00000033',
-  )
+  beeswarm(beeInput,las=1,cex=.7, ylab='Closing price',
+    main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
   addMeanLines(x,y)
 @
 \begin{center}
