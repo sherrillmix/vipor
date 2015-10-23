@@ -33,4 +33,7 @@ dat<-list(
 labs<-factor(rep(names(dat),sapply(dat,length)),levels=names(dat))
 vpPlot(labs,unlist(dat))
 }
+\seealso{
+\code{\link{offsetX}}
+}
 
