@@ -3,8 +3,8 @@
 
 <<package,include=FALSE,echo=FALSE>>=
 options(keep.source = TRUE, width = 60)
-packageInfo <- packageDescription("violinpoint")
-library(violinpoint)
+packageInfo <- packageDescription("vipor")
+library(vipor)
 packageKeywords<-"visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput"
 @
 %\VignetteIndexEntry{\Sexpr{packageInfo$Package} method comparisons}
@@ -17,7 +17,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 \Plainauthor{\Sexpr{packageInfo$Author}}
 
 \Address{
-  Github: \url{http://github.com/sherrillmix/violinpoint}
+  Github: \url{http://github.com/sherrillmix/vipor}
 }
 
 \Keywords{\Sexpr{packageKeywords}}
@@ -33,6 +33,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 
 This is the simplest example of using the \code{vpPlot} function to generate violin scatter plots:% (Figure \ref{figVpPlot}):
 <<vpPlot, echo=TRUE, eval=FALSE>>=
+  library(vipor)
   set.seed(12345)
   n<-100
   dat<-rnorm(n*2)

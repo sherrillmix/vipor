@@ -2,7 +2,7 @@
 
 ## Introduction
 
-`violinpoint` provides a way to plot one-dimensional data (perhaps divided into several categories) by spreading the data points to fill the kernel density. It uses a [van der Corput sequence](http://en.wikipedia.org/wiki/Van_der_Corput_sequence) to space the dots and avoid generating distracting patterns in the data. See the examples below.
+`vipor` (VIolin POints in R) provides a way to plot one-dimensional data (perhaps divided into several categories) by spreading the data points to fill the kernel density. It uses a [van der Corput sequence](http://en.wikipedia.org/wiki/Van_der_Corput_sequence) to space the dots and avoid generating distracting patterns in the data. See the examples below.
 
 Violin scatter plots (aka column scatter plots or beeswarm plots or one dimensional scatter plots) are a way of plotting points that would ordinarily overlap so that they fall next to each other instead. In addition to reducing overplotting, it helps visualize the density of the data at each point (similar to a violin plot), while still showing each data point individually.
 
@@ -10,7 +10,7 @@ Violin scatter plots (aka column scatter plots or beeswarm plots or one dimensio
 
 
 ```r
-devtools::install_github("sherrillmix/violinpoint")
+devtools::install_github("sherrillmix/vipor")
 ```
 
 ## Examples
@@ -20,7 +20,7 @@ devtools::install_github("sherrillmix/violinpoint")
 We use the provided function `offsetX` to generate the x-offsets for plotting.
 
 ```r
-library(violinpoint)
+library(vipor)
 # Generate data
 set.seed(12345)
 dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))

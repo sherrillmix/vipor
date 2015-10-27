@@ -4,15 +4,15 @@
 ### code chunk number 1: package
 ###################################################
 options(keep.source = TRUE, width = 60)
-packageInfo <- packageDescription("violinpoint")
-library(violinpoint)
+packageInfo <- packageDescription("vipor")
+library(vipor)
 packageKeywords<-"visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput, beanplot"
 
 
 ###################################################
 ### code chunk number 2: simData
 ###################################################
-  library(violinpoint)
+  library(vipor)
   library(beeswarm)
   library(beanplot)
   library(vioplot)

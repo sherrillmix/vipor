@@ -1,17 +1,17 @@
 #' Functions to generate violin scatter plots
 #'
-#' Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/violinpoint}
+#' Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/vipor}
 #'
 #' The main functions are: 
 #'      \describe{
 #'        \item{\code{\link{offsetX}}:}{calculate offsets in X position for plotting (groups of) one dimensional data}
-#'        \item{\code{\link{violinpoint}}:}{a simple wrapper around plot and offsetX to generate plots of grouped data}
+#'        \item{\code{\link{vpPlot}}:}{a simple wrapper around plot and offsetX to generate plots of grouped data}
 #'      }
 #'
 #' @docType package
-#' @name violinpoint
+#' @name vipor
 #' @author Scott Sherrill-Mix, \email{shescott@@upenn.edu}
-#' @seealso \url{http://github.com/sherrillmix/violinspoint.git}
+#' @seealso \url{http://github.com/sherrillmix/vipor}
 #' @examples
 #' dat<-list(rnorm(100),rnorm(50,1,2))
 #' ids<-rep(1:length(dat),sapply(dat,length))
@@ -275,5 +275,5 @@ aveWithArgs<-function(x, y, FUN = mean,...){
 #'   \item{H4K12ac}{number of reads aligned within +- 50,000 bases in a H4K12ac ChIP-Seq}
 #' }
 #' @references \url{http://www.retrovirology.com/content/10/1/90}
-#' @source \url{http://http://www.retrovirology.com/content/10/1/90/additional}, system.file("data-raw", "makeIntegrations.R", package = "violinpoint")
+#' @source \url{http://http://www.retrovirology.com/content/10/1/90/additional}, system.file("data-raw", "makeIntegrations.R", package = "vipor")
 "integrations"
