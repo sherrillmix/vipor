@@ -129,15 +129,16 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##     )
 ##   }
 ##   #quasirandom
-##   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),NULL)
+##   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
+##     list(width=.2))
 ##   title(main='Quasirandom')
 ##   #pseudorandom
 ##   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
-##     list(method='pseudo'))
+##     list(method='pseudo',width=.2))
 ##   title(main='Pseudorandom')
 ##   #smiley
 ##   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
-##     list(method='smiley'))
+##     list(method='smiley',width=.2))
 ##   title(main='Smiley')
 ##   #beeswarm
 ##   beeInput<-split(log(OrchardSprays$decrease), OrchardSprays$treatment)
@@ -166,15 +167,16 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     )
   }
   #quasirandom
-  plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),NULL)
+  plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
+    list(width=.2))
   title(main='Quasirandom')
   #pseudorandom
   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
-    list(method='pseudo'))
+    list(method='pseudo',width=.2))
   title(main='Pseudorandom')
   #smiley
   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
-    list(method='smiley'))
+    list(method='smiley',width=.2))
   title(main='Smiley')
   #beeswarm
   beeInput<-split(log(OrchardSprays$decrease), OrchardSprays$treatment)
