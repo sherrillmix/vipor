@@ -18,6 +18,7 @@ man: R/*.R
 
 
 inst/doc: vignettes/*.Rnw
+	make localInstall
 	R -e 'devtools::build_vignettes()'
 	touch inst/doc
 

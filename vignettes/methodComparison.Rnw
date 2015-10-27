@@ -3,8 +3,8 @@
 
 <<package,include=FALSE,echo=FALSE>>=
 options(keep.source = TRUE, width = 60)
-packageInfo <- packageDescription("violinpoint")
-library(violinpoint)
+packageInfo <- packageDescription("vipor")
+library(vipor)
 packageKeywords<-"visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput, beanplot"
 @
 %\VignetteIndexEntry{\Sexpr{packageInfo$Package} method comparisons}
@@ -17,7 +17,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 \Plainauthor{\Sexpr{packageInfo$Author}}
 
 \Address{
-  Github: \url{http://github.com/sherrillmix/violinpoint}
+  Github: \url{http://github.com/sherrillmix/vipor}
 }
 
 \Keywords{\Sexpr{packageKeywords}}
@@ -42,7 +42,7 @@ There are several ways to plot grouped one-dimensional data combining points and
 \section{Simulated data}
 To compare between methods we'll generate some simulated data from normal, bimodal (two normal) and Cauchy distributions:
 <<simData, echo=TRUE, eval=TRUE>>=
-  library(violinpoint)
+  library(vipor)
   library(beeswarm)
   library(beanplot)
   library(vioplot)

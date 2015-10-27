@@ -12,7 +12,7 @@
   \item{H4K12ac}{number of reads aligned within +- 50,000 bases in a H4K12ac ChIP-Seq}
 }}
 \source{
-\url{http://http://www.retrovirology.com/content/10/1/90/additional}, system.file("data-raw", "makeIntegrations.R", package = "violinpoint")
+\url{http://http://www.retrovirology.com/content/10/1/90/additional}, system.file("data-raw", "makeIntegrations.R", package = "vipor")
 }
 \usage{
 integrations

@@ -4,14 +4,15 @@
 ### code chunk number 1: package
 ###################################################
 options(keep.source = TRUE, width = 60)
-packageInfo <- packageDescription("violinpoint")
-library(violinpoint)
+packageInfo <- packageDescription("vipor")
+library(vipor)
 packageKeywords<-"visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput"
 
 
 ###################################################
 ### code chunk number 2: vpPlot (eval = FALSE)
 ###################################################
+##   library(vipor)
 ##   set.seed(12345)
 ##   n<-100
 ##   dat<-rnorm(n*2)
@@ -22,6 +23,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ### code chunk number 3: showVpPlot
 ###################################################
+  library(vipor)
   set.seed(12345)
   n<-100
   dat<-rnorm(n*2)
