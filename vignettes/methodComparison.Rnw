@@ -42,17 +42,18 @@ There are several ways to plot grouped one-dimensional data combining points and
 \section{Simulated data}
 To compare between methods we'll generate some simulated data from normal, bimodal (two normal) and Cauchy distributions:
 <<simData, echo=TRUE, eval=TRUE>>=
-	library(violinpoint)
-	library(beeswarm)
-	library(beanplot)
-	library(vioplot)
+  library(violinpoint)
+  library(beeswarm)
+  library(beanplot)
+  library(vioplot)
   set.seed(12345)
 
-  dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))
+  dat <- list(rnorm(50), rnorm(500), c(rnorm(100),
+    rnorm(100,5)), rcauchy(100))
   names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 @
 
-Here, we plot the data using quasirandom, pseudorandom, alternating and beeswarm methods:% (Figure \ref{figVpPlot}):
+We plot the data using quasirandom, pseudorandom, alternating and beeswarm methods:% (Figure \ref{figVpPlot}):
 <<simmed, echo=TRUE, eval=FALSE>>=
   par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
@@ -75,21 +76,44 @@ Here, we plot the data using quasirandom, pseudorandom, alternating and beeswarm
   axis(1, 1:length(offsets), names(offsets),padj=1,mgp=c(0,-.3,0),tcl=-.5)
 })
 @
-
 \begin{center}
 <<plotSimmed, fig=TRUE, height=8, width=7, echo=FALSE>>=
 <<simmed>>
 @
 \end{center}
+
+And also plot using \code{boxplot}, \code{beanplot} and \code{vioplot} methods:% (Figure \ref{figVpPlot}):
+<<simmedBox, echo=TRUE, eval=FALSE>>=
+  x<-rep(names(dat),sapply(dat,length))
+  y<-unlist(lapply(dat,function(x)x/max(abs(x))))
+  par(mfrow=c(4,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
+  vpPlot(x,y, ylab='',cex=.7, pch=21,
+    col='#00000044',bg='#00000011')
+  boxplot(y~x,main='Boxplot',ylab='')
+  beanplot(y~x,main='Beanplot',ylab='')
+  vioInput<-split(y,x)
+  labs<-names(vioInput)
+  names(vioInput)[1]<-'x'
+  do.call(vioplot,c(vioInput,list(names=labs,col='white')))
+  title(main='Vioplot')
+@
+\begin{center}
+<<plotSimmedBox, fig=TRUE, height=8, width=7, echo=FALSE>>=
+<<simmedBox>>
+@
+\end{center}
+
+
 \section{Real data}
 \subsection{Few data points}
 An example with few data points (maybe a bit too few for optimal use of this package) using the \code{OrchardSprays} data from the \pkg{datasets} package:
 <<vpOrchard, echo=TRUE, eval=FALSE>>=
   par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
-    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,offsetXArgs){
-    vpPlot(x,y, las=1, ylab='Log treatment effect', pch=21,
+    vpPlot(x,y, ylab='Log treatment effect', pch=21,
       col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
     title(xlab='Treatment')
     addMeanLines(x,y)
@@ -130,22 +154,24 @@ Data with discrete bins are plotted adequately although other display choices (e
   data('singer',package='lattice')
   parts<-sub(' [0-9]+$','',singer$voice)
   par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
-    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
-    vpPlot(x,y,las=1, ylab='Height',pch=21,col='#00000099',bg='#00000033',...)
+    vpPlot(x,y, ylab='Height',pch=21,col='#00000099',bg='#00000033',...)
     addMeanLines(x,y)
   }
   #quasirandom
   plotFunc(parts,singer$height)
   title(main='Quasirandom')
   #pseudorandom
-  plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
+  plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),
+    main='Pseudorandom')
   #smiley
-  plotFunc( parts,singer$height,offsetXArgs=list(method='smiley'),main='Smiley')
+  plotFunc(parts,singer$height,offsetXArgs=list(method='smiley'),
+    main='Smiley')
   #beeswarm
   beeInput<-split(singer$height, parts)
-  beeswarm(beeInput,las=1,ylab='Height',main='Beeswarm',
+  beeswarm(beeInput,ylab='Height',main='Beeswarm',
     pch=21, col='#00000099',bg='#00000033')
   addMeanLines(parts,singer$height)
 @
@@ -194,10 +220,10 @@ An example using the \code{EuStockMarkets} data from the \pkg{datasets} package.
   y<-as.vector(EuStockMarkets)
   x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
   par(mfrow=c(4,1), mar=c(4,4.3, 1.2, 0.5),mgp=c(3.3,.75,0),
-    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
-    vpPlot(x,y,las=1, ylab='Price',cex=.7,
+    vpPlot(x,y, ylab='Price',cex=.7,
       pch=21, col='#00000011',bg='#00000011',...)
     addMeanLines(x,y)
   }
@@ -209,7 +235,7 @@ An example using the \code{EuStockMarkets} data from the \pkg{datasets} package.
   plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
   #beeswarm
   #beeInput<-split(y,x)
-  beeswarm(EuStockMarkets[,'DAX',drop=FALSE],las=1,cex=.7, ylab='Price',
+  beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
     main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
   #addMeanLines(x,y)
 @
@@ -257,27 +283,27 @@ Another example using 3000 entries of the \code{diamonds} data from the \pkg{ggp
   y<-log10(ggplot2::diamonds[select,'price'])
   x<-ggplot2::diamonds[select,'cut']
   par(mfrow=c(4,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
-    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
-  plotFunc<-function(x,y,...){
-    vpPlot(x,y,las=1, ylab='Price',cex=.7,
-      pch=21, col='#00000011',bg='#00000011',...,yaxt='n')
-		prettyY<-pretty(y)
-		axis(2,prettyY,sapply(prettyY,function(x)as.expression(bquote(10^.(x)))),las=1)
+  prettyYAxis<-function(y){
+    prettyY<-pretty(y)
+    yLabs<-sapply(prettyY,function(x)as.expression(bquote(10^.(x))))
+    axis(2,prettyY,yLabs)
   }
   #quasirandom
-  plotFunc(x,y,main='Quasirandom',offsetXArgs=list(varwidth=TRUE))
-  boxplot(y~x,main='Boxplot')
-  beanplot(y~x,main='Beanplot')
+  vpPlot(x,y,offsetXArgs=list(varwidth=TRUE), 
+    ylab='Price',cex=.7,pch=21, col='#00000044',
+    bg='#00000011',yaxt='n',main='Quasirandom')
+  prettyYAxis(y)
+  boxplot(y~x,main='Boxplot',ylab='Price',yaxt='n')
+  prettyYAxis(y)
+  beanplot(y~x,main='Beanplot',ylab='Price',yaxt='n')
+  prettyYAxis(y)
   vioInput<-split(y,x)
   labs<-names(vioInput)
   names(vioInput)[1]<-'x'
   do.call(vioplot,c(vioInput,list(names=labs,col='white')))
-  title(main='Vioplot')
-  #pseudorandom
-  #plotFunc(x,y,offsetXArgs=list(method='pseudo',varwidth=TRUE),main='Pseudorandom')
-  #smiley
-  #plotFunc(x,y,offsetXArgs=list(method='smiley',varwidth=TRUE),main='Smiley')
+  title(ylab='Price', main='Vioplot')
 @
 \begin{center}
 <<showDiamond, fig=TRUE, height=7, width=6, echo=FALSE>>=

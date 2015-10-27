@@ -12,13 +12,14 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ### code chunk number 2: simData
 ###################################################
-	library(violinpoint)
-	library(beeswarm)
-	library(beanplot)
-	library(vioplot)
+  library(violinpoint)
+  library(beeswarm)
+  library(beanplot)
+  library(vioplot)
   set.seed(12345)
 
-  dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))
+  dat <- list(rnorm(50), rnorm(500), c(rnorm(100),
+    rnorm(100,5)), rcauchy(100))
   names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 
 
@@ -73,13 +74,49 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 
 
 ###################################################
-### code chunk number 5: vpOrchard (eval = FALSE)
+### code chunk number 5: simmedBox (eval = FALSE)
+###################################################
+##   x<-rep(names(dat),sapply(dat,length))
+##   y<-unlist(lapply(dat,function(x)x/max(abs(x))))
+##   par(mfrow=c(4,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
+##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
+##   vpPlot(x,y, ylab='',cex=.7, pch=21,
+##     col='#00000044',bg='#00000011')
+##   boxplot(y~x,main='Boxplot',ylab='')
+##   beanplot(y~x,main='Beanplot',ylab='')
+##   vioInput<-split(y,x)
+##   labs<-names(vioInput)
+##   names(vioInput)[1]<-'x'
+##   do.call(vioplot,c(vioInput,list(names=labs,col='white')))
+##   title(main='Vioplot')
+
+
+###################################################
+### code chunk number 6: plotSimmedBox
+###################################################
+  x<-rep(names(dat),sapply(dat,length))
+  y<-unlist(lapply(dat,function(x)x/max(abs(x))))
+  par(mfrow=c(4,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
+  vpPlot(x,y, ylab='',cex=.7, pch=21,
+    col='#00000044',bg='#00000011')
+  boxplot(y~x,main='Boxplot',ylab='')
+  beanplot(y~x,main='Beanplot',ylab='')
+  vioInput<-split(y,x)
+  labs<-names(vioInput)
+  names(vioInput)[1]<-'x'
+  do.call(vioplot,c(vioInput,list(names=labs,col='white')))
+  title(main='Vioplot')
+
+
+###################################################
+### code chunk number 7: vpOrchard (eval = FALSE)
 ###################################################
 ##   par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
-##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
 ##   #simple function to avoid repeating code
 ##   plotFunc<-function(x,y,offsetXArgs){
-##     vpPlot(x,y, las=1, ylab='Log treatment effect', pch=21,
+##     vpPlot(x,y, ylab='Log treatment effect', pch=21,
 ##       col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
 ##     title(xlab='Treatment')
 ##     addMeanLines(x,y)
@@ -110,13 +147,13 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 
 
 ###################################################
-### code chunk number 6: showVpOrchard
+### code chunk number 8: showVpOrchard
 ###################################################
   par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
-    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,offsetXArgs){
-    vpPlot(x,y, las=1, ylab='Log treatment effect', pch=21,
+    vpPlot(x,y, ylab='Log treatment effect', pch=21,
       col='#00000099',bg='#00000033', offsetXArgs=offsetXArgs)
     title(xlab='Treatment')
     addMeanLines(x,y)
@@ -147,59 +184,63 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 
 
 ###################################################
-### code chunk number 7: vpSinger (eval = FALSE)
+### code chunk number 9: vpSinger (eval = FALSE)
 ###################################################
 ##   data('singer',package='lattice')
 ##   parts<-sub(' [0-9]+$','',singer$voice)
 ##   par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
-##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
 ##   #simple function to avoid repeating code
 ##   plotFunc<-function(x,y,...){
-##     vpPlot(x,y,las=1, ylab='Height',pch=21,col='#00000099',bg='#00000033',...)
+##     vpPlot(x,y, ylab='Height',pch=21,col='#00000099',bg='#00000033',...)
 ##     addMeanLines(x,y)
 ##   }
 ##   #quasirandom
 ##   plotFunc(parts,singer$height)
 ##   title(main='Quasirandom')
 ##   #pseudorandom
-##   plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
+##   plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),
+##     main='Pseudorandom')
 ##   #smiley
-##   plotFunc( parts,singer$height,offsetXArgs=list(method='smiley'),main='Smiley')
+##   plotFunc(parts,singer$height,offsetXArgs=list(method='smiley'),
+##     main='Smiley')
 ##   #beeswarm
 ##   beeInput<-split(singer$height, parts)
-##   beeswarm(beeInput,las=1,ylab='Height',main='Beeswarm',
+##   beeswarm(beeInput,ylab='Height',main='Beeswarm',
 ##     pch=21, col='#00000099',bg='#00000033')
 ##   addMeanLines(parts,singer$height)
 
 
 ###################################################
-### code chunk number 8: showVpSinger
+### code chunk number 10: showVpSinger
 ###################################################
   data('singer',package='lattice')
   parts<-sub(' [0-9]+$','',singer$voice)
   par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
-    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
-    vpPlot(x,y,las=1, ylab='Height',pch=21,col='#00000099',bg='#00000033',...)
+    vpPlot(x,y, ylab='Height',pch=21,col='#00000099',bg='#00000033',...)
     addMeanLines(x,y)
   }
   #quasirandom
   plotFunc(parts,singer$height)
   title(main='Quasirandom')
   #pseudorandom
-  plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
+  plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),
+    main='Pseudorandom')
   #smiley
-  plotFunc( parts,singer$height,offsetXArgs=list(method='smiley'),main='Smiley')
+  plotFunc(parts,singer$height,offsetXArgs=list(method='smiley'),
+    main='Smiley')
   #beeswarm
   beeInput<-split(singer$height, parts)
-  beeswarm(beeInput,las=1,ylab='Height',main='Beeswarm',
+  beeswarm(beeInput,ylab='Height',main='Beeswarm',
     pch=21, col='#00000099',bg='#00000033')
   addMeanLines(parts,singer$height)
 
 
 ###################################################
-### code chunk number 9: vpBeaver (eval = FALSE)
+### code chunk number 11: vpBeaver (eval = FALSE)
 ###################################################
 ##   y<-c(beaver1$temp,beaver2$temp)
 ##   x<-rep(c('Beaver 1','Beaver 2'), c(nrow(beaver1),nrow(beaver2)))
@@ -225,7 +266,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 
 
 ###################################################
-### code chunk number 10: showBeaver
+### code chunk number 12: showBeaver
 ###################################################
   y<-c(beaver1$temp,beaver2$temp)
   x<-rep(c('Beaver 1','Beaver 2'), c(nrow(beaver1),nrow(beaver2)))
@@ -251,15 +292,15 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 
 
 ###################################################
-### code chunk number 11: vpStock (eval = FALSE)
+### code chunk number 13: vpStock (eval = FALSE)
 ###################################################
 ##   y<-as.vector(EuStockMarkets)
 ##   x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
 ##   par(mfrow=c(4,1), mar=c(4,4.3, 1.2, 0.5),mgp=c(3.3,.75,0),
-##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
 ##   #simple function to avoid repeating code
 ##   plotFunc<-function(x,y,...){
-##     vpPlot(x,y,las=1, ylab='Price',cex=.7,
+##     vpPlot(x,y, ylab='Price',cex=.7,
 ##       pch=21, col='#00000011',bg='#00000011',...)
 ##     addMeanLines(x,y)
 ##   }
@@ -271,21 +312,21 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
 ##   #beeswarm
 ##   #beeInput<-split(y,x)
-##   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],las=1,cex=.7, ylab='Price',
+##   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
 ##     main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
 ##   #addMeanLines(x,y)
 
 
 ###################################################
-### code chunk number 12: showStock
+### code chunk number 14: showStock
 ###################################################
   y<-as.vector(EuStockMarkets)
   x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
   par(mfrow=c(4,1), mar=c(4,4.3, 1.2, 0.5),mgp=c(3.3,.75,0),
-    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
-    vpPlot(x,y,las=1, ylab='Price',cex=.7,
+    vpPlot(x,y, ylab='Price',cex=.7,
       pch=21, col='#00000011',bg='#00000011',...)
     addMeanLines(x,y)
   }
@@ -297,68 +338,68 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
   #beeswarm
   #beeInput<-split(y,x)
-  beeswarm(EuStockMarkets[,'DAX',drop=FALSE],las=1,cex=.7, ylab='Price',
+  beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
     main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
   #addMeanLines(x,y)
 
 
 ###################################################
-### code chunk number 13: vpDiamond (eval = FALSE)
+### code chunk number 15: vpDiamond (eval = FALSE)
 ###################################################
 ##   select<-sample(1:nrow(ggplot2::diamonds),3000)
 ##   y<-log10(ggplot2::diamonds[select,'price'])
 ##   x<-ggplot2::diamonds[select,'cut']
 ##   par(mfrow=c(4,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
-##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
 ##   #simple function to avoid repeating code
-##   plotFunc<-function(x,y,...){
-##     vpPlot(x,y,las=1, ylab='Price',cex=.7,
-##       pch=21, col='#00000011',bg='#00000011',...,yaxt='n')
-## 		prettyY<-pretty(y)
-## 		axis(2,prettyY,sapply(prettyY,function(x)as.expression(bquote(10^.(x)))),las=1)
+##   prettyYAxis<-function(y){
+##     prettyY<-pretty(y)
+##     yLabs<-sapply(prettyY,function(x)as.expression(bquote(10^.(x))))
+##     axis(2,prettyY,yLabs)
 ##   }
 ##   #quasirandom
-##   plotFunc(x,y,main='Quasirandom',offsetXArgs=list(varwidth=TRUE))
-##   boxplot(y~x,main='Boxplot')
-##   beanplot(y~x,main='Beanplot')
+##   vpPlot(x,y,offsetXArgs=list(varwidth=TRUE), 
+##     ylab='Price',cex=.7,pch=21, col='#00000044',
+##     bg='#00000011',yaxt='n',main='Quasirandom')
+##   prettyYAxis(y)
+##   boxplot(y~x,main='Boxplot',ylab='Price',yaxt='n')
+##   prettyYAxis(y)
+##   beanplot(y~x,main='Beanplot',ylab='Price',yaxt='n')
+##   prettyYAxis(y)
 ##   vioInput<-split(y,x)
 ##   labs<-names(vioInput)
 ##   names(vioInput)[1]<-'x'
 ##   do.call(vioplot,c(vioInput,list(names=labs,col='white')))
-##   title(main='Vioplot')
-##   #pseudorandom
-##   #plotFunc(x,y,offsetXArgs=list(method='pseudo',varwidth=TRUE),main='Pseudorandom')
-##   #smiley
-##   #plotFunc(x,y,offsetXArgs=list(method='smiley',varwidth=TRUE),main='Smiley')
+##   title(ylab='Price', main='Vioplot')
 
 
 ###################################################
-### code chunk number 14: showDiamond
+### code chunk number 16: showDiamond
 ###################################################
   select<-sample(1:nrow(ggplot2::diamonds),3000)
   y<-log10(ggplot2::diamonds[select,'price'])
   x<-ggplot2::diamonds[select,'cut']
   par(mfrow=c(4,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
-    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
-  plotFunc<-function(x,y,...){
-    vpPlot(x,y,las=1, ylab='Price',cex=.7,
-      pch=21, col='#00000011',bg='#00000011',...,yaxt='n')
-		prettyY<-pretty(y)
-		axis(2,prettyY,sapply(prettyY,function(x)as.expression(bquote(10^.(x)))),las=1)
+  prettyYAxis<-function(y){
+    prettyY<-pretty(y)
+    yLabs<-sapply(prettyY,function(x)as.expression(bquote(10^.(x))))
+    axis(2,prettyY,yLabs)
   }
   #quasirandom
-  plotFunc(x,y,main='Quasirandom',offsetXArgs=list(varwidth=TRUE))
-  boxplot(y~x,main='Boxplot')
-  beanplot(y~x,main='Beanplot')
+  vpPlot(x,y,offsetXArgs=list(varwidth=TRUE), 
+    ylab='Price',cex=.7,pch=21, col='#00000044',
+    bg='#00000011',yaxt='n',main='Quasirandom')
+  prettyYAxis(y)
+  boxplot(y~x,main='Boxplot',ylab='Price',yaxt='n')
+  prettyYAxis(y)
+  beanplot(y~x,main='Beanplot',ylab='Price',yaxt='n')
+  prettyYAxis(y)
   vioInput<-split(y,x)
   labs<-names(vioInput)
   names(vioInput)[1]<-'x'
   do.call(vioplot,c(vioInput,list(names=labs,col='white')))
-  title(main='Vioplot')
-  #pseudorandom
-  #plotFunc(x,y,offsetXArgs=list(method='pseudo',varwidth=TRUE),main='Pseudorandom')
-  #smiley
-  #plotFunc(x,y,offsetXArgs=list(method='smiley',varwidth=TRUE),main='Smiley')
+  title(ylab='Price', main='Vioplot')
 
 
