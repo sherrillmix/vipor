@@ -2,3 +2,4 @@
 ^makefile$
 ^README.Rmd$
 ^data-raw.*$
+^.travis.yml$
