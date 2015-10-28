@@ -1,5 +1,8 @@
 # Plot one-dimensional data using quasirandom noise and kernel density
 
+[![Build Status](https://travis-ci.org/sherrillmix/levenR.svg?branch=master)](https://travis-ci.org/sherrillmix/levenR)
+[![codecov.io](https://codecov.io/github/sherrillmix/levenR/coverage.svg?branch=master)](https://codecov.io/github/sherrillmix/levenR?branch=master)
+
 ## Introduction
 
 `vipor` (VIolin POints in R) provides a way to plot one-dimensional data (perhaps divided into several categories) by spreading the data points to fill the kernel density. It uses a [van der Corput sequence](http://en.wikipedia.org/wiki/Van_der_Corput_sequence) to space the dots and avoid generating distracting patterns in the data. See the examples below.
