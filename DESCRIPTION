@@ -1,6 +1,6 @@
 Package: vipor
 Type: Package
-Title: Plot categorical data using quasirandom noise and density estimates
+Title: Plot Categorical Data Using Quasirandom Noise and Density Estimates
 Version: 0.3.0
 Date: 2015-01-13
 Author: Scott Sherrill-Mix, Erik Clarke
