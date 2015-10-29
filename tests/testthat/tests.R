@@ -107,3 +107,11 @@ test_that("Test consistency",{
 	expect_that(digits2number(number2digits(100,5),5), equals(100))
 	expect_that(digits2number(number2digits(123456,23),23), equals(123456))
 })
+
+dat<-rnorm(1000)
+labs<-rep(1:4,250)
+test_that("vpPlot returns x positions",{
+	expect_that(length(vpPlot(y=rnorm(100))), equals(100))
+	expect_that(vpPlot(y=dat), equals(1+offsetX(dat)))
+	expect_that(vpPlot(labs,dat), equals(labs+offsetX(dat,labs)))
+})
