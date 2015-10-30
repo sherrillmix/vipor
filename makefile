@@ -30,4 +30,5 @@ data/integrations.RData: data-raw/makeIntegrations.R
 	R -e 'source("data-raw/makeIntegrations.R",chdir=TRUE)'
 
 $(PACKAGEFILE): man R/*.R DESCRIPTION tests/testthat/tests.R inst/doc data/integrations.RData
+	sed -i "s/^Date:.*$$/Date: `date +%Y-%m-%d`/" DESCRIPTION
 	R -e 'devtools::check();devtools::build()'
