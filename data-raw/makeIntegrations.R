@@ -6,7 +6,7 @@ file.remove('ints.csv.gz')
 desiredCols<-c('study'='sample','latent'='isLatent','nearestGene'='logDist_nearest','H4K12ac'='H4K12ac_50000')
 integrations<-ints[,desiredCols]
 colnames(integrations)<-names(desiredCols)
-integrations$latent<-ifelse(integrations$latent,'Inactive','Active')
+integrations$latent<-ifelse(integrations$latent,'Unexpressed','Expressed')
 integrations$nearestGene<-ifelse(ints$inGene,0,round(exp(integrations$nearestGene)))
 integrations$study<-sub(' .*$','',integrations$study)
 

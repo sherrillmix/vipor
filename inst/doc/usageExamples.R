@@ -188,10 +188,17 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ##   ints<-integrations[integrations$nearestGene>0,]
 ##   y<-log(ints$nearestGene)
-##   x<-paste(ints$study,ints$latent)
-##   cols<-ifelse(ints$latent=='Active','#FF000033','#0000FF33')
-##   vpPlot(x,y,las=2, ylab='Log distance to gene',
-##     pch=21, col=cols,bg=cols,cex=.7,mar=c(10,4,.1,.1))
+##   x<-as.factor(paste(ints$study,ints$latent))
+##   activeCols<-c('Expressed'='#FF000033','Unexpressed'='#0000FF33')
+##   cols<-activeCols[ints$latent]
+##   par(mar=c(4,7,.1,.1))
+##   vpPlot(x,y,las=2, ylab='Log distance to gene',xaxt='n',
+##     pch=21, col=cols,bg=cols,cex=.7)
+##   uniqX<-levels(x)
+##   prettyX<-tapply(1:length(uniqX),sub('(Une|E)xpressed$','',uniqX),mean)
+##   axis(1,prettyX,names(prettyX),las=2)
+##   legend(grconvertX(0.01,from='ndc'),grconvertY(0.15,from='ndc'),
+##     names(activeCols),pch=21,col=cols,pt.bg=activeCols,xpd=NA)
 
 
 ###################################################
@@ -199,9 +206,16 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
   ints<-integrations[integrations$nearestGene>0,]
   y<-log(ints$nearestGene)
-  x<-paste(ints$study,ints$latent)
-  cols<-ifelse(ints$latent=='Active','#FF000033','#0000FF33')
-  vpPlot(x,y,las=2, ylab='Log distance to gene',
-    pch=21, col=cols,bg=cols,cex=.7,mar=c(10,4,.1,.1))
+  x<-as.factor(paste(ints$study,ints$latent))
+  activeCols<-c('Expressed'='#FF000033','Unexpressed'='#0000FF33')
+  cols<-activeCols[ints$latent]
+  par(mar=c(4,7,.1,.1))
+  vpPlot(x,y,las=2, ylab='Log distance to gene',xaxt='n',
+    pch=21, col=cols,bg=cols,cex=.7)
+  uniqX<-levels(x)
+  prettyX<-tapply(1:length(uniqX),sub('(Une|E)xpressed$','',uniqX),mean)
+  axis(1,prettyX,names(prettyX),las=2)
+  legend(grconvertX(0.01,from='ndc'),grconvertY(0.15,from='ndc'),
+    names(activeCols),pch=21,col=cols,pt.bg=activeCols,xpd=NA)
 
 
