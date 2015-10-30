@@ -275,5 +275,5 @@ aveWithArgs<-function(x, y, FUN = mean,...){
 #'   \item{H4K12ac}{number of reads aligned within +- 50,000 bases in a H4K12ac ChIP-Seq}
 #' }
 #' @references \url{http://www.retrovirology.com/content/10/1/90}
-#' @source \url{http://http://www.retrovirology.com/content/10/1/90/additional}, system.file("data-raw", "makeIntegrations.R", package = "vipor")
+#' @source \url{http://www.retrovirology.com/content/10/1/90/additional}, system.file("data-raw", "makeIntegrations.R", package = "vipor")
 "integrations"
