@@ -21,13 +21,13 @@ NULL
 
 #' Plot data using offsets by quasirandom noise to generate a violin point plot
 #' 
-#' Arranges data points using quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. That is a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points) and so here we'll call it a violin point plot.  
+#' Arranges data points using quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. That is a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points) and so here we'll call it a violin point plot.
 #' 
 #' @param x a grouping factor for y (optional)
-#' @param y vector of data points 
+#' @param y vector of data points
 #' @param xaxt if 'n' then no x axis is plotted
 #' @param offsetXArgs a list with arguments for offsetX
-#' @param ... additional arguments to plot 
+#' @param ... additional arguments to plot
 #' @return invisibly return the adjusted x positions of the points
 #' @export
 #' @seealso \code{\link{offsetX}}
@@ -41,29 +41,29 @@ NULL
 #' labs<-factor(rep(names(dat),sapply(dat,length)),levels=names(dat))
 #' vpPlot(labs,unlist(dat))
 vpPlot<-function(x=rep('Data',length(y)),y,xaxt='y',offsetXArgs=NULL,...){
-	x<-as.factor(x)		
-	ids<-as.numeric(x)
-	labels<-levels(x)
-	labelIds<-1:length(labels)
-	names(labelIds)<-labels
-	xPos<-ids+do.call(offsetX,c(list(y),list(x),offsetXArgs))
-	graphics::plot(xPos,y,...,xaxt='n',xlab='')
-	if(xaxt!='n')graphics::axis(1,labelIds,labels,...) 
-	return(invisible(xPos))
+  x<-as.factor(x)
+  ids<-as.numeric(x)
+  labels<-levels(x)
+  labelIds<-1:length(labels)
+  names(labelIds)<-labels
+  xPos<-ids+do.call(offsetX,c(list(y),list(x),offsetXArgs))
+  graphics::plot(xPos,y,...,xaxt='n',xlab='')
+  if(xaxt!='n')graphics::axis(1,labelIds,labels,...)
+  return(invisible(xPos))
 }
 
 #' Offset data using quasirandom noise to avoid overplotting
 #' 
 #' Arranges data points using quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. That is a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). This function returns a vector of the offsets to be used in plotting.
 #' 
-#' @param y vector of data points 
+#' @param y vector of data points
 #' @param x a grouping factor for y (optional)
 #' @param width the maximum spacing away from center for each group of points. Since points are spaced to left and right, the maximum width of the cluster will be approximately width*2 (0 = no offset, default = 0.4)
 #' @param varwidth adjust the width of each group based on the number of points in the group
 #' @param ... additional arguments to offsetSingleGroup
 #' @return a vector with of x-offsets of the same length as y
 #' @export
-#' @examples 
+#' @examples
 #' ## Generate fake data
 #' dat <- list(rnorm(50), rnorm(500), c(rnorm(100), rnorm(100,5)), rcauchy(100))
 #' names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
@@ -87,15 +87,14 @@ vpPlot<-function(x=rep('Data',length(y)),y,xaxt='y',offsetXArgs=NULL,...){
 #' })
 #' 
 offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
-  
   if (length(x)!=length(y)) stop(simpleError('x and y not the same length in offsetX'))
-  
+
   maxLength<-max(table(x))
 
   # Apply the van der Corput noise to each x group to create offsets
   new_x <- aveWithArgs(y,x, FUN=offsetSingleGroup,maxLength=if(varwidth){maxLength}else{NULL},...)
   new_x <- new_x*width
-  
+
   return(new_x)
 }
 
@@ -115,33 +114,33 @@ offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
 # @seealso \code{\link{offsetX}}, \code{\link[stats]{density}}
 # @return a vector with of x-offsets between -1 and 1 of the same length as y
 offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=NULL,adjust=1) {
-	method<-match.arg(method)
-	if(is.null(nbins))nbins<-ifelse(method %in% c("pseudorandom","quasirandom"),2^10,ceiling(length(y)/5))
-	#catch 0 length inputs
-	if (length(y) == 0) return(NULL) 
-	# If there's only one value in this group, leave it alone
-	if (length(y) == 1) return(0) 
+  method<-match.arg(method)
+  if(is.null(nbins))nbins<-ifelse(method %in% c("pseudorandom","quasirandom"),2^10,ceiling(length(y)/5))
+  #catch 0 length inputs
+  if (length(y) == 0) return(NULL)
+  # If there's only one value in this group, leave it alone
+  if (length(y) == 1) return(0)
 
-	#sqrt to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
-	if(is.null(maxLength)||maxLength<=0)subgroup_width <- 1
-	else subgroup_width <- sqrt(length(y)/maxLength)
+  #sqrt to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
+  if(is.null(maxLength)||maxLength<=0)subgroup_width <- 1
+  else subgroup_width <- sqrt(length(y)/maxLength)
 
-	dens <- stats::density(y, n = nbins, adjust = adjust)
-	dens$y <- dens$y / max(dens$y)
-	offset <- switch(method,
-		'quasirandom'=vanDerCorput(length(y))[rank(y, ties.method="first")],
-		'pseudorandom'=stats::runif(length(y)),
-		'smiley'=stats::ave(y,as.character(cut(y,dens$x)),FUN=topBottomDistribute),
-		'frowney'=stats::ave(y,as.character(cut(y,dens$x)),FUN=function(x)topBottomDistribute(x,frowney=TRUE)),
-		stop(simpleError('Unrecognized method in offsetSingleGroup'))
-	)
+  dens <- stats::density(y, n = nbins, adjust = adjust)
+  dens$y <- dens$y / max(dens$y)
+  offset <- switch(method,
+    'quasirandom'=vanDerCorput(length(y))[rank(y, ties.method="first")],
+    'pseudorandom'=stats::runif(length(y)),
+    'smiley'=stats::ave(y,as.character(cut(y,dens$x)),FUN=topBottomDistribute),
+    'frowney'=stats::ave(y,as.character(cut(y,dens$x)),FUN=function(x)topBottomDistribute(x,frowney=TRUE)),
+    stop(simpleError('Unrecognized method in offsetSingleGroup'))
+  )
 
-	pointDensities<-stats::approx(dens$x,dens$y,y)$y
+  pointDensities<-stats::approx(dens$x,dens$y,y)$y
 
-	#*2 to get -1 to 1
-	out<-(offset-.5)*2*pointDensities*subgroup_width
+  #*2 to get -1 to 1
+  out<-(offset-.5)*2*pointDensities*subgroup_width
 
-	return(out)
+  return(out)
 }
 
 #' Produce offsets such that points are sorted with most extreme values to right and left
@@ -157,16 +156,16 @@ offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorando
 #' topBottomDistribute(1:10)
 #' topBottomDistribute(1:10,TRUE)
 topBottomDistribute<-function(x,frowney=FALSE,prop=TRUE){
-	if(length(x)==1)return(.5)
-	if(frowney)x<- -x
-	newOrder<-rank(x,ties.method='first')
-	newOrder[newOrder%%2==1]<- -newOrder[newOrder%%2==1]
-	newOrder<-rank(newOrder)
-	if(prop){
-		props<-seq(0,1,length.out=length(newOrder))
-		newOrder<-props[newOrder]
-	}
-	return(newOrder)
+  if(length(x)==1)return(.5)
+  if(frowney)x<- -x
+  newOrder<-rank(x,ties.method='first')
+  newOrder[newOrder%%2==1]<- -newOrder[newOrder%%2==1]
+  newOrder<-rank(newOrder)
+  if(prop){
+    props<-seq(0,1,length.out=length(newOrder))
+    newOrder<-props[newOrder]
+  }
+  return(newOrder)
 }
 
 #' Generate van der Corput sequences
@@ -251,13 +250,13 @@ digits2number<-function(digits,base=2,fractional=FALSE){
 #' aveWithArgs(1:10,rep(1:5,2))
 #' aveWithArgs(c(1:9,NA),rep(1:5,2),max,na.rm=TRUE)
 aveWithArgs<-function(x, y, FUN = mean,...){
-	if (missing(y)) 
-		x[] <- FUN(x,...)
-	else {
-		g <- interaction(y)
-		split(x, g) <- lapply(split(x, g), FUN,...)
-	}
-	x
+  if (missing(y))
+    x[] <- FUN(x,...)
+  else {
+    g <- interaction(y)
+    split(x, g) <- lapply(split(x, g), FUN,...)
+  }
+  x
 }
 
 
