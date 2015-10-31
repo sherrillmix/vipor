@@ -47,10 +47,8 @@ vpPlot<-function(x=rep('Data',length(y)),y,xaxt='y',offsetXArgs=NULL,...){
 	labelIds<-1:length(labels)
 	names(labelIds)<-labels
 	xPos<-ids+do.call(offsetX,c(list(y),list(x),offsetXArgs))
-	plot(xPos,y,...,xaxt='n',xlab='')
-	if(xaxt!='n'){
-		axis(1,labelIds,labels,...) 
-	}
+	graphics::plot(xPos,y,...,xaxt='n',xlab='')
+	if(xaxt!='n')graphics::axis(1,labelIds,labels,...) 
 	return(invisible(xPos))
 }
 
@@ -132,9 +130,9 @@ offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorando
 	dens$y <- dens$y / max(dens$y)
 	offset <- switch(method,
 		'quasirandom'=vanDerCorput(length(y))[rank(y, ties.method="first")],
-		'pseudorandom'=runif(length(y)),
-		'smiley'=ave(y,as.character(cut(y,dens$x)),FUN=topBottomDistribute),
-		'frowney'=ave(y,as.character(cut(y,dens$x)),FUN=function(x)topBottomDistribute(x,frowney=TRUE)),
+		'pseudorandom'=stats::runif(length(y)),
+		'smiley'=stats::ave(y,as.character(cut(y,dens$x)),FUN=topBottomDistribute),
+		'frowney'=stats::ave(y,as.character(cut(y,dens$x)),FUN=function(x)topBottomDistribute(x,frowney=TRUE)),
 		stop(simpleError('Unrecognized method in offsetSingleGroup'))
 	)
 
