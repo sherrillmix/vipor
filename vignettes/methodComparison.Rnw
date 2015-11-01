@@ -7,12 +7,12 @@ packageInfo <- packageDescription("vipor")
 library(vipor)
 packageKeywords<-"visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput, beanplot"
 @
-%\VignetteIndexEntry{\Sexpr{packageInfo$Package} method comparisons}
+%\VignetteIndexEntry{Grouped one-dimensional data method comparison}
 %\VignetteDepends{lattice,beeswarm,ggplot2,beanplot}
-%\VignetteKeywords{\Sexpr{packageKeywords}}
-%\VignettePackage{\Sexpr{packageInfo$Package}}
+%\VignetteKeywords{visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput, beanplot}
+%\VignettePackage{vipor}
 
-\title{Grouped one dimensional data comparison (\pkg{\Sexpr{packageInfo$Package}} version \Sexpr{packageInfo$Version})}
+\title{Grouped one-dimensional data method comparison (\pkg{\Sexpr{packageInfo$Package}} version \Sexpr{packageInfo$Version})}
 \author{\Sexpr{packageInfo$Author}}
 \Plainauthor{\Sexpr{packageInfo$Author}}
 

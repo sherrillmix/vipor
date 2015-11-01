@@ -7,12 +7,12 @@ packageInfo <- packageDescription("vipor")
 library(vipor)
 packageKeywords<-"visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput"
 @
-%\VignetteIndexEntry{\Sexpr{packageInfo$Package} method comparisons}
+%\VignetteIndexEntry{vipor package usage examples}
 %\VignetteDepends{}
-%\VignetteKeywords{\Sexpr{packageKeywords}}
-%\VignettePackage{\Sexpr{packageInfo$Package}}
+%\VignetteKeywords{visualization, display, one dimensional, grouped, groups, violin, scatter, points, quasirandom, beeswarm, van der Corput}
+%\VignettePackage{vipor}
 
-\title{\pkg{\Sexpr{packageInfo$Package}} package example (version \Sexpr{packageInfo$Version})}
+\title{\pkg{\Sexpr{packageInfo$Package}} package usage example (version \Sexpr{packageInfo$Version})}
 \author{\Sexpr{packageInfo$Author}}
 \Plainauthor{\Sexpr{packageInfo$Author}}
 
