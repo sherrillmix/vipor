@@ -4,7 +4,7 @@ PACKAGEFILE:=../$(NAME)_$(VERSION).tar.gz
 
 all: $(PACKAGEFILE) README.md
 
-.PHONY: all install
+.PHONY: all install localInstall
 
 install:
 	R -e 'devtools::install_github("sherrillmix/$(NAME)")'
