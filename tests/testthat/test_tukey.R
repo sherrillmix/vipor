@@ -1,0 +1,11 @@
+context("violinscatter functions")
+test_that("Test permuting",{
+	expect_equal(permute(c()),NULL)
+	expect_equal(permute(1),list(1))
+	expect_equal(permute(1:2),list(1:2,2:1))
+	expect_equal(permute(2:1),list(2:1,1:2))
+	expect_equal(permute(c('a','b')),list(c('a','b'),c('b','a')))
+	expect_equal(permute(1:3),list(1:3,c(1,3,2),c(2,1,3),c(2,3,1),c(3,1,2),3:1))
+	expect_equal(length(permute(1:5)),factorial(5))
+	expect_equal(length(permute(1:6)),factorial(6))
+})

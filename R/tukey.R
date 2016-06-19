@@ -1,8 +1,20 @@
+#' Return all permutations of a vector
+#'
+#' Recursively generates all permutations of a vector. The result will be \code{factorial(length(vals))} long so be careful with any longer vectors (e.g. longer than 10).
+#'
+#' @param vals a vector of elements to be permuted
+#' @return A list of all permutation of the values
+#' @export
+#' @seealso \code{\link{sample}}
+#' @examples
+#' permute(letters[1:3])
+#' permute(1:5)
+#
 permute<-function(vals){
-  if(length(vals)==1)return(vals)
+  if(length(vals)==1)return(list(vals))
   if(length(vals)==0)return(NULL)
   permList<-lapply(1:length(vals),function(ii){
-      lapply(generatePerms(vals[-ii]),function(y)c(vals[ii],y))
+      lapply(permute(vals[-ii]),function(y)c(vals[ii],y))
   })
   return(unlist(permList,recursive=FALSE))
 }
