@@ -48,7 +48,7 @@ sapply(names(dat),function(label) {
 })
 ```
 
-![plot of chunk adjust-examples](README_files/adjust-examples-1.png) 
+![plot of chunk adjust-examples](README_files/adjust-examples-1.png)
 
 
 ### Comparison with other methods
@@ -77,7 +77,7 @@ sapply(names(dat),function(label) {
 })
 ```
 
-![plot of chunk other-methods](README_files/other-methods-1.png) 
+![plot of chunk other-methods](README_files/other-methods-1.png)
 
 ------
 Authors: Scott Sherrill-Mix and Erik Clarke
