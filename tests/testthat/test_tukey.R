@@ -8,4 +8,16 @@ test_that("Test permuting",{
 	expect_equal(permute(1:3),list(1:3,c(1,3,2),c(2,1,3),c(2,3,1),c(3,1,2),3:1))
 	expect_equal(length(permute(1:5)),factorial(5))
 	expect_equal(length(permute(1:6)),factorial(6))
+	expect_equal(sort(unlist(permute(1:6))),rep(1:6,each=factorial(6)))
+	expect_equal(unique(sapply(permute(2:7),function(x)length(unique(x)))),6)
+})
+
+test_that("Test Tukey permutes",{
+	expect_equal(length(tukeyPermutes()),32)
+	expect_equal(length(tukeyPermutes(5,2)),32)
+	expect_equal(length(tukeyPermutes(3,2)),4)
+	expect_equal(length(tukeyPermutes(3,3)),6)
+	expect_equal(sort(unlist(tukeyPermutes(5,2))),rep(1:5,each=32))
+	expect_false(any(sapply(tukeyPermutes(6),function(x)x[1]<x[2]&&x[2]<x[3])))
+	expect_false(any(sapply(tukeyPermutes(6),function(x)x[5]>x[4]&&x[4]>x[3])))
 })

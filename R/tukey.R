@@ -9,7 +9,6 @@
 #' @examples
 #' permute(letters[1:3])
 #' permute(1:5)
-#
 permute<-function(vals){
   if(length(vals)==1)return(list(vals))
   if(length(vals)==0)return(NULL)
@@ -19,7 +18,17 @@ permute<-function(vals){
   return(unlist(permList,recursive=FALSE))
 }
 
-goodPermutes<-function(n,limit=2){
+#' Find permutations meeting Tukey criteria
+#' 
+#' Find all permutations of 1:n fulfilling Tukey's criteria that there are no runs of 3 or more increases or decreases in a row. Tukey just uses the default n=5 and limit=2.
+#'
+#' @param n permutations from 1 to n
+#' @param limit the maximum number of increases or decreases in a row
+#' @export
+#' @examples
+#' tukeyPermutes()
+#' tukeyPermutes(6,3)
+tukeyPermutes<-function(n=5,limit=2){
   allPermutes<-permute(1:n)
   nSameDir<-sapply(allPermutes,function(x)max(rle(diff(x)>0)$lengths))
   okPermutes<-allPermutes[nSameDir<limit]
@@ -27,7 +36,7 @@ goodPermutes<-function(n,limit=2){
 }
 
 generatePermuteString<-function(nReps=20,n=5){
-  permutes<-goodPermutes(n)
+  permutes<-tukeyPermutes(n)
   indexed<-tapply(permutes,sapply(permutes,'[',1),c)
   out<-rep(c(NULL),nReps)
   out[[1]]<-sample(permutes,1)[[1]]
@@ -56,7 +65,7 @@ texture<-function(x,jitter=TRUE){
   offset<-tukeyT(10)
   offset[26:50]<-offset[26:50]+2
   spread<-rep(offset,length.out=n)
-  if(jitter)spread<-spread+runif(n,-1,1)
+  if(jitter)spread<-spread+stats::runif(n,-1,1)
   return(spread)
 }
 
