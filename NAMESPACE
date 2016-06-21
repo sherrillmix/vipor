@@ -2,11 +2,13 @@
 
 export(aveWithArgs)
 export(digits2number)
+export(generatePermuteString)
 export(number2digits)
 export(offsetSingleGroup)
 export(offsetX)
 export(permute)
 export(topBottomDistribute)
 export(tukeyPermutes)
+export(tukeyT)
 export(vanDerCorput)
 export(vpPlot)

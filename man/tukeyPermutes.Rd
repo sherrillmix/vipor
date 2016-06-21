@@ -11,6 +11,9 @@ tukeyPermutes(n = 5, limit = 2)
 
 \item{limit}{the maximum number of increases or decreases in a row}
 }
+\value{
+a list of vectors containing valid permutations
+}
 \description{
 Find all permutations of 1:n fulfilling Tukey's criteria that there are no runs of 3 or more increases or decreases in a row. Tukey just uses the default n=5 and limit=2.
 }

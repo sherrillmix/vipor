@@ -10,7 +10,7 @@ permute(vals)
 \item{vals}{a vector of elements to be permuted}
 }
 \value{
-A list of all permutation of the values
+A list of vectors containing all permutation of the values
 }
 \description{
 Recursively generates all permutations of a vector. The result will be \code{factorial(length(vals))} long so be careful with any longer vectors (e.g. longer than 10).

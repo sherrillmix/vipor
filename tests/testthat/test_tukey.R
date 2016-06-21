@@ -19,5 +19,23 @@ test_that("Test Tukey permutes",{
 	expect_equal(length(tukeyPermutes(3,3)),6)
 	expect_equal(sort(unlist(tukeyPermutes(5,2))),rep(1:5,each=32))
 	expect_false(any(sapply(tukeyPermutes(6),function(x)x[1]<x[2]&&x[2]<x[3])))
+	expect_false(any(sapply(tukeyPermutes(6),function(x)x[2]<x[3]&&x[3]<x[4])))
 	expect_false(any(sapply(tukeyPermutes(6),function(x)x[5]>x[4]&&x[4]>x[3])))
+	expect_false(any(sapply(tukeyPermutes(6),function(x)x[6]>x[5]&&x[5]>x[4])))
+})
+
+test_that("Test Tukey permute string",{
+	expect_equal(sort(generatePermuteString(20)),rep(1:5,each=20))
+	expect_equal(sort(generatePermuteString(10,7)),rep(1:7,each=10))
+	expect_lt(max(rle(diff(generatePermuteString(20,7))>0)$lengths),3)
+	expect_lt(max(rle(diff(generatePermuteString(100,5))>0)$lengths),3)
+})
+
+test_that("Test Tukey offset positioning",{
+	expect_equal(sort(tukeyT()),rep(seq(2,98,4),each=2))
+	expect_equal(sort(tukeyT(10,5)),rep(seq(2,98,4),each=2))
+	expect_equal(sort(tukeyT(20,5)),rep(seq(2,98,4),each=4))
+	expect_equal(length(tukeyT(10,6)),60)
+	expect_lt(max(rle(diff(tukeyT())>0)$lengths),3)
+	expect_lt(max(rle(diff(tukeyT(50))>0)$lengths),3)
 })

@@ -3,7 +3,7 @@
 #' Recursively generates all permutations of a vector. The result will be \code{factorial(length(vals))} long so be careful with any longer vectors (e.g. longer than 10).
 #'
 #' @param vals a vector of elements to be permuted
-#' @return A list of all permutation of the values
+#' @return A list of vectors containing all permutation of the values
 #' @export
 #' @seealso \code{\link{sample}}
 #' @examples
@@ -24,6 +24,7 @@ permute<-function(vals){
 #'
 #' @param n permutations from 1 to n
 #' @param limit the maximum number of increases or decreases in a row
+#' @return a list of vectors containing valid permutations
 #' @export
 #' @examples
 #' tukeyPermutes()
@@ -35,6 +36,17 @@ tukeyPermutes<-function(n=5,limit=2){
   return(okPermutes)
 }
 
+#' Generate a permutation string meeting Tukey criteria
+#' 
+#' Find a random string of concatenated permutations of 1:n fulfilling Tukey's criteria that there are no runs of 3 or more increases or decreases in a row. Tukey just uses the default n=5.
+#'
+#' @param nReps number of permutations to concatenate
+#' @param n permutations from 1 to n
+#' @return a vector of nReps*n integers giving concatenated permutations
+#' @export
+#' @examples
+#' tukeyPermutes()
+#' tukeyPermutes(6,3)
 generatePermuteString<-function(nReps=20,n=5){
   permutes<-tukeyPermutes(n)
   indexed<-tapply(permutes,sapply(permutes,'[',1),c)
@@ -51,7 +63,19 @@ generatePermuteString<-function(nReps=20,n=5){
 }
 
 
-tukeyT<-function(nReps,base=5){
+#' Combine multiple permutation strings into one
+#'
+#' Combine base+1 permutation strings to generate offsets
+#'
+#' @param nReps number of permutations to paste together
+#' @param base generate permutations of integers 1:base
+#' @return A nReps*base length vector giving offset positions based on Tukey's algorithm
+#' @export
+#' @examples
+#' tukeyT()
+#' tukeyT()
+#' tukeyT(5,4)
+tukeyT<-function(nReps=10,base=5){
   T<-generatePermuteString(nReps,base)
   ti<-lapply(1:base,function(x)generatePermuteString(nReps,base))
   indexs<-1:length(T)
@@ -60,7 +84,12 @@ tukeyT<-function(nReps,base=5){
   return(out)
 }
 
-texture<-function(x,jitter=TRUE){
+#' Generate random positions based on Tukey texture algorithm
+#'
+#' @param x the points to be jittered. really only used to calculate length
+#' @param jitter if TRUE add random jitter to each point
+#'
+tukeyTexture<-function(x,jitter=TRUE){
   n<-length(x)
   offset<-tukeyT(10)
   offset[26:50]<-offset[26:50]+2
