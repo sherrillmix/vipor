@@ -39,3 +39,9 @@ test_that("Test Tukey offset positioning",{
 	expect_lt(max(rle(diff(tukeyT())>0)$lengths),3)
 	expect_lt(max(rle(diff(tukeyT(50))>0)$lengths),3)
 })
+
+test_that("Test Tukey algorithm",{
+	expect_equal(length(tukeyTexture(1:200)),200)
+	expect_equal(length(unique(tukeyTexture(1:100))),100) #assuming jitter will not overlap perfectly
+	expect_equal(length(unique(tukeyTexture(1:100,jitter=FALSE))),50)
+})

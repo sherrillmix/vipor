@@ -86,15 +86,20 @@ tukeyT<-function(nReps=10,base=5){
 
 #' Generate random positions based on Tukey texture algorithm
 #'
+#' Generate partly random, partly constrained lateral displacements based on Tukey texture algorithm from Tukey and Tukey 1990
+#'
 #' @param x the points to be jittered. really only used to calculate length
 #' @param jitter if TRUE add random jitter to each point
-#'
+#' @return a vector of length length(x) giving displacements for each corresponding point in x
+#' @export
+#' @examples
 tukeyTexture<-function(x,jitter=TRUE){
   n<-length(x)
   offset<-tukeyT(10)
   offset[26:50]<-offset[26:50]+2
   spread<-rep(offset,length.out=n)
   if(jitter)spread<-spread+stats::runif(n,-1,1)
+  spread<-spread[order(x)]
   return(spread)
 }
 

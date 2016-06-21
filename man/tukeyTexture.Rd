@@ -11,7 +11,10 @@ tukeyTexture(x, jitter = TRUE)
 
 \item{jitter}{if TRUE add random jitter to each point}
 }
+\value{
+a vector of length length(x) giving displacements for each corresponding point in x
+}
 \description{
-Generate random positions based on Tukey texture algorithm
+Generate partly random, partly constrained lateral displacements based on Tukey texture algorithm from Tukey and Tukey 1990
 }
 
