@@ -5,8 +5,9 @@ nParts<-sapply(strsplit(counties$geographicArea,' - '),length)
 counties<-counties[nParts==3,]
 counties$state<-sapply(strsplit(counties$geographicArea,' - '),'[',2)
 counties$county<-counties$geographicArea2
-out<-counties[,c('id','state','county','population','housingUnits','totalArea','waterArea','landArea')]
-save(out,file='../data/counties.RData')
+counties[counties$county=="Do\361a Ana County",'county']<-'Dona Ana County'
+counties<-counties[,c('id','state','county','population','housingUnits','totalArea','waterArea','landArea')]
+save(counties,file='../data/counties.RData')
 tools::resaveRdaFiles('../data/counties.RData')
 
 

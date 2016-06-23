@@ -92,6 +92,8 @@ tukeyT<-function(nReps=10,base=5){
 #' @param x the points to be jittered. really only used to calculate length
 #' @param jitter if TRUE add random jitter to each point
 #' @param delta a ``reasonably small value'' used in edge straightening and thinning
+#' @param thin if TRUE then push points to the center in thin regions
+#' @param hollow if TRUE then expand points outward to avoid ``hollowness''
 #' @return a vector of length length(x) giving displacements for each corresponding point in x
 #' @export
 #' @examples
@@ -99,7 +101,7 @@ tukeyT<-function(nReps=10,base=5){
 #' plot(tukeyTexture(x),x)
 #' x<-1:100
 #' plot(tukeyTexture(x),x)
-tukeyTexture<-function(x,jitter=TRUE,delta=diff(stats::quantile(x,c(.25,.75)))*.03){
+tukeyTexture<-function(x,jitter=TRUE,delta=diff(stats::quantile(x,c(.25,.75)))*.03,thin=FALSE,hollow=FALSE){
   n<-length(x)
   orderX<-order(x)
   x<-x[orderX]
@@ -107,9 +109,41 @@ tukeyTexture<-function(x,jitter=TRUE,delta=diff(stats::quantile(x,c(.25,.75)))*.
   offset[26:50]<-offset[26:50]+2
   spread<-rep(offset,length.out=n)
   if(jitter)spread<-spread+stats::runif(n,-1,1)
-  diffLeft<-c(Inf,diff(x))
-  diffRight<-c(diff(x),Inf)
-  spread[diffLeft>delta&diffRight>delta]<-50
+  #deal with thin regions
+  if(thin){
+    diffLeft<-c(Inf,diff(x))
+    diffRight<-c(diff(x),Inf)
+    spread[diffLeft>delta&diffRight>delta]<-50
+  }
+  #deal with 'hollow' regions
+  if(hollow){
+    current<-1
+    fiveStarts<-seq(1,n,5)
+    for(ii in fiveStarts){
+      breakPoint<-fiveStarts[which(x[fiveStarts]-x[ii]>delta*10)[1]] #sorted so can just take [1] instead of min
+      if(is.na(breakPoint))break()
+      rightMost<-min(breakPoint+4,n)
+      spread[ii:rightMost]<-(spread[ii:rightMost]-min(spread[ii:rightMost]))/diff(range(spread[ii:rightMost]))*100
+    }
+  }
   return(spread[order(orderX)])
 }
 
+#' Census ata on US counties
+#'
+#' A dataset containing data from the US census burea
+#'
+#' @format A data frame with 3143 rows and 8 variables:
+#' \describe{
+#'   \item{id}{GEO.id from original data}
+#'   \item{state}{state in which the county is located}
+#'   \item{county}{name of the county}
+#'   \item{population}{population of the county}
+#'   \item{housingUnits}{housing units in the county}
+#'   \item{totalArea}{Area in square miles - Total area}
+#'   \item{waterArea}{Area in square miles - Water area}
+#'   \item{landArea}{Area in square miles - Land area}
+#' }
+#' @references \url{https://www.census.gov/prod/cen2010/cph-2-1.pdf}
+#' @source \url{http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_SF1/GCTPH1.US05PR}, system.file("data-raw", "makeCounties.R", package = "vipor")
+"counties"
