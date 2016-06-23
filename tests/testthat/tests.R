@@ -6,6 +6,11 @@ test_that("Test offsetting",{
 	expect_error(offsetX(1:2,1), "not the same length")
 	expect_equal(length(unique(offsetX(rep(1,100)))), 100)
 	expect_equal(offsetX(rep(1,100)), offsetX(rep(1,100)))
+	expect_equal(offsetX(rep(1,100),width=.2)*2, offsetX(rep(1,100),width=.4))
+	expect_equal(
+    offsetX(rep(1:2,c(10,1000)),rep(1:2,c(10,1000)),varwidth=TRUE)[1:10]*10,
+    offsetX(rep(1:2,c(1000,1000)),rep(1:2,c(1000,1000)),varwidth=TRUE)[1:10]
+  )
 })
 
 test_that("Test single group offsetting",{
@@ -13,6 +18,10 @@ test_that("Test single group offsetting",{
 	expect_equal(offsetSingleGroup(NULL), NULL)
 	expect_equal(offsetSingleGroup(rep(1,100)), offsetSingleGroup(rep(1,100)))
 	expect_equal(length(offsetSingleGroup(rnorm(1000))), 1000)
+  x<-rnorm(1000)
+	expect_equal(offsetSingleGroup(x), offsetSingleGroup(x,maxLength=1000))
+	expect_equal(offsetSingleGroup(x)*10, offsetSingleGroup(x,maxLength=10))
+	expect_equal(offsetSingleGroup(x)/10, offsetSingleGroup(x,maxLength=100000))
 })
 
 test_that("Test ave with args",{
@@ -23,6 +32,7 @@ test_that("Test ave with args",{
 	expect_equal(aveWithArgs(100:1+.01,rep(1:5,20),FUN=max), ave(100:1+.01,rep(1:5,20),FUN=max))
 	expect_equal(aveWithArgs(c(1:5,NA),rep(1:3,2),FUN=max,na.rm=TRUE), rep(c(4,5,3),2))
 	expect_equal(aveWithArgs(c(1:6),rep(1:3,2),FUN=function(x,y)sum(x)+y,3), rep(c(8,10,12),2))
+	expect_equal(aveWithArgs(c(1:6)),rep(mean(1:6),6))
 	expect_equal(aveWithArgs(c(1:6),rep(1:3,2),FUN=function(x,y)x+y,3), 1:6+3)
 	expect_equal(aveWithArgs(c(6:1),rep(1:3,2),FUN=function(x,y)sqrt(x)+y,3), sqrt(6:1)+3)
 	expect_error(aveWithArgs(c(6:1),rep(1:3,2),FUN=function(x,y)sqrt(x)+y), 'argument.*missing')
@@ -97,6 +107,8 @@ test_that("Test digit combining",{
 	expect_equal(digits2number(c(rep(0,5),1),5), 5^5)
 	expect_equal(digits2number(c(1,1,1),1), 3)
 	expect_equal(digits2number(rep(0,16),2), 0)
+	expect_equal(digits2number(c()), 0)
+	expect_equal(digits2number(c(),11), 0)
 	expect_error(digits2number(c(1,1,1),0), 'base') #doesn't really require an error but probably does not produce a desired result
 	expect_error(digits2number(1,-1), 'base') #doesn't really require an error but probably does not produce a desired result
 	expect_error(digits2number(-1,10), 'digit') #doesn't really require an error but probably does not produce a desired result

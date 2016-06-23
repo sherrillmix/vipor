@@ -92,10 +92,10 @@ offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
   maxLength<-max(table(x))
 
   # Apply the van der Corput noise to each x group to create offsets
-  new_x <- aveWithArgs(y,x, FUN=offsetSingleGroup,maxLength=if(varwidth){maxLength}else{NULL},...)
-  new_x <- new_x*width
+  offsets <- aveWithArgs(y,x, FUN=offsetSingleGroup,maxLength=if(varwidth){maxLength}else{NULL},...)
+  out <- offsets*width
 
-  return(new_x)
+  return(out)
 }
 
 
