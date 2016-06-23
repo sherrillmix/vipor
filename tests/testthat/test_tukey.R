@@ -32,9 +32,9 @@ test_that("Test Tukey permute string",{
 })
 
 test_that("Test Tukey offset positioning",{
-	expect_equal(sort(tukeyT()),rep(seq(2,98,4),each=2))
-	expect_equal(sort(tukeyT(10,5)),rep(seq(2,98,4),each=2))
-	expect_equal(sort(tukeyT(20,5)),rep(seq(2,98,4),each=4))
+	expect_equal(sort(tukeyT()),rep(seq(1,97,4),each=2))
+	expect_equal(sort(tukeyT(10,5)),rep(seq(1,97,4),each=2))
+	expect_equal(sort(tukeyT(20,5)),rep(seq(1,97,4),each=4))
 	expect_equal(length(tukeyT(10,6)),60)
 	expect_lt(max(rle(diff(tukeyT())>0)$lengths),3)
 	expect_lt(max(rle(diff(tukeyT(50))>0)$lengths),3)
@@ -47,4 +47,7 @@ test_that("Test Tukey algorithm",{
 	expect_gte(min(tukeyTexture(1:1234)),0)
 	expect_equal(length(unique(tukeyTexture(1:100))),100) #assuming jitter will not overlap perfectly
 	expect_equal(length(unique(tukeyTexture(1:100,jitter=FALSE))),50)
+	expect_equal(tukeyTexture(c(-100,1:100,101.1),delta=1)[c(1,102)],c(50,50))
+	expect_equal(tukeyTexture(c(-100,1:100,101.1),delta=10)[1],50)
+	expect_true(tukeyTexture(c(-100,1:100,101.1),delta=10)[102]!=50) #assuming jitter and algorithm will not exactly equal 50
 })

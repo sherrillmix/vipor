@@ -91,16 +91,25 @@ tukeyT<-function(nReps=10,base=5){
 #'
 #' @param x the points to be jittered. really only used to calculate length
 #' @param jitter if TRUE add random jitter to each point
+#' @param delta a ``reasonably small value'' used in edge straightening and thinning
 #' @return a vector of length length(x) giving displacements for each corresponding point in x
 #' @export
 #' @examples
-tukeyTexture<-function(x,jitter=TRUE){
+#' x<-rnorm(200)
+#' plot(tukeyTexture(x),x)
+#' x<-1:100
+#' plot(tukeyTexture(x),x)
+tukeyTexture<-function(x,jitter=TRUE,delta=diff(stats::quantile(x,c(.25,.75)))*.03){
   n<-length(x)
+  orderX<-order(x)
+  x<-x[orderX]
   offset<-tukeyT(10)
   offset[26:50]<-offset[26:50]+2
   spread<-rep(offset,length.out=n)
   if(jitter)spread<-spread+stats::runif(n,-1,1)
-  spread<-spread[order(x)]
-  return(spread)
+  diffLeft<-c(Inf,diff(x))
+  diffRight<-c(diff(x),Inf)
+  spread[diffLeft>delta&diffRight>delta]<-50
+  return(spread[order(orderX)])
 }
 

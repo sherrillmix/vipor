@@ -4,17 +4,26 @@
 \alias{tukeyTexture}
 \title{Generate random positions based on Tukey texture algorithm}
 \usage{
-tukeyTexture(x, jitter = TRUE)
+tukeyTexture(x, jitter = TRUE, delta = diff(stats::quantile(x, c(0.25,
+  0.75))) * 0.03)
 }
 \arguments{
 \item{x}{the points to be jittered. really only used to calculate length}
 
 \item{jitter}{if TRUE add random jitter to each point}
+
+\item{delta}{a ``reasonably small value'' used in edge straightening and thinning}
 }
 \value{
 a vector of length length(x) giving displacements for each corresponding point in x
 }
 \description{
 Generate partly random, partly constrained lateral displacements based on Tukey texture algorithm from Tukey and Tukey 1990
+}
+\examples{
+x<-rnorm(200)
+plot(tukeyTexture(x),x)
+x<-1:100
+plot(tukeyTexture(x),x)
 }
 
