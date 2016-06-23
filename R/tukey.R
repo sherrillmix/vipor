@@ -80,7 +80,8 @@ tukeyT<-function(nReps=10,base=5){
   ti<-lapply(1:base,function(x)generatePermuteString(nReps,base))
   indexs<-1:length(T)
   ts<-sapply(indexs,function(fiveGPlusI)ti[[T[fiveGPlusI]]][ceiling(fiveGPlusI/5)])
-  out<-2+4*(ts-1)+20*(T-1)
+  #final -1 to deal with using 1:base instead of 0:(base-1)
+  out<-2+4*(ts-1)+20*(T-1)-1
   return(out)
 }
 
