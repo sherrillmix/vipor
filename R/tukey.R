@@ -91,9 +91,9 @@ tukeyT<-function(nReps=10,base=5){
 #'
 #' @param x the points to be jittered. really only used to calculate length
 #' @param jitter if TRUE add random jitter to each point
-#' @param delta a ``reasonably small value'' used in edge straightening and thinning
 #' @param thin if TRUE then push points to the center in thin regions
 #' @param hollow if TRUE then expand points outward to avoid ``hollowness''
+#' @param delta a ``reasonably small value'' used in edge straightening and thinning
 #' @return a vector of length length(x) giving displacements for each corresponding point in x
 #' @export
 #' @examples
@@ -101,7 +101,7 @@ tukeyT<-function(nReps=10,base=5){
 #' plot(tukeyTexture(x),x)
 #' x<-1:100
 #' plot(tukeyTexture(x),x)
-tukeyTexture<-function(x,jitter=TRUE,delta=diff(stats::quantile(x,c(.25,.75)))*.03,thin=FALSE,hollow=FALSE){
+tukeyTexture<-function(x,jitter=TRUE,thin=FALSE,hollow=FALSE,delta=diff(stats::quantile(x,c(.25,.75)))*.03){
   n<-length(x)
   orderX<-order(x)
   x<-x[orderX]
@@ -119,8 +119,10 @@ tukeyTexture<-function(x,jitter=TRUE,delta=diff(stats::quantile(x,c(.25,.75)))*.
   if(hollow){
     current<-1
     fiveStarts<-seq(1,n,5)
+    fiveEnds<-fiveStarts+4
+	 fiveEnds[fiveEnds>n]<-n
     for(ii in fiveStarts){
-      breakPoint<-fiveStarts[which(x[fiveStarts]-x[ii]>delta*10)[1]] #sorted so can just take [1] instead of min
+      breakPoint<-fiveStarts[which(x[fiveEnds]-x[ii]>delta*10)[1]] #sorted so can just take [1] instead of min
       if(is.na(breakPoint))break()
       rightMost<-min(breakPoint+4,n)
       spread[ii:rightMost]<-(spread[ii:rightMost]-min(spread[ii:rightMost]))/diff(range(spread[ii:rightMost]))*100

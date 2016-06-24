@@ -47,7 +47,12 @@ test_that("Test Tukey algorithm",{
 	expect_gte(min(tukeyTexture(1:1234)),0)
 	expect_equal(length(unique(tukeyTexture(1:100))),100) #assuming jitter will not overlap perfectly
 	expect_equal(length(unique(tukeyTexture(1:100,jitter=FALSE))),50)
-	expect_equal(tukeyTexture(c(-100,1:100,101.1),delta=1)[c(1,102)],c(50,50))
-	expect_equal(tukeyTexture(c(-100,1:100,101.1),delta=10)[1],50)
-	expect_true(tukeyTexture(c(-100,1:100,101.1),delta=10)[102]!=50) #assuming jitter and algorithm will not exactly equal 50
+	expect_equal(tukeyTexture(c(-100,1:100,101.1),delta=1,thin=TRUE)[c(1,102)],c(50,50))
+	expect_equal(tukeyTexture(c(-100,1:100,101.1),delta=10,thin=TRUE)[1],50)
+	expect_true(tukeyTexture(c(-100,1:100,101.1),delta=10,thin=TRUE)[102]!=50) #assuming jitter and algorithm will not exactly equal 50
+	expect_equal(tukeyTexture(1:100,delta=.9,thin=TRUE),rep(50,100))
+	expect_equal(range(tukeyTexture(c(1,2,101,102),delta=10,hollow=TRUE)),c(0,100))
+	expect_equal(sum(tukeyTexture(c(1:5,101:105),delta=.1,hollow=TRUE) %in% c(0,100)),4)
+	expect_equal(sum(tukeyTexture(c(1:5,101:105),delta=1,hollow=TRUE) %in% c(0,100)),2)
+	expect_true(all(range(tukeyTexture(c(1,2,101,102),delta=10.1,hollow=TRUE))!=c(0,100))) #assuming jitter and algorithm will not exactly equal 0,100
 })

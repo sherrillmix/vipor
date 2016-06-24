@@ -4,13 +4,17 @@
 \alias{tukeyTexture}
 \title{Generate random positions based on Tukey texture algorithm}
 \usage{
-tukeyTexture(x, jitter = TRUE, delta = diff(stats::quantile(x, c(0.25,
-  0.75))) * 0.03)
+tukeyTexture(x, jitter = TRUE, thin = FALSE, hollow = FALSE,
+  delta = diff(stats::quantile(x, c(0.25, 0.75))) * 0.03)
 }
 \arguments{
 \item{x}{the points to be jittered. really only used to calculate length}
 
 \item{jitter}{if TRUE add random jitter to each point}
+
+\item{thin}{if TRUE then push points to the center in thin regions}
+
+\item{hollow}{if TRUE then expand points outward to avoid ``hollowness''}
 
 \item{delta}{a ``reasonably small value'' used in edge straightening and thinning}
 }
