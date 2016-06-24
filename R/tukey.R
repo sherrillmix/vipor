@@ -101,6 +101,7 @@ tukeyT<-function(nReps=10,base=5){
 #' plot(tukeyTexture(x),x)
 #' x<-1:100
 #' plot(tukeyTexture(x),x)
+#' plot(tukeyTexture(log10(counties$landArea),TRUE,TRUE),log10(counties$landArea),cex=.25)
 tukeyTexture<-function(x,jitter=TRUE,thin=FALSE,hollow=FALSE,delta=diff(stats::quantile(x,c(.25,.75)))*.03){
   n<-length(x)
   orderX<-order(x)
