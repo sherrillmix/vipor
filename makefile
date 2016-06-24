@@ -4,7 +4,7 @@ PACKAGEFILE:=../$(NAME)_$(VERSION).tar.gz
 
 all: $(PACKAGEFILE) README.md
 
-.PHONY: all install
+.PHONY: all install localInstall
 
 install:
 	R -e 'devtools::install_github("sherrillmix/$(NAME)")'
@@ -29,6 +29,6 @@ README.md: README.Rmd R/*.R
 data/integrations.RData: data-raw/makeIntegrations.R
 	R -e 'source("data-raw/makeIntegrations.R",chdir=TRUE)'
 
-$(PACKAGEFILE): man R/*.R DESCRIPTION tests/testthat/tests.R inst/doc data/integrations.RData
+$(PACKAGEFILE): man R/*.R DESCRIPTION tests/testthat/*.R inst/doc data/integrations.RData
 	sed -i "s/^Date:.*$$/Date: `date +%Y-%m-%d`/" DESCRIPTION
 	R -e 'devtools::check();devtools::build()'
