@@ -8,7 +8,8 @@
 offsetX(y, x = rep(1, length(y)), width = 0.4, varwidth = FALSE, ...)
 
 offsetSingleGroup(y, maxLength = NULL, method = c("quasirandom",
-  "pseudorandom", "smiley", "frowney"), nbins = NULL, adjust = 1)
+  "pseudorandom", "smiley", "frowney", "tukey", "tukeyNoDense"), nbins = NULL,
+  adjust = 1)
 }
 \arguments{
 \item{y}{vector of data points}

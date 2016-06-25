@@ -113,7 +113,7 @@ offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
 #' @rdname offsetX 
 # @seealso \code{\link{offsetX}}, \code{\link[stats]{density}}
 # @return a vector with of x-offsets between -1 and 1 of the same length as y
-offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney'),nbins=NULL,adjust=1) {
+offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney','tukey','tukeyNoDense'),nbins=NULL,adjust=1) {
   method<-match.arg(method)
   if(is.null(nbins))nbins<-ifelse(method %in% c("pseudorandom","quasirandom"),2^10,ceiling(length(y)/5))
   #catch 0 length inputs
@@ -132,10 +132,13 @@ offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorando
     'pseudorandom'=stats::runif(length(y)),
     'smiley'=stats::ave(y,as.character(cut(y,dens$x)),FUN=topBottomDistribute),
     'frowney'=stats::ave(y,as.character(cut(y,dens$x)),FUN=function(x)topBottomDistribute(x,frowney=TRUE)),
+    'tukey'=tukeyTexture(y)/100,
+    'tukeyNoDense'=tukeyTexture(y,TRUE,TRUE)/100,
     stop(simpleError('Unrecognized method in offsetSingleGroup'))
   )
 
-  pointDensities<-stats::approx(dens$x,dens$y,y)$y
+  if(method %in% c('tukeyNoDense'))pointDensities<-1
+  else pointDensities<-stats::approx(dens$x,dens$y,y)$y
 
   #*2 to get -1 to 1
   out<-(offset-.5)*2*pointDensities*subgroup_width
