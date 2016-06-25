@@ -121,7 +121,7 @@ tukeyTexture<-function(x,jitter=TRUE,thin=FALSE,hollow=FALSE,delta=diff(stats::q
     current<-1
     fiveStarts<-seq(1,n,5)
     fiveEnds<-fiveStarts+4
-	 fiveEnds[fiveEnds>n]<-n
+    fiveEnds[fiveEnds>n]<-n
     for(ii in fiveStarts){
       breakPoint<-fiveStarts[which(x[fiveEnds]-x[ii]>delta*10)[1]] #sorted so can just take [1] instead of min
       if(is.na(breakPoint))break()
