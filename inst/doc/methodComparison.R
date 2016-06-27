@@ -37,7 +37,9 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##       'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
 ##       'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
 ##       'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
-##       'Beeswarm'=swarmx(rep(0,length(y)),y)$x
+##       'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
+##       'Tukey'=offsetX(y,method='tukeyNoDense'),
+##       'Tukey +\ndensity'=offsetX(y,method='tukey')
 ##     )
 ##     ids <- rep(1:length(offsets), each=length(y))
 ##     plot(unlist(offsets) + ids, rep(y, length(offsets)),
@@ -62,7 +64,9 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
       'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
       'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
       'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
-      'Beeswarm'=swarmx(rep(0,length(y)),y)$x
+      'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
+      'Tukey'=offsetX(y,method='tukeyNoDense'),
+      'Tukey +\ndensity'=offsetX(y,method='tukey')
     )
     ids <- rep(1:length(offsets), each=length(y))
     plot(unlist(offsets) + ids, rep(y, length(offsets)),

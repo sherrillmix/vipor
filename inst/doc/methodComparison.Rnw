@@ -36,6 +36,7 @@ There are several ways to plot grouped one-dimensional data combining points and
 	\item[alternating within bins] The kernel density is estimated then points are distributed within the density estimate for a given bin evenly spaced with extreme values alternating from right to left e.g. max, 3rd max, ..., 4th max, 2nd max. If maximums are placed on the outside then these plots often form consecutive ``smiley'' patterns. If minimums are placed on the outside then ``frowny'' patterns are generated. Selection of the number of bins can have large effects on appearance important.
 	\item[beanplot] The package \pkg{beeswarm} provides methods for generating a ``beeswarm'' plot where points are distibuted so that no points overlap. Kernel density is not calculated although the resulting plot does provide an approximate density estimate.  Selection of an appropriate number of bins affects appearance and plot and point sizes must be known in advance.
 	\item[quasirandom] The kernel density is estimated then points are distributed quasirandomly using the von der Corput sequence within the density estimate for a given bin.  Selection of an appropriate number of bins does not greatly affect appearance and position does not depend on plotting parameters.
+	\item[tukey] An algorithm described by Tukey and Tukey in ``Strips displaying empirical distributions: I. textured dot strips'' using constrained permutations of offsets to distrbute the data.
 \end{description}
 
 
@@ -53,7 +54,7 @@ To compare between methods we'll generate some simulated data from normal, bimod
   names(dat) <- c("Normal", "Dense Normal", "Bimodal", "Extremes")
 @
 
-We plot the data using quasirandom, pseudorandom, alternating and beeswarm methods:% (Figure \ref{figVpPlot}):
+We plot the data using quasirandom, pseudorandom, alternating, Tukey texture and beeswarm methods:% (Figure \ref{figVpPlot}):
 <<simmed, echo=TRUE, eval=FALSE>>=
   par(mfrow=c(4,1), mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
@@ -66,7 +67,9 @@ We plot the data using quasirandom, pseudorandom, alternating and beeswarm metho
       'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
       'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
       'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
-      'Beeswarm'=swarmx(rep(0,length(y)),y)$x
+      'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
+      'Tukey'=offsetX(y,method='tukeyNoDense'),
+      'Tukey +\ndensity'=offsetX(y,method='tukey')
     )
     ids <- rep(1:length(offsets), each=length(y))
     plot(unlist(offsets) + ids, rep(y, length(offsets)),
