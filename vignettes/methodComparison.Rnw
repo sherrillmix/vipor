@@ -112,7 +112,7 @@ And also plot using \code{boxplot}, \code{beanplot} and \code{vioplot} methods:%
 \subsection{Few data points}
 An example with few data points (maybe a bit too few for optimal use of this package) using the \code{OrchardSprays} data from the \pkg{datasets} package:
 <<vpOrchard, echo=TRUE, eval=FALSE>>=
-  par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+  par(mfrow=c(5,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,offsetXArgs){
@@ -145,6 +145,9 @@ An example with few data points (maybe a bit too few for optimal use of this pac
   beeswarm(beeInput,las=1,ylab='Log treatment effect',xlab='Treatment',
     pch=21, col='#00000099',bg='#00000033', main='Beeswarm')
   addMeanLines(OrchardSprays$treatment,log(OrchardSprays$decrease))
+  plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
+    list(method='tukeyNoDense',width=.2))
+  title(main='Tukey')
 @
 \begin{center}
 <<showVpOrchard, fig=TRUE, height=6, width=7, echo=FALSE>>=
@@ -157,7 +160,7 @@ Data with discrete bins are plotted adequately although other display choices (e
 <<vpSinger, echo=TRUE, eval=FALSE>>=
   data('singer',package='lattice')
   parts<-sub(' [0-9]+$','',singer$voice)
-  par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+  par(mfrow=c(5,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
@@ -165,8 +168,8 @@ Data with discrete bins are plotted adequately although other display choices (e
     addMeanLines(x,y)
   }
   #quasirandom
-  plotFunc(parts,singer$height)
-  title(main='Quasirandom')
+  plotFunc(parts,singer$height,
+    main='Quasirandom')
   #pseudorandom
   plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),
     main='Pseudorandom')
@@ -178,6 +181,9 @@ Data with discrete bins are plotted adequately although other display choices (e
   beeswarm(beeInput,ylab='Height',main='Beeswarm',
     pch=21, col='#00000099',bg='#00000033')
   addMeanLines(parts,singer$height)
+  #tukey
+  plotFunc(parts,singer$height,offsetXArgs=list(method='tukeyNoDense'),
+    main='Tukey')
 @
 \begin{center}
 <<showVpSinger, fig=TRUE, height=7, width=7, echo=FALSE>>=
@@ -191,7 +197,7 @@ An example with using the \code{beaver1} and \code{beaver2} data from the \pkg{d
 <<vpBeaver, echo=TRUE, eval=FALSE>>=
   y<-c(beaver1$temp,beaver2$temp)
   x<-rep(c('Beaver 1','Beaver 2'), c(nrow(beaver1),nrow(beaver2)))
-  par(mfrow=c(4,1), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+  par(mfrow=c(3,2), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
@@ -210,6 +216,8 @@ An example with using the \code{beaver1} and \code{beaver2} data from the \pkg{d
   beeswarm(beeInput,las=1,ylab='Body temperature',main='Beeswarm',
     pch=21, col='#00000099',bg='#00000033')
   addMeanLines(x,y)
+  #tukey
+  plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
 @
 \begin{center}
 <<showBeaver, fig=TRUE, height=7, width=4, echo=FALSE>>=
@@ -223,7 +231,7 @@ An example using the \code{EuStockMarkets} data from the \pkg{datasets} package.
 <<vpStock, echo=TRUE, eval=FALSE>>=
   y<-as.vector(EuStockMarkets)
   x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
-  par(mfrow=c(4,1), mar=c(4,4.3, 1.2, 0.5),mgp=c(3.3,.75,0),
+  par(mfrow=c(3,2), mar=c(4,4.3, 1.2, 0.5),mgp=c(3.3,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
@@ -241,7 +249,8 @@ An example using the \code{EuStockMarkets} data from the \pkg{datasets} package.
   #beeInput<-split(y,x)
   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
     main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
-  #addMeanLines(x,y)
+  #tukey
+  plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
 @
 \begin{center}
 <<showStock, fig=TRUE, height=7, width=4, echo=FALSE>>=
@@ -298,6 +307,10 @@ Another example using 3000 entries of the \code{diamonds} data from the \pkg{ggp
   vpPlot(x,y,offsetXArgs=list(varwidth=TRUE), 
     ylab='Price',cex=.7,pch=21, col='#00000044',
     bg='#00000011',yaxt='n',main='Quasirandom')
+  prettyYAxis(y)
+  vpPlot(x,y,offsetXArgs=list(method='tukeyNoDense'), 
+    ylab='Price',cex=.7,pch=21, col='#00000044',
+    bg='#00000011',yaxt='n',main='Tukey')
   prettyYAxis(y)
   boxplot(y~x,main='Boxplot',ylab='Price',yaxt='n')
   prettyYAxis(y)

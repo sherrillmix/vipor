@@ -116,7 +116,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ### code chunk number 7: vpOrchard (eval = FALSE)
 ###################################################
-##   par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+##   par(mfrow=c(5,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
 ##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
 ##   #simple function to avoid repeating code
 ##   plotFunc<-function(x,y,offsetXArgs){
@@ -149,12 +149,15 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   beeswarm(beeInput,las=1,ylab='Log treatment effect',xlab='Treatment',
 ##     pch=21, col='#00000099',bg='#00000033', main='Beeswarm')
 ##   addMeanLines(OrchardSprays$treatment,log(OrchardSprays$decrease))
+##   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
+##     list(method='tukeyNoDense',width=.2))
+##   title(main='Tukey')
 
 
 ###################################################
 ### code chunk number 8: showVpOrchard
 ###################################################
-  par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+  par(mfrow=c(5,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,offsetXArgs){
@@ -187,6 +190,9 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   beeswarm(beeInput,las=1,ylab='Log treatment effect',xlab='Treatment',
     pch=21, col='#00000099',bg='#00000033', main='Beeswarm')
   addMeanLines(OrchardSprays$treatment,log(OrchardSprays$decrease))
+  plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
+    list(method='tukeyNoDense',width=.2))
+  title(main='Tukey')
 
 
 ###################################################
@@ -194,7 +200,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ##   data('singer',package='lattice')
 ##   parts<-sub(' [0-9]+$','',singer$voice)
-##   par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+##   par(mfrow=c(5,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
 ##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
 ##   #simple function to avoid repeating code
 ##   plotFunc<-function(x,y,...){
@@ -202,8 +208,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##     addMeanLines(x,y)
 ##   }
 ##   #quasirandom
-##   plotFunc(parts,singer$height)
-##   title(main='Quasirandom')
+##   plotFunc(parts,singer$height,
+##     main='Quasirandom')
 ##   #pseudorandom
 ##   plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),
 ##     main='Pseudorandom')
@@ -215,6 +221,9 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   beeswarm(beeInput,ylab='Height',main='Beeswarm',
 ##     pch=21, col='#00000099',bg='#00000033')
 ##   addMeanLines(parts,singer$height)
+##   #tukey
+##   plotFunc(parts,singer$height,offsetXArgs=list(method='tukeyNoDense'),
+##     main='Tukey')
 
 
 ###################################################
@@ -222,7 +231,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
   data('singer',package='lattice')
   parts<-sub(' [0-9]+$','',singer$voice)
-  par(mfrow=c(4,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
+  par(mfrow=c(5,1), mar=c(3.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
@@ -230,8 +239,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     addMeanLines(x,y)
   }
   #quasirandom
-  plotFunc(parts,singer$height)
-  title(main='Quasirandom')
+  plotFunc(parts,singer$height,
+    main='Quasirandom')
   #pseudorandom
   plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),
     main='Pseudorandom')
@@ -243,6 +252,9 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   beeswarm(beeInput,ylab='Height',main='Beeswarm',
     pch=21, col='#00000099',bg='#00000033')
   addMeanLines(parts,singer$height)
+  #tukey
+  plotFunc(parts,singer$height,offsetXArgs=list(method='tukeyNoDense'),
+    main='Tukey')
 
 
 ###################################################
@@ -250,7 +262,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ##   y<-c(beaver1$temp,beaver2$temp)
 ##   x<-rep(c('Beaver 1','Beaver 2'), c(nrow(beaver1),nrow(beaver2)))
-##   par(mfrow=c(4,1), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+##   par(mfrow=c(3,2), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
 ##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 ##   #simple function to avoid repeating code
 ##   plotFunc<-function(x,y,...){
@@ -269,6 +281,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   beeswarm(beeInput,las=1,ylab='Body temperature',main='Beeswarm',
 ##     pch=21, col='#00000099',bg='#00000033')
 ##   addMeanLines(x,y)
+##   #tukey
+##   plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
 
 
 ###################################################
@@ -276,7 +290,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
   y<-c(beaver1$temp,beaver2$temp)
   x<-rep(c('Beaver 1','Beaver 2'), c(nrow(beaver1),nrow(beaver2)))
-  par(mfrow=c(4,1), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+  par(mfrow=c(3,2), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
@@ -295,6 +309,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   beeswarm(beeInput,las=1,ylab='Body temperature',main='Beeswarm',
     pch=21, col='#00000099',bg='#00000033')
   addMeanLines(x,y)
+  #tukey
+  plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
 
 
 ###################################################
@@ -302,7 +318,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ##   y<-as.vector(EuStockMarkets)
 ##   x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
-##   par(mfrow=c(4,1), mar=c(4,4.3, 1.2, 0.5),mgp=c(3.3,.75,0),
+##   par(mfrow=c(3,2), mar=c(4,4.3, 1.2, 0.5),mgp=c(3.3,.75,0),
 ##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
 ##   #simple function to avoid repeating code
 ##   plotFunc<-function(x,y,...){
@@ -320,7 +336,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   #beeInput<-split(y,x)
 ##   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
 ##     main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
-##   #addMeanLines(x,y)
+##   #tukey
+##   plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
 
 
 ###################################################
@@ -328,7 +345,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
   y<-as.vector(EuStockMarkets)
   x<-rep(colnames(EuStockMarkets), each=nrow(EuStockMarkets))
-  par(mfrow=c(4,1), mar=c(4,4.3, 1.2, 0.5),mgp=c(3.3,.75,0),
+  par(mfrow=c(3,2), mar=c(4,4.3, 1.2, 0.5),mgp=c(3.3,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
@@ -346,7 +363,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #beeInput<-split(y,x)
   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
     main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
-  #addMeanLines(x,y)
+  #tukey
+  plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
 
 
 ###################################################
@@ -367,6 +385,10 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   vpPlot(x,y,offsetXArgs=list(varwidth=TRUE), 
 ##     ylab='Price',cex=.7,pch=21, col='#00000044',
 ##     bg='#00000011',yaxt='n',main='Quasirandom')
+##   prettyYAxis(y)
+##   vpPlot(x,y,offsetXArgs=list(method='tukeyNoDense'), 
+##     ylab='Price',cex=.7,pch=21, col='#00000044',
+##     bg='#00000011',yaxt='n',main='Tukey')
 ##   prettyYAxis(y)
 ##   boxplot(y~x,main='Boxplot',ylab='Price',yaxt='n')
 ##   prettyYAxis(y)
@@ -397,6 +419,10 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   vpPlot(x,y,offsetXArgs=list(varwidth=TRUE), 
     ylab='Price',cex=.7,pch=21, col='#00000044',
     bg='#00000011',yaxt='n',main='Quasirandom')
+  prettyYAxis(y)
+  vpPlot(x,y,offsetXArgs=list(method='tukeyNoDense'), 
+    ylab='Price',cex=.7,pch=21, col='#00000044',
+    bg='#00000011',yaxt='n',main='Tukey')
   prettyYAxis(y)
   boxplot(y~x,main='Boxplot',ylab='Price',yaxt='n')
   prettyYAxis(y)
