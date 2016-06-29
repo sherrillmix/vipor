@@ -219,3 +219,23 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     names(activeCols),pch=21,col=cols,pt.bg=activeCols,xpd=NA)
 
 
+###################################################
+### code chunk number 17: ggPlot (eval = FALSE)
+###################################################
+##   library(ggbeeswarm)
+##   n<-100
+##   dat<-rnorm(n*2)
+##   labs<-rep(c('a','b'),n)
+##   ggplot(mapping=aes(labs,dat))+geom_quasirandom()
+
+
+###################################################
+### code chunk number 18: showGg
+###################################################
+  library(ggbeeswarm)
+  n<-100
+  dat<-rnorm(n*2)
+  labs<-rep(c('a','b'),n)
+  ggplot(mapping=aes(labs,dat))+geom_quasirandom()
+
+
