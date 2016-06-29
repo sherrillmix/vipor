@@ -38,8 +38,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##       'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
 ##       'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
 ##       'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
-##       'Tukey'=offsetX(y,method='tukeyNoDense'),
-##       'Tukey +\ndensity'=offsetX(y,method='tukey')
+##       'Tukey'=offsetX(y,method='tukey'),
+##       'Tukey +\ndensity'=offsetX(y,method='tukeyDense')
 ##     )
 ##     ids <- rep(1:length(offsets), each=length(y))
 ##     plot(unlist(offsets) + ids, rep(y, length(offsets)),
@@ -65,8 +65,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
       'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
       'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
       'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
-      'Tukey'=offsetX(y,method='tukeyNoDense'),
-      'Tukey +\ndensity'=offsetX(y,method='tukey')
+      'Tukey'=offsetX(y,method='tukey'),
+      'Tukey +\ndensity'=offsetX(y,method='tukeyDense')
     )
     ids <- rep(1:length(offsets), each=length(y))
     plot(unlist(offsets) + ids, rep(y, length(offsets)),
@@ -150,7 +150,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##     pch=21, col='#00000099',bg='#00000033', main='Beeswarm')
 ##   addMeanLines(OrchardSprays$treatment,log(OrchardSprays$decrease))
 ##   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
-##     list(method='tukeyNoDense',width=.2))
+##     list(method='tukey',width=.2))
 ##   title(main='Tukey')
 
 
@@ -191,7 +191,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     pch=21, col='#00000099',bg='#00000033', main='Beeswarm')
   addMeanLines(OrchardSprays$treatment,log(OrchardSprays$decrease))
   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
-    list(method='tukeyNoDense',width=.2))
+    list(method='tukey',width=.2))
   title(main='Tukey')
 
 
@@ -222,7 +222,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##     pch=21, col='#00000099',bg='#00000033')
 ##   addMeanLines(parts,singer$height)
 ##   #tukey
-##   plotFunc(parts,singer$height,offsetXArgs=list(method='tukeyNoDense'),
+##   plotFunc(parts,singer$height,offsetXArgs=list(method='tukey'),
 ##     main='Tukey')
 
 
@@ -253,7 +253,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     pch=21, col='#00000099',bg='#00000033')
   addMeanLines(parts,singer$height)
   #tukey
-  plotFunc(parts,singer$height,offsetXArgs=list(method='tukeyNoDense'),
+  plotFunc(parts,singer$height,offsetXArgs=list(method='tukey'),
     main='Tukey')
 
 
@@ -282,7 +282,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##     pch=21, col='#00000099',bg='#00000033')
 ##   addMeanLines(x,y)
 ##   #tukey
-##   plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
+##   plotFunc(x,y,offsetXArgs=list(method='tukey'),main='Tukey')
 
 
 ###################################################
@@ -310,7 +310,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     pch=21, col='#00000099',bg='#00000033')
   addMeanLines(x,y)
   #tukey
-  plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
+  plotFunc(x,y,offsetXArgs=list(method='tukey'),main='Tukey')
 
 
 ###################################################
@@ -337,7 +337,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
 ##     main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
 ##   #tukey
-##   plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
+##   plotFunc(x,y,offsetXArgs=list(method='tukey'),main='Tukey')
 
 
 ###################################################
@@ -364,7 +364,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
     main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
   #tukey
-  plotFunc(x,y,offsetXArgs=list(method='tukeyNoDense'),main='Tukey')
+  plotFunc(x,y,offsetXArgs=list(method='tukey'),main='Tukey')
 
 
 ###################################################
@@ -386,7 +386,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##     ylab='Price',cex=.7,pch=21, col='#00000044',
 ##     bg='#00000011',yaxt='n',main='Quasirandom')
 ##   prettyYAxis(y)
-##   vpPlot(x,y,offsetXArgs=list(method='tukeyNoDense'), 
+##   vpPlot(x,y,offsetXArgs=list(method='tukey'), 
 ##     ylab='Price',cex=.7,pch=21, col='#00000044',
 ##     bg='#00000011',yaxt='n',main='Tukey')
 ##   prettyYAxis(y)
@@ -420,7 +420,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     ylab='Price',cex=.7,pch=21, col='#00000044',
     bg='#00000011',yaxt='n',main='Quasirandom')
   prettyYAxis(y)
-  vpPlot(x,y,offsetXArgs=list(method='tukeyNoDense'), 
+  vpPlot(x,y,offsetXArgs=list(method='tukey'), 
     ylab='Price',cex=.7,pch=21, col='#00000044',
     bg='#00000011',yaxt='n',main='Tukey')
   prettyYAxis(y)

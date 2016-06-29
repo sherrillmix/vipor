@@ -106,14 +106,22 @@ offsetX <- function(y, x=rep(1, length(y)), width=0.4, varwidth=FALSE,...) {
 # Arranges data points using quasirandom noise (van der Corput sequence), pseudorandom noise or alternatively positioning extreme values within a band to the left and right to form beeswarm/one-dimensional scatter/strip chart style plots. Returns a vector of the offsets to be used in plotting. This function is mostly used as a subroutine of \code{\link{offsetX}}
 # @param y y values for a single group for which offsets should be calculated
 #' @param maxLength multiply the offset by sqrt(length(y)/maxLength) if not NULL. The sqrt is to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)
-#' @param method method used to distribute the points
+#' @param method method used to distribute the points:
+#' \describe{
+#'   \item{quasirandom:}{points are distributed within a kernel density estimate of the distribution with offset determined by quasirandom Van der Corput noise}
+#'   \item{pseudorandom:}{points are distributed within a kernel density estimate of the distribution with offset determined by pseudorandom noise a la jitter}
+#'   \item{smiley:}{points are distributed within a kernel density with points in a band distributed with highest value points on the  outside and lowest in the middle}
+#'   \item{frowney:}{points are distributed within a kernel density with points in a band distributed with highest value points in the middle and lowest on the outside}
+#'   \item{tukey:}{points are distributed as described in Tukey and Tukey "Strips displaying empirical distributions: I. textured dot strips"}
+#'   \item{tukeyDense:}{points are distributed as described in Tukey and Tukey but are constrained with the kernel density estimate}
+#' }
 #' @param nbins the number of points used to calculate density (defaults to 1000 for quasirandom and pseudorandom and 100 for others)
 #' @param adjust adjust the bandwidth used to calculate the kernel density (smaller values mean tighter fit, larger values looser fit, default is 1)
 #' @export
 #' @rdname offsetX 
 # @seealso \code{\link{offsetX}}, \code{\link[stats]{density}}
 # @return a vector with of x-offsets between -1 and 1 of the same length as y
-offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney','tukey','tukeyNoDense'),nbins=NULL,adjust=1) {
+offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorandom','smiley','frowney','tukey','tukeyDense'),nbins=NULL,adjust=1) {
   method<-match.arg(method)
   if(is.null(nbins))nbins<-ifelse(method %in% c("pseudorandom","quasirandom"),2^10,ceiling(length(y)/5))
   #catch 0 length inputs
@@ -132,12 +140,12 @@ offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorando
     'pseudorandom'=stats::runif(length(y)),
     'smiley'=stats::ave(y,as.character(cut(y,dens$x)),FUN=topBottomDistribute),
     'frowney'=stats::ave(y,as.character(cut(y,dens$x)),FUN=function(x)topBottomDistribute(x,frowney=TRUE)),
-    'tukey'=tukeyTexture(y)/100,
-    'tukeyNoDense'=tukeyTexture(y,TRUE,TRUE)/100,
+    'tukeyDense'=tukeyTexture(y)/100,
+    'tukey'=tukeyTexture(y,TRUE,TRUE)/100,
     stop(simpleError('Unrecognized method in offsetSingleGroup'))
   )
 
-  if(method %in% c('tukeyNoDense'))pointDensities<-1
+  if(method %in% c('tukey'))pointDensities<-1
   else pointDensities<-stats::approx(dens$x,dens$y,y)$y
 
   #*2 to get -1 to 1

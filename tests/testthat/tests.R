@@ -22,7 +22,7 @@ test_that("Test single group offsetting",{
   expect_equal(offsetSingleGroup(x), offsetSingleGroup(x,maxLength=1000))
   expect_equal(offsetSingleGroup(x)*10, offsetSingleGroup(x,maxLength=10))
   expect_equal(offsetSingleGroup(x)/10, offsetSingleGroup(x,maxLength=100000))
-  for(ii in c('quasirandom','pseudorandom','smiley','frowney','tukey','tukeyNoDense')){
+  for(ii in c('quasirandom','pseudorandom','smiley','frowney','tukey','tukeyDense')){
     expect_lte(max(offsetX(rnorm(100),method=ii,width=.1)),.1)
     expect_gte(min(offsetX(rnorm(100),method=ii,width=.1)),-.1)
     expect_equal(length(offsetX(rnorm(100),method=ii)),100)

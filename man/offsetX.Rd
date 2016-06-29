@@ -8,7 +8,7 @@
 offsetX(y, x = rep(1, length(y)), width = 0.4, varwidth = FALSE, ...)
 
 offsetSingleGroup(y, maxLength = NULL, method = c("quasirandom",
-  "pseudorandom", "smiley", "frowney", "tukey", "tukeyNoDense"), nbins = NULL,
+  "pseudorandom", "smiley", "frowney", "tukey", "tukeyDense"), nbins = NULL,
   adjust = 1)
 }
 \arguments{
@@ -24,7 +24,15 @@ offsetSingleGroup(y, maxLength = NULL, method = c("quasirandom",
 
 \item{maxLength}{multiply the offset by sqrt(length(y)/maxLength) if not NULL. The sqrt is to match boxplot (allows comparison of order of magnitude different ns, scale with standard error)}
 
-\item{method}{method used to distribute the points}
+\item{method}{method used to distribute the points:
+\describe{
+  \item{quasirandom:}{points are distributed within a kernel density estimate of the distribution with offset determined by quasirandom Van der Corput noise}
+  \item{pseudorandom:}{points are distributed within a kernel density estimate of the distribution with offset determined by pseudorandom noise a la jitter}
+  \item{smiley:}{points are distributed within a kernel density with points in a band distributed with highest value points on the  outside and lowest in the middle}
+  \item{frowney:}{points are distributed within a kernel density with points in a band distributed with highest value points in the middle and lowest on the outside}
+  \item{tukey:}{points are distributed as described in Tukey and Tukey "Strips displaying empirical distributions: I. textured dot strips"}
+  \item{tukeyDense:}{points are distributed as described in Tukey and Tukey but are constrained with the kernel density estimate}
+}}
 
 \item{nbins}{the number of points used to calculate density (defaults to 1000 for quasirandom and pseudorandom and 100 for others)}
 
