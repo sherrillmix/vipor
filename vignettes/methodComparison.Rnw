@@ -60,6 +60,10 @@ We plot the data using quasirandom, pseudorandom, alternating, Tukey texture and
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   dummy<-sapply(names(dat),function(label) {
     y<-dat[[label]]
+    # need to plot first so beeswarm can figure out pars
+    # xlim is a magic number due to needing plot for beeswarm
+    plot(1,1,type='n',xlab='',xaxt='n',ylab='y value',las=1,main=label,
+      xlim=c(0.5,9.5),ylim=range(y))
     offsets <- list(
       'Quasi'=offsetX(y),  # Default
       'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
@@ -72,9 +76,8 @@ We plot the data using quasirandom, pseudorandom, alternating, Tukey texture and
       'Tukey +\ndensity'=offsetX(y,method='tukeyDense')
     )
     ids <- rep(1:length(offsets), each=length(y))
-    plot(unlist(offsets) + ids, rep(y, length(offsets)),
-        xlab='', xaxt='n', pch=21,las=1,main=label, ylab='y value',
-        col='#00000099',bg='#00000033')
+    points(unlist(offsets) + ids, rep(y, length(offsets)),
+          pch=21,col='#00000099',bg='#00000033')
   par(lheight=.8)
   axis(1, 1:length(offsets), names(offsets),padj=1,mgp=c(0,-.3,0),tcl=-.5)
 })
@@ -109,6 +112,42 @@ And also plot using \code{boxplot}, \code{beanplot} and \code{vioplot} methods:%
 
 
 \section{Real data}
+\subsection{County data}
+An example using USA county land area (similar to figure 7 of Tukey and Tukey's ``Strips displaying empirical distributions: I. textured dot strips''):
+<<vpCounties, echo=TRUE, eval=FALSE>>=
+  y<-log10(counties$landArea)
+  offsets <- list(
+    'Quasi'=offsetX(y),  # Default
+    'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
+    'Frown'=offsetX(y, method='frowney',nbins=20),
+    'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
+    'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
+    'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+    'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
+    'Tukey'=offsetX(y,method='tukey'),
+    'Tukey +\ndensity'=offsetX(y,method='tukeyDense')
+  )
+  ids <- rep(1:length(offsets), each=length(y))
+
+  par(mar=c(2.5,4,.2,0.2))
+  plot(unlist(offsets) + ids, rep(y, length(offsets)),
+    xlab='', xaxt='n', yaxt='n',pch=21,
+    ylab='Land area (square miles)', col='#00000033',
+    bg='#00000011',cex=.3,mgp=c(3.2,1,0))
+  par(lheight=.8)
+  axis(1, 1:length(offsets), names(offsets),padj=1,
+    mgp=c(0,-.3,0),tcl=-.3,cex.axis=.95)
+  axis(2, pretty(y), format(10^pretty(y),scientific=FALSE,big.mark=','),
+    mgp=c(0,.6,0),tcl=-.3,las=1)
+@
+\begin{center}
+<<showCounties, fig=TRUE, height=5, width=8, echo=FALSE>>=
+<<vpCounties>>
+@
+\end{center}
+
+
+
 \subsection{Few data points}
 An example with few data points (maybe a bit too few for optimal use of this package) using the \code{OrchardSprays} data from the \pkg{datasets} package:
 <<vpOrchard, echo=TRUE, eval=FALSE>>=
@@ -121,11 +160,11 @@ An example with few data points (maybe a bit too few for optimal use of this pac
     title(xlab='Treatment')
     addMeanLines(x,y)
   }
-  addMeanLines<-function(x,y){
+  addMeanLines<-function(x,y,col='#FF000099'){
     means<-tapply(y,x,mean)
     segments(
      1:length(means)-.25,means,1:length(means)+.25,means,
-     col='#FF000099',lwd=2
+     col=col,lwd=2
     )
   }
   #quasirandom
@@ -235,8 +274,9 @@ An example using the \code{EuStockMarkets} data from the \pkg{datasets} package.
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
-    vpPlot(x,y, ylab='Price',cex=.7,
-      pch=21, col='#00000011',bg='#00000011',...)
+    vpPlot(x,y, ylab='Price',cex=.7,cex.axis=.7,
+      mgp=c(2.5,.75,0),tcl=-.4, pch=21,
+      col='#00000011',bg='#00000011',...)
     addMeanLines(x,y)
   }
   #quasirandom
@@ -248,7 +288,7 @@ An example using the \code{EuStockMarkets} data from the \pkg{datasets} package.
   #beeswarm
   #beeInput<-split(y,x)
   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
-    main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
+    main='Beeswarm',pch=21, col='#00000099',bg='#00000033',cex.axis=.7)
   #tukey
   plotFunc(x,y,offsetXArgs=list(method='tukey'),main='Tukey')
 @
@@ -258,37 +298,42 @@ An example using the \code{EuStockMarkets} data from the \pkg{datasets} package.
 @
 \end{center}
 
-%Another example using the \code{integrations} data from this package. Here \code{beeswarm} takes too long to run and is omitted:
-%<<vpInts, echo=TRUE, eval=FALSE>>=
-%  ints<-integrations[integrations$nearestGene>0,]
-%  y<-log(ints$nearestGene)
-%  x<-paste(ints$study,ints$latent)
-%  cols<-ifelse(ints$latent=='Active','#FF000033','#0000FF33')
-%  par(mfrow=c(4,1), mar=c(4,4, 1.2, 0.5),mgp=c(3.3,.75,0),
-%    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
-%  #simple function to avoid repeating code
-%  plotFunc<-function(x,y,...){
-%    vpPlot(x,y,las=1, ylab='Log distance to gene',cex=.7,
-%      pch=21, col='#00000011',bg='#00000011',...)
-%    addMeanLines(x,y)
-%  }
-%  #quasirandom
-%  plotFunc(x,y,main='Quasirandom')
-%  #pseudorandom
-%  plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
-%  #smiley
-%  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
-%  #beeswarm
-%  #beeInput<-split(y,x)
-%  #beeswarm(beeInput,las=1,cex=.7, ylab='Log distance to gene',
-%    #main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
-%  #addMeanLines(x,y)
-%@
-%\begin{center}
-%<<showInts, fig=TRUE, height=7, width=4, echo=FALSE>>=
-%<<vpInts>>
-%@
-%\end{center}
+Another example using the \code{integrations} data from this package. Here \code{beeswarm} takes too long to run and is omitted:
+<<vpInts, echo=TRUE, eval=FALSE>>=
+  ints<-integrations[integrations$nearestGene>0,]
+  y<-log10(ints$nearestGene)
+  x<-paste(ints$latent,ints$study,sep='\n')
+  par(mfrow=c(4,1), mar=c(7.5,3.5, 1.2, 0.5),mgp=c(2.5,.75,0),
+    cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
+  #simple function to avoid repeating code
+  plotFunc<-function(x,y,...){
+    cols<-ifelse(grepl('Expressed',x),'#FF000033','#0000FF33')
+    vpPlot(x,y,las=2, ylab='Distance to gene',cex=.7,yaxt='n',
+      pch=21, col=NA,bg=cols,lheight=.4,...)
+    prettyY<-pretty(y)
+    yLabs<-sapply(prettyY,function(x)as.expression(bquote(10^.(x))))
+    axis(2,prettyY,yLabs,las=1)
+    addMeanLines(x,y,col='#000000AA')
+  }
+  #quasirandom
+  plotFunc(x,y,main='Quasirandom')
+  #pseudorandom
+  plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
+  #smiley
+  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+  #tukey
+  plotFunc(x,y,offsetXArgs=list(method='tukey'),main='Tukey')
+  #beeswarm
+  #beeInput<-split(y,x)
+  #beeswarm(beeInput,las=1,cex=.7, ylab='Log distance to gene',
+    #main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
+  #addMeanLines(x,y)
+@
+\begin{center}
+<<showInts, fig=TRUE, height=8, width=5, echo=FALSE>>=
+<<vpInts>>
+@
+\end{center}
 
 Another example using 3000 entries of the \code{diamonds} data from the \pkg{ggplot2} package. Here \code{beeswarm} takes too long to run and is omitted:
 <<vpDiamond, echo=TRUE, eval=FALSE>>=
@@ -327,8 +372,6 @@ Another example using 3000 entries of the \code{diamonds} data from the \pkg{ggp
 <<vpDiamond>>
 @
 \end{center}
-
-
 
 
 \end{document}
