@@ -131,4 +131,5 @@ test_that("vpPlot returns x positions",{
   expect_equal(length(vpPlot(y=rnorm(100))), 100)
   expect_equal(vpPlot(y=dat), 1+offsetX(dat))
   expect_equal(vpPlot(labs,dat), labs+offsetX(dat,labs))
+  expect_silent(vpPlot(labs,dat,col='black'))
 })

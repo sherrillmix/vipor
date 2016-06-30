@@ -48,7 +48,9 @@ vpPlot<-function(x=rep('Data',length(y)),y,xaxt='y',offsetXArgs=NULL,...){
   names(labelIds)<-labels
   xPos<-ids+do.call(offsetX,c(list(y),list(x),offsetXArgs))
   graphics::plot(xPos,y,...,xaxt='n',xlab='')
-  if(xaxt!='n')graphics::axis(1,labelIds,labels,...)
+  #avoid point color passing into axis ticks inside ...
+  noColAxis<-function(...,col)graphics::axis(1,labelIds,labels,col='black',...)
+  if(xaxt!='n')noColAxis(...)
   return(invisible(xPos))
 }
 
