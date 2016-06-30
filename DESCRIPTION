@@ -22,5 +22,6 @@ Suggests:
     ggplot2,
     beanplot,
     vioplot,
-    ggbeeswarm
+    ggbeeswarm,
+    raster
 RoxygenNote: 5.0.1

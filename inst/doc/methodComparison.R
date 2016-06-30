@@ -439,6 +439,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   ints<-integrations[integrations$nearestGene>0,]
 ##   y<-log10(ints$nearestGene)
 ##   x<-paste(ints$latent,ints$study,sep='\n')
+##   tmp<-tempfile()
+##   png(tmp,height=2400,width=1500,res=300)
 ##   par(mfrow=c(4,1), mar=c(7.5,3.5, 1.2, 0.5),mgp=c(2.5,.75,0),
 ##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 ##   #simple function to avoid repeating code
@@ -464,6 +466,10 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   #beeswarm(beeInput,las=1,cex=.7, ylab='Log distance to gene',
 ##     #main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
 ##   #addMeanLines(x,y)
+##   dev.off()
+##   #reduce file size by rendering to raster
+##   r <- raster::brick(tmp)
+##   raster::plotRGB(r,maxpixels=3000^2)
 
 
 ###################################################
@@ -472,6 +478,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   ints<-integrations[integrations$nearestGene>0,]
   y<-log10(ints$nearestGene)
   x<-paste(ints$latent,ints$study,sep='\n')
+  tmp<-tempfile()
+  png(tmp,height=2400,width=1500,res=300)
   par(mfrow=c(4,1), mar=c(7.5,3.5, 1.2, 0.5),mgp=c(2.5,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   #simple function to avoid repeating code
@@ -497,6 +505,10 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #beeswarm(beeInput,las=1,cex=.7, ylab='Log distance to gene',
     #main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
   #addMeanLines(x,y)
+  dev.off()
+  #reduce file size by rendering to raster
+  r <- raster::brick(tmp)
+  raster::plotRGB(r,maxpixels=3000^2)
 
 
 ###################################################
