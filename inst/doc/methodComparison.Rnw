@@ -114,7 +114,7 @@ And also plot using \code{boxplot}, \code{beanplot} and \code{vioplot} methods:%
 \section{Real data}
 \subsection{County data}
 An example using USA county land area (similar to figure 7 of Tukey and Tukey's ``Strips displaying empirical distributions: I. textured dot strips''):
-<<vpCounties, echo=TRUE, eval=FALSE>>=
+<<vpCounties, echo=TRUE, eval=TRUE, results=hide>>=
   y<-log10(counties$landArea)
   offsets <- list(
     'Quasi'=offsetX(y),  # Default
@@ -129,6 +129,8 @@ An example using USA county land area (similar to figure 7 of Tukey and Tukey's 
   )
   ids <- rep(1:length(offsets), each=length(y))
 
+  tmpPng<-tempfile(fileext='.png')
+  png(tmpPng,height=1200,width=1800,res=200)
   par(mar=c(2.5,4,.2,0.2))
   plot(unlist(offsets) + ids, rep(y, length(offsets)),
     xlab='', xaxt='n', yaxt='n',pch=21,
@@ -139,11 +141,10 @@ An example using USA county land area (similar to figure 7 of Tukey and Tukey's 
     mgp=c(0,-.3,0),tcl=-.3,cex.axis=.95)
   axis(2, pretty(y), format(10^pretty(y),scientific=FALSE,big.mark=','),
     mgp=c(0,.6,0),tcl=-.3,las=1)
+  dev.off()
 @
 \begin{center}
-<<showCounties, fig=TRUE, height=5, width=8, echo=FALSE>>=
-<<vpCounties>>
-@
+\includegraphics[height=4in,width=6in]{\Sexpr{tmpPng}}
 \end{center}
 
 
@@ -298,13 +299,14 @@ An example using the \code{EuStockMarkets} data from the \pkg{datasets} package.
 @
 \end{center}
 
-Another example using the \code{integrations} data from this package. Here \code{beeswarm} takes too long to run and is omitted:
-<<vpInts, echo=TRUE, eval=FALSE>>=
+Another example using the HIV \code{integrations} data from this package. Here \code{beeswarm} takes too long to run and is omitted:
+<<vpInts, echo=TRUE, eval=TRUE,results=hide>>=
   ints<-integrations[integrations$nearestGene>0,]
   y<-log10(ints$nearestGene)
   x<-paste(ints$latent,ints$study,sep='\n')
-  tmp<-tempfile()
-  png(tmp,height=2400,width=1500,res=300)
+  #reduce file size by rendering to raster
+  tmpPng<-tempfile(fileext='.png')
+  png(tmpPng,height=2400,width=1500,res=300)
   par(mfrow=c(4,1), mar=c(7.5,3.5, 1.2, 0.5),mgp=c(2.5,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   #simple function to avoid repeating code
@@ -331,14 +333,9 @@ Another example using the \code{integrations} data from this package. Here \code
     #main='Beeswarm',pch=21, col='#00000099',bg='#00000033')
   #addMeanLines(x,y)
   dev.off()
-  #reduce file size by rendering to raster
-  r <- raster::brick(tmp)
-  raster::plotRGB(r,maxpixels=3000^2)
 @
 \begin{center}
-<<showInts, fig=TRUE, height=8, width=5, echo=FALSE>>=
-<<vpInts>>
-@
+\includegraphics[height=8in,width=5in]{\Sexpr{tmpPng}}
 \end{center}
 
 Another example using 3000 entries of the \code{diamonds} data from the \pkg{ggplot2} package. Here \code{beeswarm} takes too long to run and is omitted:
