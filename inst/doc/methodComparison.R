@@ -136,8 +136,9 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   )
   ids <- rep(1:length(offsets), each=length(y))
 
+  #reduce file size by rendering to raster
   tmpPng<-tempfile(fileext='.png')
-  png(tmpPng,height=1200,width=1800,res=200)
+  png(tmpPng,height=1200,width=1800,res=300)
   par(mar=c(2.5,4,.2,0.2))
   plot(unlist(offsets) + ids, rep(y, length(offsets)),
     xlab='', xaxt='n', yaxt='n',pch=21,
@@ -145,9 +146,9 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     bg='#00000011',cex=.3,mgp=c(3.2,1,0))
   par(lheight=.8)
   axis(1, 1:length(offsets), names(offsets),padj=1,
-    mgp=c(0,-.3,0),tcl=-.3,cex.axis=.95)
+    mgp=c(0,-.3,0),tcl=-.3,cex.axis=.7)
   axis(2, pretty(y), format(10^pretty(y),scientific=FALSE,big.mark=','),
-    mgp=c(0,.6,0),tcl=-.3,las=1)
+    mgp=c(0,.6,0),tcl=-.3,las=1,cex.axis=.75)
   dev.off()
 
 
@@ -300,7 +301,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
 ##   y<-c(beaver1$temp,beaver2$temp)
 ##   x<-rep(c('Beaver 1','Beaver 2'), c(nrow(beaver1),nrow(beaver2)))
-##   par(mfrow=c(3,2), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+##   par(mfrow=c(3,2), mar=c(3.5,4.5, 1.2, 0.5),mgp=c(3,.75,0),
 ##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
 ##   #simple function to avoid repeating code
 ##   plotFunc<-function(x,y,...){
@@ -328,7 +329,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ###################################################
   y<-c(beaver1$temp,beaver2$temp)
   x<-rep(c('Beaver 1','Beaver 2'), c(nrow(beaver1),nrow(beaver2)))
-  par(mfrow=c(3,2), mar=c(3.5,4, 1.2, 0.5),mgp=c(3,.75,0),
+  par(mfrow=c(3,2), mar=c(3.5,4.5, 1.2, 0.5),mgp=c(3,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2)
   #simple function to avoid repeating code
   plotFunc<-function(x,y,...){
@@ -413,6 +414,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   ints<-integrations[integrations$nearestGene>0,]
   y<-log10(ints$nearestGene)
   x<-paste(ints$latent,ints$study,sep='\n')
+
   #reduce file size by rendering to raster
   tmpPng<-tempfile(fileext='.png')
   png(tmpPng,height=2400,width=1500,res=300)

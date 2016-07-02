@@ -2,7 +2,7 @@ Package: vipor
 Type: Package
 Title: Plot Categorical Data Using Quasirandom Noise and Density Estimates
 Version: 0.4.1
-Date: 2016-06-30
+Date: 2016-07-02
 Author: Scott Sherrill-Mix, Erik Clarke
 Maintainer: Scott Sherrill-Mix <shescott@upenn.edu>
 Description: Generate a violin point plot, a combination of a violin/histogram
@@ -23,5 +23,4 @@ Suggests:
     beanplot,
     vioplot,
     ggbeeswarm,
-    raster
 RoxygenNote: 5.0.1
