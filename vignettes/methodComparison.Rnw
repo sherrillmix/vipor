@@ -146,7 +146,8 @@ An example using USA county land area (similar to figure 7 of Tukey and Tukey's 
   dev.off()
 @
 \begin{center}
-\includegraphics[height=4in,width=6in]{\Sexpr{tmpPng}}
+%convert file path to linux style for latex if on windows
+\includegraphics[height=4in,width=6in]{\Sexpr{gsub('\\\\','/',tmpPng)}}
 \end{center}
 
 
@@ -338,7 +339,8 @@ Another example using the HIV \code{integrations} data from this package. Here \
   dev.off()
 @
 \begin{center}
-\includegraphics[height=8in,width=5in]{\Sexpr{tmpPng}}
+%convert file path to linux style for latex if on windows
+\includegraphics[height=8in,width=5in]{\Sexpr{gsub('\\\\','/',tmpPng)}}
 \end{center}
 
 Another example using 3000 entries of the \code{diamonds} data from the \pkg{ggplot2} package. Here \code{beeswarm} takes too long to run and is omitted:
