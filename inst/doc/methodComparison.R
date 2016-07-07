@@ -37,10 +37,10 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##     offsets <- list(
 ##       'Quasi'=offsetX(y),  # Default
 ##       'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
-##       'Frown'=offsetX(y, method='frowney',nbins=20),
-##       'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
-##       'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
-##       'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+##       'Min out'=offsetX(y, method='minout',nbins=20),
+##       'Max out\n20 bin'=offsetX(y, method='maxout',nbins=20),
+##       'Max out\n100 bin'=offsetX(y, method='maxout',nbins=100),
+##       'Max out\nn/5 bin'=offsetX(y, method='maxout',nbins=round(length(y)/5)),
 ##       'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
 ##       'Tukey'=offsetX(y,method='tukey'),
 ##       'Tukey +\ndensity'=offsetX(y,method='tukeyDense')
@@ -67,10 +67,10 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     offsets <- list(
       'Quasi'=offsetX(y),  # Default
       'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
-      'Frown'=offsetX(y, method='frowney',nbins=20),
-      'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
-      'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
-      'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+      'Min out'=offsetX(y, method='minout',nbins=20),
+      'Max out\n20 bin'=offsetX(y, method='maxout',nbins=20),
+      'Max out\n100 bin'=offsetX(y, method='maxout',nbins=100),
+      'Max out\nn/5 bin'=offsetX(y, method='maxout',nbins=round(length(y)/5)),
       'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
       'Tukey'=offsetX(y,method='tukey'),
       'Tukey +\ndensity'=offsetX(y,method='tukeyDense')
@@ -126,10 +126,10 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   offsets <- list(
     'Quasi'=offsetX(y),  # Default
     'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
-    'Frown'=offsetX(y, method='frowney',nbins=20),
-    'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
-    'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
-    'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+    'Min out'=offsetX(y, method='minout',nbins=20),
+    'Max out\n20 bin'=offsetX(y, method='maxout',nbins=20),
+    'Max out\n100 bin'=offsetX(y, method='maxout',nbins=100),
+    'Max out\nn/5 bin'=offsetX(y, method='maxout',nbins=round(length(y)/5)),
     'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
     'Tukey'=offsetX(y,method='tukey'),
     'Tukey +\ndensity'=offsetX(y,method='tukeyDense')
@@ -181,8 +181,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   title(main='Pseudorandom')
 ##   #smiley
 ##   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
-##     list(method='smiley',width=.2))
-##   title(main='Smiley')
+##     list(method='maxout',width=.2))
+##   title(main='Max outside')
 ##   #beeswarm
 ##   beeInput<-split(log(OrchardSprays$decrease), OrchardSprays$treatment)
 ##   beeswarm(beeInput,las=1,ylab='Log treatment effect',xlab='Treatment',
@@ -222,8 +222,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   title(main='Pseudorandom')
   #smiley
   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
-    list(method='smiley',width=.2))
-  title(main='Smiley')
+    list(method='maxout',width=.2))
+  title(main='Max outside')
   #beeswarm
   beeInput<-split(log(OrchardSprays$decrease), OrchardSprays$treatment)
   beeswarm(beeInput,las=1,ylab='Log treatment effect',xlab='Treatment',
@@ -253,8 +253,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),
 ##     main='Pseudorandom')
 ##   #smiley
-##   plotFunc(parts,singer$height,offsetXArgs=list(method='smiley'),
-##     main='Smiley')
+##   plotFunc(parts,singer$height,offsetXArgs=list(method='maxout'),
+##     main='Max outside')
 ##   #beeswarm
 ##   beeInput<-split(singer$height, parts)
 ##   beeswarm(beeInput,ylab='Height',main='Beeswarm',
@@ -284,8 +284,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),
     main='Pseudorandom')
   #smiley
-  plotFunc(parts,singer$height,offsetXArgs=list(method='smiley'),
-    main='Smiley')
+  plotFunc(parts,singer$height,offsetXArgs=list(method='maxout'),
+    main='Max outside')
   #beeswarm
   beeInput<-split(singer$height, parts)
   beeswarm(beeInput,ylab='Height',main='Beeswarm',
@@ -314,7 +314,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   #pseudorandom
 ##   plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
 ##   #smiley
-##   plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+##   plotFunc(x,y,offsetXArgs=list(method='maxout'),main='Max outside')
 ##   #beeswarm
 ##   beeInput<-split(y,x)
 ##   beeswarm(beeInput,las=1,ylab='Body temperature',main='Beeswarm',
@@ -342,7 +342,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #pseudorandom
   plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
   #smiley
-  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+  plotFunc(x,y,offsetXArgs=list(method='maxout'),main='Max outside')
   #beeswarm
   beeInput<-split(y,x)
   beeswarm(beeInput,las=1,ylab='Body temperature',main='Beeswarm',
@@ -371,7 +371,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##   #pseudorandom
 ##   plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
 ##   #smiley
-##   plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+##   plotFunc(x,y,offsetXArgs=list(method='maxout'),main='Max outside')
 ##   #beeswarm
 ##   #beeInput<-split(y,x)
 ##   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
@@ -399,7 +399,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #pseudorandom
   plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
   #smiley
-  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+  plotFunc(x,y,offsetXArgs=list(method='maxout'),main='Max outside')
   #beeswarm
   #beeInput<-split(y,x)
   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
@@ -435,7 +435,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   #pseudorandom
   plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
   #smiley
-  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+  plotFunc(x,y,offsetXArgs=list(method='maxout'),main='Max outside')
   #tukey
   plotFunc(x,y,offsetXArgs=list(method='tukey'),main='Tukey')
   #beeswarm

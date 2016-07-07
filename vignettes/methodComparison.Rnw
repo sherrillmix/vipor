@@ -68,10 +68,10 @@ We plot the data using quasirandom, pseudorandom, alternating, Tukey texture and
     offsets <- list(
       'Quasi'=offsetX(y),  # Default
       'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
-      'Frown'=offsetX(y, method='frowney',nbins=20),
-      'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
-      'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
-      'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+      'Min out'=offsetX(y, method='minout',nbins=20),
+      'Max out\n20 bin'=offsetX(y, method='maxout',nbins=20),
+      'Max out\n100 bin'=offsetX(y, method='maxout',nbins=100),
+      'Max out\nn/5 bin'=offsetX(y, method='maxout',nbins=round(length(y)/5)),
       'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
       'Tukey'=offsetX(y,method='tukey'),
       'Tukey +\ndensity'=offsetX(y,method='tukeyDense')
@@ -120,10 +120,10 @@ An example using USA county land area (similar to figure 7 of Tukey and Tukey's 
   offsets <- list(
     'Quasi'=offsetX(y),  # Default
     'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
-    'Frown'=offsetX(y, method='frowney',nbins=20),
-    'Smile\n20 bin'=offsetX(y, method='smiley',nbins=20),
-    'Smile\n100 bin'=offsetX(y, method='smiley',nbins=100),
-    'Smile\nn/5 bin'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+    'Min out'=offsetX(y, method='minout',nbins=20),
+    'Max out\n20 bin'=offsetX(y, method='maxout',nbins=20),
+    'Max out\n100 bin'=offsetX(y, method='maxout',nbins=100),
+    'Max out\nn/5 bin'=offsetX(y, method='maxout',nbins=round(length(y)/5)),
     'Beeswarm'=swarmx(rep(0,length(y)),y)$x,
     'Tukey'=offsetX(y,method='tukey'),
     'Tukey +\ndensity'=offsetX(y,method='tukeyDense')
@@ -180,8 +180,8 @@ An example with few data points (maybe a bit too few for optimal use of this pac
   title(main='Pseudorandom')
   #smiley
   plotFunc(OrchardSprays$treatment,log(OrchardSprays$decrease),
-    list(method='smiley',width=.2))
-  title(main='Smiley')
+    list(method='maxout',width=.2))
+  title(main='Max outside')
   #beeswarm
   beeInput<-split(log(OrchardSprays$decrease), OrchardSprays$treatment)
   beeswarm(beeInput,las=1,ylab='Log treatment effect',xlab='Treatment',
@@ -216,8 +216,8 @@ Data with discrete bins are plotted adequately although other display choices (e
   plotFunc(parts,singer$height,offsetXArgs=list(method='pseudo'),
     main='Pseudorandom')
   #smiley
-  plotFunc(parts,singer$height,offsetXArgs=list(method='smiley'),
-    main='Smiley')
+  plotFunc(parts,singer$height,offsetXArgs=list(method='maxout'),
+    main='Max outside')
   #beeswarm
   beeInput<-split(singer$height, parts)
   beeswarm(beeInput,ylab='Height',main='Beeswarm',
@@ -252,7 +252,7 @@ An example with using the \code{beaver1} and \code{beaver2} data from the \pkg{d
   #pseudorandom
   plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
   #smiley
-  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+  plotFunc(x,y,offsetXArgs=list(method='maxout'),main='Max outside')
   #beeswarm
   beeInput<-split(y,x)
   beeswarm(beeInput,las=1,ylab='Body temperature',main='Beeswarm',
@@ -287,7 +287,7 @@ An example using the \code{EuStockMarkets} data from the \pkg{datasets} package.
   #pseudorandom
   plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
   #smiley
-  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+  plotFunc(x,y,offsetXArgs=list(method='maxout'),main='Max outside')
   #beeswarm
   #beeInput<-split(y,x)
   beeswarm(EuStockMarkets[,'DAX',drop=FALSE],cex=.7, ylab='Price',
@@ -327,7 +327,7 @@ Another example using the HIV \code{integrations} data from this package. Here \
   #pseudorandom
   plotFunc(x,y,offsetXArgs=list(method='pseudo'),main='Pseudorandom')
   #smiley
-  plotFunc(x,y,offsetXArgs=list(method='smiley'),main='Smiley')
+  plotFunc(x,y,offsetXArgs=list(method='maxout'),main='Max outside')
   #tukey
   plotFunc(x,y,offsetXArgs=list(method='tukey'),main='Tukey')
   #beeswarm

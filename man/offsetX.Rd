@@ -8,8 +8,8 @@
 offsetX(y, x = rep(1, length(y)), width = 0.4, varwidth = FALSE, ...)
 
 offsetSingleGroup(y, maxLength = NULL, method = c("quasirandom",
-  "pseudorandom", "smiley", "frowney", "tukey", "tukeyDense"), nbins = NULL,
-  adjust = 1)
+  "pseudorandom", "smiley", "maxout", "frowney", "minout", "tukey",
+  "tukeyDense"), nbins = NULL, adjust = 1)
 }
 \arguments{
 \item{y}{vector of data points}
@@ -28,8 +28,8 @@ offsetSingleGroup(y, maxLength = NULL, method = c("quasirandom",
 \describe{
   \item{quasirandom:}{points are distributed within a kernel density estimate of the distribution with offset determined by quasirandom Van der Corput noise}
   \item{pseudorandom:}{points are distributed within a kernel density estimate of the distribution with offset determined by pseudorandom noise a la jitter}
-  \item{smiley:}{points are distributed within a kernel density with points in a band distributed with highest value points on the  outside and lowest in the middle}
-  \item{frowney:}{points are distributed within a kernel density with points in a band distributed with highest value points in the middle and lowest on the outside}
+  \item{maxout:}{points are distributed within a kernel density with points in a band distributed with highest value points on the  outside and lowest in the middle}
+  \item{minout:}{points are distributed within a kernel density with points in a band distributed with highest value points in the middle and lowest on the outside}
   \item{tukey:}{points are distributed as described in Tukey and Tukey "Strips displaying empirical distributions: I. textured dot strips"}
   \item{tukeyDense:}{points are distributed as described in Tukey and Tukey but are constrained with the kernel density estimate}
 }}
