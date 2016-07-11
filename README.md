@@ -11,6 +11,13 @@
 Violin scatter plots (aka column scatter plots or beeswarm plots or one dimensional scatter plots) are a way of plotting points that would ordinarily overlap so that they fall next to each other instead. In addition to reducing overplotting, it helps visualize the density of the data at each point (similar to a violin plot), while still showing each data point individually.
 
 ## Installation
+This package is on CRAN so install should be a simple:
+
+```r
+install.packages('vipor')
+```
+
+If you want the development version from GitHub, you can do:
 
 
 ```r
