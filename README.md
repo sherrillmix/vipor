@@ -89,6 +89,34 @@ sapply(names(dat),function(label) {
 
 ![plot of chunk other-methods](README_files/other-methods-1.png)
 
+And using the county data from Tukey and Tukey:
+
+```r
+par(mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0))
+y<-log10(counties$landArea)
+offsets <- list(
+  'Quasi'=offsetX(y),  # Default
+  'Quasi\nbandwidth=3'=offsetX(y,adjust=.25),
+  'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
+  'Smile'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+  'Tukey'=offsetX(y, method='tukey')
+  #'Beeswarm'=swarmx(rep(0,length(y)),y)$x
+)
+ids <- rep(1:length(offsets), each=length(y))
+plot(
+  unlist(offsets) + ids,
+  rep(y, length(offsets)),
+  xlab='', ylab='Land area (log10)',
+  main='Counties', xaxt='n', las=1,
+  pch=21,col='#00000022',bg='#00000011',
+  cex=.7
+)
+par(lheight=.8)
+axis(1, 1:length(offsets), names(offsets),padj=1,mgp=c(0,-.3,0),tcl=-.5)
+```
+
+![plot of chunk methods-county](README_files/methods-county-1.png)
+
 ------
 Authors: Scott Sherrill-Mix and Erik Clarke
 
