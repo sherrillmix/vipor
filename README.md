@@ -96,11 +96,11 @@ par(mar=c(2.5,3.1, 1.2, 0.5),mgp=c(2.1,.75,0))
 y<-log10(counties$landArea)
 offsets <- list(
   'Quasi'=offsetX(y),  # Default
-  'Quasi\nbandwidth=3'=offsetX(y,adjust=.25),
+  'Quasi\nadjust=.25'=offsetX(y,adjust=.25),
   'Pseudo'=offsetX(y, method='pseudorandom',nbins=100),
-  'Smile'=offsetX(y, method='smiley',nbins=round(length(y)/5)),
+  'Smile'=offsetX(y, method='smiley'),
+  'Smile\nadjust=.25'=offsetX(y, method='smiley',adjust=.25),
   'Tukey'=offsetX(y, method='tukey')
-  #'Beeswarm'=swarmx(rep(0,length(y)),y)$x
 )
 ids <- rep(1:length(offsets), each=length(y))
 plot(
@@ -108,8 +108,7 @@ plot(
   rep(y, length(offsets)),
   xlab='', ylab='Land area (log10)',
   main='Counties', xaxt='n', las=1,
-  pch=21,col='#00000022',bg='#00000011',
-  cex=.7
+  pch='.'
 )
 par(lheight=.8)
 axis(1, 1:length(offsets), names(offsets),padj=1,mgp=c(0,-.3,0),tcl=-.5)
