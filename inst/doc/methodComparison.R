@@ -49,7 +49,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##     points(unlist(offsets) + ids, rep(y, length(offsets)),
 ##           pch=21,col='#00000099',bg='#00000033')
 ##   par(lheight=.8)
-##   axis(1, 1:length(offsets), names(offsets),padj=1,mgp=c(0,-.3,0),tcl=-.5)
+##   axis(1, 1:length(offsets), names(offsets),padj=1,
+##     mgp=c(0,-.1,0),tcl=-.5,cex.axis=1.1)
 ## })
 
 
@@ -79,7 +80,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     points(unlist(offsets) + ids, rep(y, length(offsets)),
           pch=21,col='#00000099',bg='#00000033')
   par(lheight=.8)
-  axis(1, 1:length(offsets), names(offsets),padj=1,mgp=c(0,-.3,0),tcl=-.5)
+  axis(1, 1:length(offsets), names(offsets),padj=1,
+    mgp=c(0,-.1,0),tcl=-.5,cex.axis=1.1)
 })
 
 
@@ -143,7 +145,8 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
   plot(
     unlist(offsets) + ids, rep(y, length(offsets)),
     xlab='', xaxt='n', yaxt='n',pch='.',
-    ylab='Land area (square miles)',mgp=c(2.7,1,0)
+    ylab='Land area (square miles)',mgp=c(2.7,1,0),
+    col='#00000077'
   )
   par(lheight=.8)
   axis(1, 1:length(offsets), names(offsets),padj=1,
