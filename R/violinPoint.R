@@ -127,7 +127,7 @@ offsetSingleGroup<-function(y,maxLength=NULL,method=c('quasirandom','pseudorando
   method<-match.arg(method)
   if(method %in% c('smiley'))method<-'maxout' 
   if(method %in% c('frowney'))method<-'minout' 
-  if(is.null(nbins))nbins<-ifelse(method %in% c("pseudorandom","quasirandom"),2^10,ceiling(length(y)/5))
+  if(is.null(nbins))nbins<-ifelse(method %in% c("pseudorandom","quasirandom"),2^10,max(2,ceiling(length(y)/5)))
   #catch 0 length inputs
   if (length(y) == 0) return(NULL)
   # If there's only one value in this group, leave it alone
