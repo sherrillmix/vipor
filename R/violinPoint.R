@@ -211,7 +211,7 @@ vanDerCorput <- function(n, base=2,start=1){
 #' 
 #' @param n the integer to be converted
 #' @param base the base for the numeral system (e.g. 2 for binary or 8 for octal)
-#' @return a vector of length ceiling(log(n+1,base)) respresenting each digit for that numeral system
+#' @return a vector of length \code{ceiling(log(n+1,base))} respresenting each digit for that numeral system
 #' @references \url{https://en.wikipedia.org/wiki/Radix}
 #' @export
 #' @examples
@@ -233,7 +233,7 @@ number2digits <- function(n, base=2){
 #' 
 #' @param digits a vector of integers representing digits in an arbitrary base
 #' @param base the base for the numeral system (e.g. 2 for binary or 8 for octal)
-#' @param fractional divide the 
+#' @param fractional divide the output by the max for this number of digits and base. Note that this is \code{base^length(digits)} not \code{base^length(digits)-1}.
 #' @return an integer
 #' @references \url{https://en.wikipedia.org/wiki/Radix}
 #' @export
@@ -246,7 +246,7 @@ digits2number<-function(digits,base=2,fractional=FALSE){
   if(any(digits<0))stop(simpleError('digit < 0 in digits2number'))
   powers<-0:(length(digits)-1)
   out<-sum(digits*base^powers)
-  if(fractional)out<-out/base^(length(digits))
+  if(fractional)out<-out/base^length(digits)
   return(out)
 }
 

@@ -12,7 +12,7 @@ number2digits(n, base = 2)
 \item{base}{the base for the numeral system (e.g. 2 for binary or 8 for octal)}
 }
 \value{
-a vector of length ceiling(log(n+1,base)) respresenting each digit for that numeral system
+a vector of length \code{ceiling(log(n+1,base))} respresenting each digit for that numeral system
 }
 \description{
 Takes an integer and converts it into an arbitrary base e.g. binary or octal. Note that the first digit in the output is the least significant.

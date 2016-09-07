@@ -123,6 +123,14 @@ test_that("Test digit combining",{
   expect_error(digits2number(c(1,1,1),0), 'base') #doesn't really require an error but probably does not produce a desired result
   expect_error(digits2number(1,-1), 'base') #doesn't really require an error but probably does not produce a desired result
   expect_error(digits2number(-1,10), 'digit') #doesn't really require an error but probably does not produce a desired result
+  #test fractional. Note never reaches 1
+  expect_equal(digits2number(1,base=2,fractional=TRUE),1/2)
+  expect_equal(digits2number(7,base=8,fractional=TRUE),7/8)
+  expect_equal(digits2number(c(0,1),base=2,fractional=TRUE),2/4)
+  #not really well formed but might as well handle
+  expect_equal(digits2number(20,base=2),20)
+  expect_equal(digits2number(c(1,20),base=2),41)
+  expect_equal(digits2number(20,base=8,fractional=TRUE),20/8)
 })
 
 test_that("Test consistency",{

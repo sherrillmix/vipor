@@ -11,7 +11,7 @@ digits2number(digits, base = 2, fractional = FALSE)
 
 \item{base}{the base for the numeral system (e.g. 2 for binary or 8 for octal)}
 
-\item{fractional}{divide the}
+\item{fractional}{divide the output by the max for this number of digits and base. Note that this is \code{base^length(digits)} not \code{base^length(digits)-1}.}
 }
 \value{
 an integer
