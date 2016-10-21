@@ -381,7 +381,6 @@ Another example using 3000 entries of the \code{diamonds} data from the \pkg{ggp
   #vioplot
   do.call(vioplot,c(vioInput,list(names=labs,col='white')))
   title(ylab='Price', main='Vioplot')
-
 @
 \begin{center}
 <<showDiamond, fig=TRUE, height=7, width=6, echo=FALSE>>=

@@ -454,9 +454,9 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ### code chunk number 17: vpDiamond (eval = FALSE)
 ###################################################
 ##   select<-sample(1:nrow(ggplot2::diamonds),3000)
-##   y<-log10(ggplot2::diamonds[select,'price'])
-##   x<-ggplot2::diamonds[select,'cut']
-##   par(mfrow=c(4,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
+##   y<-unlist(log10(ggplot2::diamonds[select,'price']))
+##   x<-unlist(ggplot2::diamonds[select,'cut'])
+##   par(mfrow=c(5,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
 ##     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
 ##   #simple function to avoid repeating code
 ##   prettyYAxis<-function(y){
@@ -469,17 +469,21 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ##     ylab='Price',cex=.7,pch=21, col='#00000044',
 ##     bg='#00000011',yaxt='n',main='Quasirandom')
 ##   prettyYAxis(y)
+##   #tukey
 ##   vpPlot(x,y,offsetXArgs=list(method='tukey'), 
 ##     ylab='Price',cex=.7,pch=21, col='#00000044',
 ##     bg='#00000011',yaxt='n',main='Tukey')
 ##   prettyYAxis(y)
+##   #boxplot
 ##   boxplot(y~x,main='Boxplot',ylab='Price',yaxt='n')
 ##   prettyYAxis(y)
+##   #beanplot
 ##   beanplot(y~x,main='Beanplot',ylab='Price',yaxt='n')
 ##   prettyYAxis(y)
 ##   vioInput<-split(y,x)
 ##   labs<-names(vioInput)
 ##   names(vioInput)[1]<-'x'
+##   #vioplot
 ##   do.call(vioplot,c(vioInput,list(names=labs,col='white')))
 ##   title(ylab='Price', main='Vioplot')
 
@@ -488,9 +492,9 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 ### code chunk number 18: showDiamond
 ###################################################
   select<-sample(1:nrow(ggplot2::diamonds),3000)
-  y<-log10(ggplot2::diamonds[select,'price'])
-  x<-ggplot2::diamonds[select,'cut']
-  par(mfrow=c(4,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
+  y<-unlist(log10(ggplot2::diamonds[select,'price']))
+  x<-unlist(ggplot2::diamonds[select,'cut'])
+  par(mfrow=c(5,1), mar=c(6,4.5, 1.2, 0.5),mgp=c(3.3,.75,0),
     cex.axis=1.2,cex.lab=1.2,cex.main=1.2,las=1)
   #simple function to avoid repeating code
   prettyYAxis<-function(y){
@@ -503,17 +507,21 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
     ylab='Price',cex=.7,pch=21, col='#00000044',
     bg='#00000011',yaxt='n',main='Quasirandom')
   prettyYAxis(y)
+  #tukey
   vpPlot(x,y,offsetXArgs=list(method='tukey'), 
     ylab='Price',cex=.7,pch=21, col='#00000044',
     bg='#00000011',yaxt='n',main='Tukey')
   prettyYAxis(y)
+  #boxplot
   boxplot(y~x,main='Boxplot',ylab='Price',yaxt='n')
   prettyYAxis(y)
+  #beanplot
   beanplot(y~x,main='Beanplot',ylab='Price',yaxt='n')
   prettyYAxis(y)
   vioInput<-split(y,x)
   labs<-names(vioInput)
   names(vioInput)[1]<-'x'
+  #vioplot
   do.call(vioplot,c(vioInput,list(names=labs,col='white')))
   title(ylab='Price', main='Vioplot')
 
