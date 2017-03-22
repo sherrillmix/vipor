@@ -24,7 +24,7 @@ inst/doc: vignettes/*.Rnw data/integrations.RData
 
 README.md: README.Rmd R/*.R
 	make localInstall
-	R -e 'knitr::opts_chunk$$set(fig.path="README_files/");knitr::knit("README.Rmd")'
+	R -e 'knitr::opts_chunk$$set(fig.path="tools/");knitr::knit("README.Rmd")'
 	
 data/integrations.RData: data-raw/makeIntegrations.R
 	R -e 'source("data-raw/makeIntegrations.R",chdir=TRUE)'
