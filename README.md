@@ -55,7 +55,7 @@ sapply(names(dat),function(label) {
 })
 ```
 
-![plot of chunk adjust-examples](README_files/adjust-examples-1.png)
+![plot of chunk adjust-examples](tools/adjust-examples-1.png)
 
 
 ### Comparison with other methods
@@ -87,7 +87,7 @@ sapply(names(dat),function(label) {
 })
 ```
 
-![plot of chunk other-methods](README_files/other-methods-1.png)
+![plot of chunk other-methods](tools/other-methods-1.png)
 
 And using the county data from Tukey and Tukey:
 
@@ -114,7 +114,7 @@ par(lheight=.8)
 axis(1, 1:length(offsets), names(offsets),padj=1,mgp=c(0,-.3,0),tcl=-.5)
 ```
 
-![plot of chunk methods-county](README_files/methods-county-1.png)
+![plot of chunk methods-county](tools/methods-county-1.png)
 
 ------
 Authors: Scott Sherrill-Mix and Erik Clarke
