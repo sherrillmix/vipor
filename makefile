@@ -17,10 +17,10 @@ man: R/*.R
 	touch man
 
 
-inst/doc: vignettes/*.Rnw data/integrations.RData
+doc: vignettes/*.Rnw data/integrations.RData data/counties.RData
 	make localInstall
 	R -e 'devtools::build_vignettes()'
-	touch inst/doc
+	touch doc
 
 README.md: README.Rmd R/*.R
 	make localInstall
@@ -32,6 +32,6 @@ data/integrations.RData: data-raw/makeIntegrations.R
 data/counties.RData: data-raw/makeCounties.R
 	R -e 'source("data-raw/makeCounties.R",chdir=TRUE)'
 
-$(PACKAGEFILE): man R/*.R DESCRIPTION tests/testthat/*.R inst/doc data/integrations.RData
+$(PACKAGEFILE): man R/*.R DESCRIPTION tests/testthat/*.R data/integrations.RData doc 
 	sed -i "s/^Date:.*$$/Date: `date +%Y-%m-%d`/" DESCRIPTION
 	R -e 'devtools::check();devtools::build()'
