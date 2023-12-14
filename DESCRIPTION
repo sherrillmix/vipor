@@ -1,10 +1,10 @@
 Package: vipor
 Type: Package
 Title: Plot Categorical Data Using Quasirandom Noise and Density Estimates
-Version: 0.4.5
-Date: 2017-03-22
+Version: 0.4.6
+Date: 2023-12-14
 Author: Scott Sherrill-Mix, Erik Clarke
-Maintainer: Scott Sherrill-Mix <shescott@upenn.edu>
+Maintainer: Scott Sherrill-Mix <ssm@msu.edu>
 Description: Generate a violin point plot, a combination of a violin/histogram
     plot and a scatter plot by offsetting points within a category based on their
     density using quasirandom noise.
@@ -23,4 +23,4 @@ Suggests:
     beanplot,
     vioplot,
     ggbeeswarm,
-RoxygenNote: 6.0.1
+RoxygenNote: 7.2.3
