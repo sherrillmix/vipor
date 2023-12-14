@@ -28,4 +28,3 @@ aveWithArgs(c(1:9,NA),rep(1:5,2),max,na.rm=TRUE)
 \seealso{
 \code{\link{ave}}
 }
-

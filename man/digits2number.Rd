@@ -26,4 +26,3 @@ digits2number(number2digits(100))
 \references{
 \url{https://en.wikipedia.org/wiki/Radix}
 }
-

@@ -36,4 +36,3 @@ vpPlot(labs,unlist(dat))
 \seealso{
 \code{\link{offsetX}}
 }
-

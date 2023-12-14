@@ -24,4 +24,3 @@ number2digits(100,8)
 \references{
 \url{https://en.wikipedia.org/wiki/Radix}
 }
-

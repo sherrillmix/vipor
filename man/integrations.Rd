@@ -4,13 +4,15 @@
 \name{integrations}
 \alias{integrations}
 \title{Data on HIV integration sites from several studies}
-\format{A data frame with 12436 rows and 4 variables:
+\format{
+A data frame with 12436 rows and 4 variables:
 \describe{
   \item{study}{the cell population infected by HIV}
   \item{latent}{whether the provirus was active (expressed) or inactive (latent)}
   \item{nearestGene}{distance to nearest gene (transcription unit) (0 if in a gene)}
   \item{H4K12ac}{number of reads aligned within +- 50,000 bases in a H4K12ac ChIP-Seq}
-}}
+}
+}
 \source{
 \url{http://www.retrovirology.com/content/10/1/90/additional}, system.file("data-raw", "makeIntegrations.R", package = "vipor")
 }
@@ -24,4 +26,3 @@ A dataset containing data from a meta-analysis looking for differences between a
 \url{http://www.retrovirology.com/content/10/1/90}
 }
 \keyword{datasets}
-

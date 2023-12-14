@@ -21,4 +21,3 @@ Find all permutations of 1:n fulfilling Tukey's criteria that there are no runs 
 tukeyPermutes()
 tukeyPermutes(6,3)
 }
-

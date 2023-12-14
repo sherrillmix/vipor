@@ -22,4 +22,3 @@ permute(1:5)
 \seealso{
 \code{\link{sample}}
 }
-

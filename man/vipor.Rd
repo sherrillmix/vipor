@@ -3,7 +3,6 @@
 \docType{package}
 \name{vipor}
 \alias{vipor}
-\alias{vipor-package}
 \title{Functions to generate violin scatter plots}
 \description{
 Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/vipor}
@@ -21,10 +20,9 @@ ids<-rep(1:length(dat),sapply(dat,length))
 offset<-offsetX(unlist(dat),ids)
 plot(unlist(dat),ids+offset)
 }
-\author{
-Scott Sherrill-Mix, \email{shescott@upenn.edu}
-}
 \seealso{
 \url{http://github.com/sherrillmix/vipor}
 }
-
+\author{
+Scott Sherrill-Mix, \email{shescott@upenn.edu}
+}

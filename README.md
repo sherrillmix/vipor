@@ -1,6 +1,5 @@
 # Plot one-dimensional data using quasirandom noise and kernel density
 
-[![Build Status](https://travis-ci.org/sherrillmix/vipor.svg?branch=master)](https://travis-ci.org/sherrillmix/vipor)
 [![codecov.io](https://codecov.io/github/sherrillmix/vipor/coverage.svg?branch=master)](https://codecov.io/github/sherrillmix/vipor?branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vipor)](https://cran.r-project.org/package=vipor)
 

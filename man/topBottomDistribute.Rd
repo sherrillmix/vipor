@@ -23,4 +23,3 @@ Produce offsets to generate smile-like or frown-like distributions of points. Th
 topBottomDistribute(1:10)
 topBottomDistribute(1:10,TRUE)
 }
-

@@ -4,7 +4,8 @@
 \name{counties}
 \alias{counties}
 \title{Census ata on US counties}
-\format{A data frame with 3143 rows and 8 variables:
+\format{
+A data frame with 3143 rows and 8 variables:
 \describe{
   \item{id}{GEO.id from original data}
   \item{state}{state in which the county is located}
@@ -14,7 +15,8 @@
   \item{totalArea}{Area in square miles - Total area}
   \item{waterArea}{Area in square miles - Water area}
   \item{landArea}{Area in square miles - Land area}
-}}
+}
+}
 \source{
 \url{http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_SF1/GCTPH1.US05PR}, system.file("data-raw", "makeCounties.R", package = "vipor")
 }
@@ -28,4 +30,3 @@ A dataset containing data from the US census burea
 \url{https://www.census.gov/prod/cen2010/cph-2-1.pdf}
 }
 \keyword{datasets}
-

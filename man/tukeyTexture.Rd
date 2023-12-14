@@ -4,8 +4,13 @@
 \alias{tukeyTexture}
 \title{Generate random positions based on Tukey texture algorithm}
 \usage{
-tukeyTexture(x, jitter = TRUE, thin = FALSE, hollow = FALSE,
-  delta = diff(stats::quantile(x, c(0.25, 0.75))) * 0.03)
+tukeyTexture(
+  x,
+  jitter = TRUE,
+  thin = FALSE,
+  hollow = FALSE,
+  delta = diff(stats::quantile(x, c(0.25, 0.75))) * 0.03
+)
 }
 \arguments{
 \item{x}{the points to be jittered. really only used to calculate length}
@@ -31,4 +36,3 @@ x<-1:100
 plot(tukeyTexture(x),x)
 plot(tukeyTexture(log10(counties$landArea),TRUE,TRUE),log10(counties$landArea),cex=.25)
 }
-

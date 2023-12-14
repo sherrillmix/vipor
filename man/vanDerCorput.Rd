@@ -25,4 +25,3 @@ vanDerCorput(100)
 \references{
 \url{https://en.wikipedia.org/wiki/Van_der_Corput_sequence}
 }
-

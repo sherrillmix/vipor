@@ -21,4 +21,3 @@ Find a random string of concatenated permutations of 1:n fulfilling Tukey's crit
 tukeyPermutes()
 tukeyPermutes(6,3)
 }
-
