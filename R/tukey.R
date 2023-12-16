@@ -147,6 +147,6 @@ tukeyTexture<-function(x,jitter=TRUE,thin=FALSE,hollow=FALSE,delta=diff(stats::q
 #'   \item{waterArea}{Area in square miles - Water area}
 #'   \item{landArea}{Area in square miles - Land area}
 #' }
-#' @references \url{https://www.census.gov/prod/cen2010/cph-2-1.pdf}
-#' @source \url{http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_SF1/GCTPH1.US05PR}, system.file("data-raw", "makeCounties.R", package = "vipor")
+#' @references \url{https://web.archive.org/web/20150326040847/https://www.census.gov/prod/cen2010/cph-2-1.pdf}
+#' @source http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_SF1/GCTPH1.US05PR (link now dead), system.file("data-raw", "makeCounties.R", package = "vipor")
 "counties"

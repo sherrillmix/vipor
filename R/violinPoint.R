@@ -1,6 +1,6 @@
 #' Functions to generate violin scatter plots
 #'
-#' Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/vipor}
+#' Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{https://github.com/sherrillmix/vipor}
 #'
 #' The main functions are: 
 #'      \describe{
@@ -11,7 +11,7 @@
 #' @docType package
 #' @name vipor
 #' @author Scott Sherrill-Mix, \email{shescott@@upenn.edu}
-#' @seealso \url{http://github.com/sherrillmix/vipor}
+#' @seealso \url{https://github.com/sherrillmix/vipor}
 #' @examples
 #' dat<-list(rnorm(100),rnorm(50,1,2))
 #' ids<-rep(1:length(dat),sapply(dat,length))
@@ -286,6 +286,6 @@ aveWithArgs<-function(x, y, FUN = mean,...){
 #'   \item{nearestGene}{distance to nearest gene (transcription unit) (0 if in a gene)}
 #'   \item{H4K12ac}{number of reads aligned within +- 50,000 bases in a H4K12ac ChIP-Seq}
 #' }
-#' @references \url{http://www.retrovirology.com/content/10/1/90}
-#' @source \url{http://www.retrovirology.com/content/10/1/90/additional}, system.file("data-raw", "makeIntegrations.R", package = "vipor")
+#' @references \url{https://retrovirology.biomedcentral.com/articles/10.1186/1742-4690-10-90}
+#' @source \url{https://retrovirology.biomedcentral.com/articles/10.1186/1742-4690-10-90}, system.file("data-raw", "makeIntegrations.R", package = "vipor")
 "integrations"

@@ -14,7 +14,7 @@ A data frame with 12436 rows and 4 variables:
 }
 }
 \source{
-\url{http://www.retrovirology.com/content/10/1/90/additional}, system.file("data-raw", "makeIntegrations.R", package = "vipor")
+\url{https://retrovirology.biomedcentral.com/articles/10.1186/1742-4690-10-90}, system.file("data-raw", "makeIntegrations.R", package = "vipor")
 }
 \usage{
 integrations
@@ -23,6 +23,6 @@ integrations
 A dataset containing data from a meta-analysis looking for differences between active and inactive HIV integrations. Each row represents a provirus integrated somewhere in a human chromosome with whether viral expression was detectd, the distance to the nearest gene and the number of reads from H4K12ac ChIP-Seq mapped to within 50,000 bases of the integration.
 }
 \references{
-\url{http://www.retrovirology.com/content/10/1/90}
+\url{https://retrovirology.biomedcentral.com/articles/10.1186/1742-4690-10-90}
 }
 \keyword{datasets}

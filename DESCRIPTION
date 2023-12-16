@@ -1,8 +1,8 @@
 Package: vipor
 Type: Package
 Title: Plot Categorical Data Using Quasirandom Noise and Density Estimates
-Version: 0.4.6
-Date: 2023-12-14
+Version: 0.4.7
+Date: 2023-12-15
 Author: Scott Sherrill-Mix, Erik Clarke
 Maintainer: Scott Sherrill-Mix <ssm@msu.edu>
 Description: Generate a violin point plot, a combination of a violin/histogram

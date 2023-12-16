@@ -5,7 +5,7 @@
 \alias{vipor}
 \title{Functions to generate violin scatter plots}
 \description{
-Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{http://github.com/sherrillmix/vipor}
+Arranges data points using quasirandom noise (van der Corput sequence) to create a plot resembling a cross between a violin plot (showing the density distribution) and a scatter plot (showing the individual points). The development version of this package is on \url{https://github.com/sherrillmix/vipor}
 }
 \details{
 The main functions are: 
@@ -21,7 +21,7 @@ offset<-offsetX(unlist(dat),ids)
 plot(unlist(dat),ids+offset)
 }
 \seealso{
-\url{http://github.com/sherrillmix/vipor}
+\url{https://github.com/sherrillmix/vipor}
 }
 \author{
 Scott Sherrill-Mix, \email{shescott@upenn.edu}

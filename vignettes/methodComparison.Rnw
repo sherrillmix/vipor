@@ -17,7 +17,7 @@ packageKeywords<-"visualization, display, one dimensional, grouped, groups, viol
 \Plainauthor{\Sexpr{packageInfo$Author}}
 
 \Address{
-  Github: \url{http://github.com/sherrillmix/vipor}\\
+  Github: \url{https://github.com/sherrillmix/vipor}\\
   Cran: \url{https://cran.r-project.org/package=vipor}
 }
 

@@ -18,7 +18,7 @@ A data frame with 3143 rows and 8 variables:
 }
 }
 \source{
-\url{http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_SF1/GCTPH1.US05PR}, system.file("data-raw", "makeCounties.R", package = "vipor")
+http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_SF1/GCTPH1.US05PR (link now dead), system.file("data-raw", "makeCounties.R", package = "vipor")
 }
 \usage{
 counties
@@ -27,6 +27,6 @@ counties
 A dataset containing data from the US census burea
 }
 \references{
-\url{https://www.census.gov/prod/cen2010/cph-2-1.pdf}
+\url{https://web.archive.org/web/20150326040847/https://www.census.gov/prod/cen2010/cph-2-1.pdf}
 }
 \keyword{datasets}
