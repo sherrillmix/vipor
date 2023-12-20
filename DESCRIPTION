@@ -10,6 +10,8 @@ Description: Generate a violin point plot, a combination of a violin/histogram
     density using quasirandom noise.
 License: GPL (>=2)
 LazyData: True
+URL: https://github.com/sherrillmix/vipor
+BugReports: https://github.com/sherrillmix/vipor/issues
 Depends:
     R (>= 3.0.0)
 Imports:
